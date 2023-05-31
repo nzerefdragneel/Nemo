@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Nemo.DOA;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +24,22 @@ namespace Nemo
         public MainWindow()
         {
             InitializeComponent();
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            var KhachHang = new KhachHang()
+            {
+                MaKH = "001",
+                TenKH = "Nguyễn Văn A",
+                DiaChi = "Hồ Chí Minh"
+            };
+          
+        }
+
+        private void Window_Closed(object sender, EventArgs e)
+        {
+
         }
     }
 }
