@@ -37,9 +37,9 @@
                     <SolidColorBrush x:Key="SecondaryHueMidForegroundBrush" Color="{StaticResource Accent200Foreground}"/>
                 </ResourceDictionary>
                 <ResourceDictionary>
-                    <SolidColorBrush x:Key="PrimaryLightBrush" Color="#222831"/>
-                    <SolidColorBrush x:Key="PrimaryLightForegroundBrush" Color="#EEEEEE"/>
-                    <SolidColorBrush x:Key="PrimaryMidBrush" Color="#222831"/>
+                    <SolidColorBrush x:Key="PrimaryLightBrush" Color="#1D4E6D"/>
+                    <SolidColorBrush x:Key="PrimaryLightForegroundBrush" Color="#DDEEFA"/>
+                    <SolidColorBrush x:Key="PrimaryMidBrush" Color="#FFFFFF"/>
                     <SolidColorBrush x:Key="PrimaryMidForegroundBrush" Color="#B55400"/>
                     <SolidColorBrush x:Key="PrimaryDarkBrush" Color="#EEEEEE"/>
                     <SolidColorBrush x:Key="PrimaryDarkForegroundBrush" Color="#B55400"/>
