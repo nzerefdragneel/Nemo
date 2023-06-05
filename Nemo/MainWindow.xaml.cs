@@ -1,4 +1,5 @@
-﻿using Nemo.DOA;
+﻿using Nemo.DTO;
+using Nemo.DOA;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -34,7 +35,9 @@ namespace Nemo
                 TenKH = "Nguyễn Văn A",
                 DiaChi = "Hồ Chí Minh"
             };
-          
+            var conn = new KhachHangDOA();
+            conn.OpenConnection();
+            conn.ExecuteQuery("");
         }
 
         private void Window_Closed(object sender, EventArgs e)
@@ -43,6 +46,21 @@ namespace Nemo
         }
 
         private void TabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+
+        private void TabControl_SelectionChanged_1(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
         {
 
         }

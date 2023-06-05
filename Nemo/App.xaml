@@ -40,16 +40,17 @@
                     <SolidColorBrush x:Key="PrimaryLightBrush" Color="#1D4E6D"/>
                     <SolidColorBrush x:Key="PrimaryLightForegroundBrush" Color="#DDEEFA"/>
                     <SolidColorBrush x:Key="PrimaryMidBrush" Color="#FFFFFF"/>
-                    <SolidColorBrush x:Key="PrimaryMidForegroundBrush" Color="#B55400"/>
+                    <SolidColorBrush x:Key="PrimaryMidForegroundBrush" Color="#F0F0F0"/>
                     <SolidColorBrush x:Key="PrimaryDarkBrush" Color="#EEEEEE"/>
-                    <SolidColorBrush x:Key="PrimaryDarkForegroundBrush" Color="#B55400"/>
+                    <SolidColorBrush x:Key="PrimaryDarkForegroundBrush" Color="#4A8DB7"/>
                     <SolidColorBrush x:Key="PrimaryCardBrush" Color="#393E46"/>
-                    <SolidColorBrush x:Key="PrimaryCardForegroundBrush" Color="#B55400"/>
+                    <SolidColorBrush x:Key="PrimaryCardForegroundBrush" Color="#03A1D7"/>
                     <SolidColorBrush x:Key="TextBrush" Color="#EEEEEE"/>
                     <SolidColorBrush x:Key="SecondaryHueMidForegroundBrush" Color="#000000"/>
                 </ResourceDictionary>
             </ResourceDictionary.MergedDictionaries>
            
         </ResourceDictionary>
+       
     </Application.Resources>
 </Application>

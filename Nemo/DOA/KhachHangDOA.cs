@@ -1,48 +1,49 @@
 ﻿using Npgsql;
 using System;
+using Nemo.DTO;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.TextBox;
+using System.Diagnostics;
 
 namespace Nemo.DOA
 {
-    static class Program
+    public class KhachHangDOA
     {
         /// <summary>The main entry point for your application.</summary>
-        [STAThread]
-        static void Main()
-    {
-        // Connection information
-        string connInfo = string.Format("Server={0};Port={1};User Id={2};Password={3};Database={4};",
-                                        "localhost", 5432, "postgres", "12345678", "sample_db");
+        private string connString; // Chuỗi kết nối tới database
+        private NpgsqlConnection conn; // Đối tượng kết nối tới database
 
-        // Connection
-        NpgsqlConnection conn = null;
-
-        try
+        public KhachHangDOA()
         {
-            // Initialization
-            conn = new NpgsqlConnection(connInfo);
+            // Khởi tạo chuỗi kết nối
+            connString = "Host=localhost;Username=postgres;Password=1;Database=postgres";
 
-            // Open connection
-            conn.Open();
-
-            MessageBox.Show("Successfully connected to PostgreSQL.");
+            // Khởi tạo đối tượng kết nối
+            conn = new NpgsqlConnection(connString);
         }
-        catch (Exception ex)
+        public void OpenConnection()
         {
-            MessageBox.Show("Failed to connect to PostgreSQL. Error: " + ex.Message);
+            conn.Open(); // Mở kết nối tới database
+            Debug.WriteLine("test ok");
         }
-        finally
-        {
-            // Close connection
-            if (null != conn)
-            {
-                conn.Close();
 
-            }
+        public void CloseConnection()
+        {
+            conn.Close(); // Đóng kết nối tới database
         }
+        public NpgsqlDataReader ExecuteQuery(string query)
+        {
+            string que = "SELECT * FROM phong";
+            NpgsqlCommand cmd = new NpgsqlCommand(que, conn); // Tạo đối tượng command để thực hiện truy vấn
+            NpgsqlDataReader reader = cmd.ExecuteReader(); // Thực hiện truy vấn và trả về đối tượng reader để đọc kết quả
+
+            return reader; // Trả về đối tượng reader
+        }
+
     }
 }
