@@ -17,7 +17,7 @@ namespace Nemo.DOA
         /// <summary>The main entry point for your application.</summary>
         private string connString; // Chuỗi kết nối tới database
         private NpgsqlConnection conn; // Đối tượng kết nối tới database
-
+        /*
         public KhachHangDOA()
         {
             // Khởi tạo chuỗi kết nối
@@ -44,6 +44,7 @@ namespace Nemo.DOA
 
             return reader; // Trả về đối tượng reader
         }
+        */
 
     }
 }

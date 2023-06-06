@@ -25,6 +25,7 @@ namespace Nemo
         public MainWindow()
         {
             InitializeComponent();
+            DataContext = new ViewModelChart();
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -36,8 +37,8 @@ namespace Nemo
                 DiaChi = "Hồ Chí Minh"
             };
             var conn = new KhachHangDOA();
-            conn.OpenConnection();
-            conn.ExecuteQuery("");
+            //conn.OpenConnection();
+            //conn.ExecuteQuery("");
         }
 
         private void Window_Closed(object sender, EventArgs e)
@@ -66,6 +67,16 @@ namespace Nemo
         }
 
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
+
+        private void RadioButton_Checked(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 
         }

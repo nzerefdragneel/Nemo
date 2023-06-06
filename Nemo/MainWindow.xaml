@@ -3,8 +3,8 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-
         xmlns:local="clr-namespace:Nemo"
+        xmlns:modelChart="clr-namespace:Nemo.DTO"
         mc:Ignorable="d"
         xmlns:gif="https://github.com/XamlAnimatedGif/XamlAnimatedGif"
          xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
@@ -21,13 +21,16 @@
          Title="Media Player" Height="650" Width="1200"
          
         Loaded="Window_Loaded" Closed="Window_Closed">
+    <Window.DataContext>
+        <modelChart:ViewModelChart></modelChart:ViewModelChart>
+    </Window.DataContext>
     <Window.Resources>
-        
+
     </Window.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="3*"></ColumnDefinition>
-            <ColumnDefinition Width="7*"></ColumnDefinition>
+            <ColumnDefinition Width="123*"></ColumnDefinition>
+            <ColumnDefinition Width="277*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="50px"></RowDefinition>
@@ -58,14 +61,14 @@
                                         <CornerRadius BottomLeft="15" BottomRight="15" TopLeft="15" TopRight="15"/>
                                     </Border.CornerRadius>
                                     <DockPanel>
-                                    <materialDesign:PackIcon Kind="Magnify" DockPanel.Dock="Left"
+                                        <materialDesign:PackIcon Kind="Magnify" DockPanel.Dock="Left"
                                                    Background="Transparent"
                                                    Foreground="{DynamicResource PrimaryHueLightForegroundBrush}"
                                                    Height="29" Width="29" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                    <TextBox Height="40" Background="{DynamicResource PrimaryMidForegroundBrush}" Foreground="Black" Width="Auto" Margin="0 0 20 0"
+                                        <TextBox Height="40" Background="{DynamicResource PrimaryMidForegroundBrush}" Foreground="Black" Width="Auto" Margin="0 0 20 0"
                                             VerticalAlignment="Bottom" FontSize="20" 
                                               materialDesign:HintAssist.Hint="Tìm kiếm">
-                                    </TextBox>
+                                        </TextBox>
                                     </DockPanel>
                                 </Border>
                             </StackPanel>
@@ -117,7 +120,7 @@
                                     </Button>
                                 </Grid>
                             </DockPanel>
-                            
+
                             <StackPanel Grid.Row="2" Margin="10">
                                 <ListView ItemsSource="{Binding Source=
                                      {x:Static GridView.GridViewScrollViewerStyleKey}}">
@@ -146,14 +149,14 @@
                                                     <DataTemplate>
                                                         <StackPanel Orientation="Horizontal">
                                                             <Grid  Width="{StaticResource GridWidth}">
-                                                    <Button
+                                                                <Button
                                                     Height="{StaticResource ButtonHeight}"
                                                     materialDesign:ButtonAssist.CornerRadius="5"
                                                     IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
                                                     Style="{StaticResource MaterialDesignRaisedLightButton}"
                                                     ToolTip="MaterialDesignRaisedLightButton with Round Corners">
-                                                        <TextBlock
-                                                            Text="BTN" /> 
+                                                                    <TextBlock
+                                                            Text="BTN" />
                                                                 </Button>
                                                             </Grid>
                                                         </StackPanel>
@@ -197,10 +200,10 @@
                                         </GridView>
                                     </ListView.View>
                                 </ListView>
-                                
+
                             </StackPanel>
                             <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Top">
-                               
+
                                 <Button Margin="3" Width="30" Height="30"
                                   Background="{DynamicResource PrimaryCardForegroundBrush}"
                                   Foreground="{DynamicResource PrimaryMidBrush}"
@@ -245,13 +248,13 @@
                             </StackPanel>
                         </Grid>
                     </TabItem>
-                <TabItem
+                    <TabItem
                     Header="Thuê phòng">
                         <Grid>
                             <!--Thuê phòng-->
-                        </Grid>   
-                </TabItem>
-                <TabItem
+                        </Grid>
+                    </TabItem>
+                    <TabItem
                 Header="Hóa đơn">
                         <Grid>
                             <!--Hóa đơn-->
@@ -260,6 +263,123 @@
                     <TabItem
                 Header="Báo cáo">
                         <!--báo cáo-->
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="50"></RowDefinition>
+                                <RowDefinition Height="*"></RowDefinition>
+                                <RowDefinition Height="*"></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <StackPanel Grid.Row="0" Orientation="Horizontal">
+                                <TextBlock FontFamily="Semi Bold" FontSize="35" Foreground="#003D69" Margin="10 5">BAO CAO</TextBlock>
+                                <StackPanel  
+                                  Margin="100 4" Orientation="Horizontal">
+                                    <RadioButton BorderBrush="#003D69"
+                                    Margin="4"
+                                    Content="Doanh Thu"
+                                    IsChecked="True"
+                                    Style="{StaticResource MaterialDesignTabRadioButton}"/>
+                                    <RadioButton BorderBrush="#003D69"
+                                    Margin="4"
+                                    Content="Mat do su dung phong"
+                                    IsChecked="False"
+                                    Style="{StaticResource MaterialDesignTabRadioButton}"
+                                    materialDesign:HintAssist.Foreground="Aqua" Width="141"/>
+                                </StackPanel>
+                            </StackPanel>
+                            <StackPanel Grid.Row="1" Grid.Column="0" HorizontalAlignment="Left">
+                                <StackPanel Orientation="Horizontal">
+                                    <ComboBox
+                                      Background="#F1F1F1"
+                                      Foreground="#003D69"
+                                      HorizontalAlignment="Left"
+                                      Margin="10"
+                                      Width="100"
+                                      Height="35"
+                                      FontSize="14"
+                                      BorderThickness="0"
+                                      Padding="10 0"
+                                      materialDesign:HintAssist.Hint="Thang"
+                                      Style="{StaticResource MaterialDesignOutlinedComboBox}" SelectionChanged="ComboBox_SelectionChanged">
+                                        <ComboBoxItem
+                                        Content="1" />
+                                        <ComboBoxItem
+                                        Content="2" />
+                                        <ComboBoxItem
+                                        Content="3" />
+                                    </ComboBox>
+                                    <ComboBox
+                                      Background="#F1F1F1"
+                                      Foreground="#003D69"
+                                      HorizontalAlignment="Left"
+                                      BorderThickness="0"
+                                      Margin="10"
+                                      Width="100"
+                                      Height="35"
+                                      FontSize="14"
+                                      Padding="10 0"
+                                      materialDesign:HintAssist.Hint="Nam"
+                                      Style="{StaticResource MaterialDesignOutlinedComboBox}" SelectionChanged="ComboBox_SelectionChanged">
+                                        <ComboBoxItem
+                                        Content="2021" />
+                                        <ComboBoxItem
+                                        Content="2022" />
+                                        <ComboBoxItem
+                                        Content="2023" />
+                                    </ComboBox>
+                                </StackPanel>
+                                <Border Margin="10 20" CornerRadius="10" BorderThickness="2" BorderBrush="#4A8DB7" Padding="5 0">
+                                    <StackPanel>
+                                        <StackPanel Margin="10" Orientation="Horizontal">
+                                            <TextBlock FontSize="18" Foreground="Black">Loai phong A</TextBlock>
+                                            <TextBlock Margin="100 0 0 0" FontSize="18" Foreground="Black">2000000</TextBlock>
+                                        </StackPanel>
+                                        <StackPanel Margin="10" Orientation="Horizontal">
+                                            <TextBlock FontSize="18" Foreground="Black">Loai phong A</TextBlock>
+                                            <TextBlock Margin="100 0 0 0" FontSize="18" Foreground="Black">2000000</TextBlock>
+                                        </StackPanel>
+                                        <StackPanel Margin="10" Orientation="Horizontal">
+                                            <TextBlock FontSize="18" Foreground="Black">Loai phong A</TextBlock>
+                                            <TextBlock Margin="100 0 0 0" FontSize="18" Foreground="Black">2000000</TextBlock>
+                                        </StackPanel>
+                                        <StackPanel Margin="10" Orientation="Horizontal">
+                                            <TextBlock FontSize="18" Foreground="Black">Loai phong A</TextBlock>
+                                            <TextBlock Margin="100 0 0 0" FontSize="18" Foreground="Black">2000000</TextBlock>
+                                        </StackPanel>
+                                    </StackPanel>
+                                </Border>
+                            </StackPanel>
+                   
+                            <Grid Grid.Row="1" Grid.Column="1">
+                                <TextBlock>Hi</TextBlock>
+     
+
+                            </Grid>
+                            <StackPanel Grid.Row="2">
+                                <ComboBox
+                                  Background="#F1F1F1"
+                                  Foreground="#003D69"
+                                  HorizontalAlignment="Left"
+                                  Margin="10 0"
+                                  Width="200"
+                                  Height="35"
+                                  BorderThickness="0"
+                                  FontSize="14"
+                                  Padding="10 0"
+                                  materialDesign:HintAssist.Hint="Nam"
+                                  Style="{StaticResource MaterialDesignOutlinedComboBox}" SelectionChanged="ComboBox_SelectionChanged">
+                                  <ComboBoxItem
+                                    Content="2021" />
+                                  <ComboBoxItem
+                                    Content="2022" />
+                                  <ComboBoxItem
+                                    Content="2023" />
+                                </ComboBox>
+                            </StackPanel>
+                        </Grid>
                     </TabItem>
                     <TabItem
                 Header="Qui định">
