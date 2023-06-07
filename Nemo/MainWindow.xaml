@@ -41,13 +41,52 @@
             <TextBlock
               Style="{DynamicResource MaterialDesignHeadline5TextBlock}" VerticalAlignment="Center" Margin="28 0 0 0"
               Text="nemo" />
+            
+            <StackPanel  VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0 0 30 0">
+                
+                <Button x:Name="MenuButton" Background="Transparent" BorderBrush="Transparent" Click="MenuButton_Click" Padding="0" Height="50" UseLayoutRounding="True">
+                    <StackPanel Orientation="Horizontal" >
+                        <materialDesign:PackIcon Width="34" Height="34" Kind="AccountCircleOutline"/>
+                    <TextBlock FontSize="18" VerticalAlignment="Center" Margin="10 0">Admin</TextBlock>
+                    <materialDesign:PackIcon Kind="MenuDown" Width="20" Height="20" VerticalAlignment="Center" />
+                    </StackPanel>
+                </Button>
+                
+                <Popup x:Name="PopupMenu" PlacementTarget="{Binding ElementName=MenuButton}" IsOpen="False" StaysOpen="False">
+                    <Border CornerRadius="2">
+                        <StackPanel Background="#A2E2F8">
+                            <Button Background="Transparent" BorderBrush="Transparent"   Padding="0" UseLayoutRounding="True">
+                                <StackPanel Orientation="Horizontal">
+                                    <materialDesign:PackIcon Kind="Logout" Width="20" Height="20" VerticalAlignment="Center" />
+                                    <TextBlock Margin="10 0 0 0" VerticalAlignment="Center">Dang xuat</TextBlock>
+                                </StackPanel>
+                            </Button>
+                            <Button Background="Transparent" BorderBrush="Transparent" Padding="10 0" UseLayoutRounding="True">
+                                <StackPanel Orientation="Horizontal">
+                                    <materialDesign:PackIcon Kind="Logout" Width="20" Height="20" VerticalAlignment="Center" />
+                                    <TextBlock Margin="10 0 0 0" VerticalAlignment="Center">Doi mat khau</TextBlock>
+
+                                </StackPanel>
+                            </Button>
+                        </StackPanel>
+                    </Border>
+                </Popup>
+            </StackPanel>
         </DockPanel>
         <materialDesign:Card Grid.ColumnSpan="2" Grid.Row="1" Background="{DynamicResource PrimaryLightForegroundBrush}">
             <Grid>
                 <TabControl 
-                TabStripPlacement="Left" >
-                    <TabItem Width="200" 
-                            Header="Danh mục phòng" >
+                    TabStripPlacement="Left" 
+                    materialDesign:ColorZoneAssist.Mode="Custom"
+                    materialDesign:ColorZoneAssist.Foreground="#003D69"
+                    >
+                    <TabItem Width="200" Height="65" Foreground="#003D69">
+                        <TabItem.Header>
+                            <StackPanel Orientation="Horizontal" Width="160">
+                                <materialDesign:PackIcon Kind="HomeVariantOutline"  Width="28" Height="30" Margin="0 0 10 0" VerticalAlignment="Center" />
+                                <TextBlock Text="Danh mục phòng" FontSize="16" VerticalAlignment="Center" />
+                            </StackPanel>
+                        </TabItem.Header>
                         <!--Content-->
                         <Grid  Background="{DynamicResource PrimaryHueMidForegroundBrush}">
                             <Grid.RowDefinitions>
@@ -249,20 +288,35 @@
                             </StackPanel>
                         </Grid>
                     </TabItem>
-                    <TabItem
-                    Header="Thuê phòng">
+                    <TabItem Foreground="#003D69" Height="65">
+                        <TabItem.Header>
+                            <StackPanel  Orientation="Horizontal" Width="160">
+                                <materialDesign:PackIcon Kind="FolderHomeOutline" Width="28" Height="30" Margin="0 0 10 0" VerticalAlignment="Center" />
+                                <TextBlock Text="Thuê Phòng" FontSize="16" VerticalAlignment="Center" />
+                            </StackPanel>
+                        </TabItem.Header>
                         <Grid>
                             <!--Thuê phòng-->
                         </Grid>
                     </TabItem>
-                    <TabItem
-                Header="Hóa đơn">
+                    <TabItem Height="65" Foreground="#003D69">
+                        <TabItem.Header>
+                            <StackPanel Orientation="Horizontal" Width="160">
+                                <materialDesign:PackIcon Kind="ReceiptTextOutline" Width="28" Height="30" Margin="0 0 10 0" VerticalAlignment="Center" />
+                                <TextBlock Text="Hóa Đơn" FontSize="16" VerticalAlignment="Center" />
+                            </StackPanel>
+                        </TabItem.Header>
                         <Grid>
                             <!--Hóa đơn-->
                         </Grid>
                     </TabItem>
-                    <TabItem
-                Header="Báo cáo">
+                    <TabItem Height="65" Foreground="#003D69">
+                        <TabItem.Header>
+                            <StackPanel Orientation="Horizontal" Width="160">
+                                <materialDesign:PackIcon Kind="ChartBox" Width="28" Height="30" Margin="0 0 10 0" VerticalAlignment="Center" />
+                                <TextBlock Text="Báo Cáo" FontSize="16" VerticalAlignment="Center" />
+                            </StackPanel>
+                        </TabItem.Header>
                         <!--báo cáo-->
                         <Grid>
                             <StackPanel Orientation="Horizontal">
@@ -475,13 +529,13 @@
 
                                                             </Style>
                                                         </DataGrid.Resources>
-                                                    <DataGrid.Columns >
-                                                        <DataGridTextColumn Header="Phòng" Binding="{Binding Room}" />
-                                                        <DataGridTextColumn Header="Loại" Binding="{Binding Type}" />
-                                                        <DataGridTextColumn Header="Số ngày cho thuê trong tháng" Binding="{Binding NumberOfDays}" />
-                                                    </DataGrid.Columns>
-                                                </DataGrid>
-                                            </ScrollViewer>
+                                                        <DataGrid.Columns >
+                                                            <DataGridTextColumn Header="Phòng" Binding="{Binding Room}" />
+                                                            <DataGridTextColumn Header="Loại" Binding="{Binding Type}" />
+                                                            <DataGridTextColumn Header="Số ngày cho thuê trong tháng" Binding="{Binding NumberOfDays}" />
+                                                        </DataGrid.Columns>
+                                                    </DataGrid>
+                                                </ScrollViewer>
                                             </StackPanel>
                                         </StackPanel>
                                     </TabItem>
@@ -490,8 +544,13 @@
 
                         </Grid>
                     </TabItem>
-                    <TabItem
-                Header="Qui định">
+                    <TabItem Height="65" Foreground="#003D69">
+                        <TabItem.Header>
+                            <StackPanel Orientation="Horizontal" Width="160">
+                                <materialDesign:PackIcon Kind="AlertCircleOutline" Width="28" Height="30" Margin="0 0 10 0" VerticalAlignment="Center" />
+                                <TextBlock Text="Quy Định" FontSize="16" VerticalAlignment="Center" />
+                            </StackPanel>
+                        </TabItem.Header>
                         <!--Qui định-->
 
                     </TabItem>

@@ -85,5 +85,10 @@ namespace Nemo
         {
 
         }
+
+        private void MenuButton_Click(object sender, RoutedEventArgs e)
+        {
+            PopupMenu.IsOpen = !PopupMenu.IsOpen;
+        }
     }
 }
