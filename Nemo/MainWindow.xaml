@@ -54,17 +54,17 @@
                 
                 <Popup x:Name="PopupMenu" PlacementTarget="{Binding ElementName=MenuButton}" IsOpen="False" StaysOpen="False">
                     <Border CornerRadius="2">
-                        <StackPanel Background="#A2E2F8">
+                        <StackPanel Background="#555555">
                             <Button Background="Transparent" BorderBrush="Transparent"   Padding="0" UseLayoutRounding="True">
                                 <StackPanel Orientation="Horizontal">
                                     <materialDesign:PackIcon Kind="Logout" Width="20" Height="20" VerticalAlignment="Center" />
-                                    <TextBlock Margin="10 0 0 0" VerticalAlignment="Center">Dang xuat</TextBlock>
+                                    <TextBlock Margin="10 0 0 0" VerticalAlignment="Center">Đăng xuất</TextBlock>
                                 </StackPanel>
                             </Button>
                             <Button Background="Transparent" BorderBrush="Transparent" Padding="10 0" UseLayoutRounding="True">
                                 <StackPanel Orientation="Horizontal">
-                                    <materialDesign:PackIcon Kind="Logout" Width="20" Height="20" VerticalAlignment="Center" />
-                                    <TextBlock Margin="10 0 0 0" VerticalAlignment="Center">Doi mat khau</TextBlock>
+                                    <materialDesign:PackIcon Kind="FormTextboxPassword" Width="20" Height="20" VerticalAlignment="Center" />
+                                    <TextBlock Margin="10 0 0 0" VerticalAlignment="Center">Đổi mật khẩu</TextBlock>
 
                                 </StackPanel>
                             </Button>
@@ -77,16 +77,36 @@
             <Grid>
                 <TabControl 
                     TabStripPlacement="Left" 
-                    materialDesign:ColorZoneAssist.Mode="Custom"
-                    materialDesign:ColorZoneAssist.Foreground="#003D69"
                     >
-                    <TabItem Width="200" Height="65" Foreground="#003D69">
+                    <TabControl.Resources>
+                        <Style TargetType="TabItem" x:Key="NavigationItemStyle">
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="TabItem">
+                                        <Border Name="Border" CornerRadius="10" Height="40" Width="180">
+                                            <ContentPresenter Name="ContentPresenter" ContentSource="Header" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10,0,10,0" />
+                                        </Border>
+                                        <ControlTemplate.Triggers>
+                                            <Trigger Property="IsSelected" Value="True">
+                                                <Setter TargetName="Border" Property="Background" Value="#A2E2F8" />
+                                            </Trigger>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter TargetName="Border" Property="Background" Value="#E0E0E0" />
+                                            </Trigger>
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </TabControl.Resources>
+                    <TabItem Width="200" Height="65" Foreground="{DynamicResource PrimaryLightBrush}" Style="{StaticResource NavigationItemStyle}">
                         <TabItem.Header>
                             <StackPanel Orientation="Horizontal" Width="160">
                                 <materialDesign:PackIcon Kind="HomeVariantOutline"  Width="28" Height="30" Margin="0 0 10 0" VerticalAlignment="Center" />
                                 <TextBlock Text="Danh mục phòng" FontSize="16" VerticalAlignment="Center" />
                             </StackPanel>
                         </TabItem.Header>
+
                         <!--Content-->
                         <Grid  Background="{DynamicResource PrimaryHueMidForegroundBrush}">
                             <Grid.RowDefinitions>
@@ -288,9 +308,10 @@
                             </StackPanel>
                         </Grid>
                     </TabItem>
-                    <TabItem Foreground="#003D69" Height="65">
+                    <TabItem Foreground="{DynamicResource PrimaryLightBrush}" Style="{StaticResource NavigationItemStyle}" Height="65">
                         <TabItem.Header>
                             <StackPanel  Orientation="Horizontal" Width="160">
+
                                 <materialDesign:PackIcon Kind="FolderHomeOutline" Width="28" Height="30" Margin="0 0 10 0" VerticalAlignment="Center" />
                                 <TextBlock Text="Thuê Phòng" FontSize="16" VerticalAlignment="Center" />
                             </StackPanel>
@@ -299,7 +320,7 @@
                             <!--Thuê phòng-->
                         </Grid>
                     </TabItem>
-                    <TabItem Height="65" Foreground="#003D69">
+                    <TabItem Foreground="{DynamicResource PrimaryLightBrush}" Height="65" Style="{StaticResource NavigationItemStyle}">
                         <TabItem.Header>
                             <StackPanel Orientation="Horizontal" Width="160">
                                 <materialDesign:PackIcon Kind="ReceiptTextOutline" Width="28" Height="30" Margin="0 0 10 0" VerticalAlignment="Center" />
@@ -310,7 +331,7 @@
                             <!--Hóa đơn-->
                         </Grid>
                     </TabItem>
-                    <TabItem Height="65" Foreground="#003D69">
+                    <TabItem Foreground="{DynamicResource PrimaryLightBrush}" Height="65" Style="{StaticResource NavigationItemStyle}">
                         <TabItem.Header>
                             <StackPanel Orientation="Horizontal" Width="160">
                                 <materialDesign:PackIcon Kind="ChartBox" Width="28" Height="30" Margin="0 0 10 0" VerticalAlignment="Center" />
@@ -544,7 +565,7 @@
 
                         </Grid>
                     </TabItem>
-                    <TabItem Height="65" Foreground="#003D69">
+                    <TabItem Foreground="{DynamicResource PrimaryLightBrush}" Style="{StaticResource NavigationItemStyle}" Height="65">
                         <TabItem.Header>
                             <StackPanel Orientation="Horizontal" Width="160">
                                 <materialDesign:PackIcon Kind="AlertCircleOutline" Width="28" Height="30" Margin="0 0 10 0" VerticalAlignment="Center" />
