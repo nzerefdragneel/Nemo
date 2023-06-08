@@ -31,7 +31,7 @@ namespace Nemo
         {
             var KhachHang = new KhachHang()
             {
-                KhachHang = "001",
+                MaKH = "001",
                 TenKH = "Nguyễn Văn A",
                 DiaChi = "Hồ Chí Minh"
             };
