@@ -29,15 +29,15 @@ namespace Nemo
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            var KhachHang = new KhachHang()
-            {
-                MaKH = "001",
-                TenKH = "Nguyễn Văn A",
-                DiaChi = "Hồ Chí Minh"
-            };
-            var conn = new KhachHangDOA();
-            conn.OpenConnection();
-            conn.ExecuteQuery("");
+            //var KhachHang = new KhachHang()
+            //{
+               // MaKH = "001",
+                //TenKH = "Nguyễn Văn A",
+                //DiaChi = "Hồ Chí Minh"
+           // };
+            //var conn = new KhachHangDOA();
+            //conn.OpenConnection();
+            //conn.ExecuteQuery("");
         }
 
         private void Window_Closed(object sender, EventArgs e)
