@@ -25,6 +25,7 @@
         <modelChart:ViewModelChart/>
     </Window.DataContext>
     <Window.Resources>
+    
 
     </Window.Resources>
     <Grid>
@@ -315,6 +316,8 @@
                                 <TextBlock Text="Thuê Phòng" FontSize="16" VerticalAlignment="Center" />
                             </StackPanel>
                         </TabItem.Header>
+                    <TabItem
+                    Header="Thuê phòng">
                         <Grid>
                             <!--Thuê phòng-->
                         </Grid>
@@ -571,6 +574,273 @@
                                 <TextBlock Text="Quy Định" FontSize="16" VerticalAlignment="Center" />
                             </StackPanel>
                         </TabItem.Header>
+                        </Grid>
+                    </TabItem>
+                    <TabItem
+                Header="Hóa đơn">
+                        <TabControl>
+                            <!--Bảng hóa đơn-->
+                            <TabItem Header="Bảng hóa đơn" Visibility="Collapsed">
+                                <Grid Background="{DynamicResource PrimaryHueMidForegroundBrush}">
+                                    <!--Search bar-->
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="70"></RowDefinition>
+                                        <RowDefinition Height="*"></RowDefinition>
+                                        <RowDefinition Height="60"></RowDefinition>
+                                    </Grid.RowDefinitions>
+                                    <StackPanel Margin="100 20 100 0"  >
+                                        <Border BorderThickness="1" BorderBrush="Gray">
+                                            <Border.CornerRadius >
+                                                <CornerRadius BottomLeft="15" BottomRight="15" TopLeft="15" TopRight="15"/>
+                                            </Border.CornerRadius>
+                                            <DockPanel>
+                                                <materialDesign:PackIcon Kind="Magnify" DockPanel.Dock="Left"
+                                                   Background="Transparent"
+                                                   Foreground="{DynamicResource PrimaryHueLightForegroundBrush}"
+                                                   Height="24" Width="24" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="12,0,0,0"/>
+                                                <TextBox Height="32" Foreground="Black" Width="Auto" Margin="6,3,20,0"
+                                            VerticalAlignment="Bottom" FontSize="16"                               
+                                              materialDesign:HintAssist.Hint="Tìm kiếm">
+                                                </TextBox>
+                                            </DockPanel>
+                                        </Border>
+                                    </StackPanel>
+
+                                    <!--Data-->
+                                    <StackPanel Grid.Row="1" Margin="10" HorizontalAlignment="Stretch">
+                                        <ListView Name="lvBill" MaxHeight="580" HorizontalContentAlignment="Stretch" ScrollViewer.HorizontalScrollBarVisibility="Disabled" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                            <ListView.ItemTemplate>
+                                                <DataTemplate/>
+                                            </ListView.ItemTemplate>
+                                            <ListView.View>
+                                                <GridView AllowsColumnReorder="True" >
+                                                    <GridView.ColumnHeaderContainerStyle>
+                                                        <Style TargetType="{x:Type GridViewColumnHeader}">
+                                                            <Setter Property="Height" Value="30"/>
+                                                            <Setter Property="Background" Value="Transparent"/>
+                                                            <Setter Property="Foreground" Value="Black"/>
+                                                            <Setter Property="FontSize" Value="13"/>
+                                                            <Setter Property="FontWeight" Value="Bold"/>
+                                                            <Setter Property="Margin" Value=" 0"/>
+                                                            <Setter Property="Width" Value="Auto"/>
+                                                            <Setter Property="Padding" Value="0"/>
+                                                            <Setter Property="BorderThickness" Value="0"/>
+                                                        </Style>
+                                                    </GridView.ColumnHeaderContainerStyle>
+                                                    <GridViewColumn Header="STT" Width="60" DisplayMemberBinding="{Binding MaHD}"/>
+                                                    <GridViewColumn Header="Mã hóa đơn" Width="200" DisplayMemberBinding="{Binding MaHD}"/>
+                                                    <GridViewColumn Header="Ngày thanh toán" Width="200" DisplayMemberBinding="{Binding NgayTra}"/>
+                                                    <GridViewColumn Header="Số phòng thanh toán" Width="170" DisplayMemberBinding="{Binding SoPhong}"/>
+                                                    <GridViewColumn Header="Khách hàng" Width="200" DisplayMemberBinding="{Binding KhachHang}"/>
+                                                    <GridViewColumn Header="Tổng tiền" Width="130" DisplayMemberBinding="{Binding TongTien}"/>
+                                                </GridView>
+                                            </ListView.View>
+                                        </ListView>
+                                    </StackPanel>
+                                    <!--Chuyển trang-->
+                                    <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Top">
+
+                                        <Button Margin="3" Width="30" Height="30"
+                                  Background="{DynamicResource PrimaryCardForegroundBrush}"
+                                  Foreground="{DynamicResource PrimaryMidBrush}"
+                                  IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
+                                  Style="{StaticResource MaterialDesignIconButton}"
+                                  ToolTip="MaterialDesignIconButton">
+                                            <TextBlock>1</TextBlock>
+
+                                        </Button>
+                                        <Button Margin="3" Height="30" Width="30"
+                                  Background="Transparent"
+                                        Foreground="{DynamicResource SecondaryHueMidForegroundBrush}"
+                                  IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
+                                  Style="{StaticResource MaterialDesignIconButton}"
+                                  ToolTip="MaterialDesignIconButton">
+                                            <TextBlock>2</TextBlock>
+                                        </Button>
+                                        <Button Margin="3" Height="30" Width="30"
+                                  Background="Transparent"
+                                        Foreground="{DynamicResource SecondaryHueMidForegroundBrush}"
+                                  IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
+                                  Style="{StaticResource MaterialDesignIconButton}"
+                                  ToolTip="MaterialDesignIconButton">
+                                            <TextBlock>3</TextBlock>
+                                        </Button>
+                                        <Button Margin="3" Height="30" Width="30"
+                                  Background="Transparent"
+                                        Foreground="{DynamicResource SecondaryHueMidForegroundBrush}"
+                                  IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
+                                  Style="{StaticResource MaterialDesignIconButton}"
+                                  ToolTip="MaterialDesignIconButton">
+                                            <TextBlock>...</TextBlock>
+                                        </Button>
+                                        <Button Margin="3" Height="30" Width="30"
+                                  Background="Transparent"
+                                        Foreground="{DynamicResource SecondaryHueMidForegroundBrush}"
+                                  IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
+                                  Style="{StaticResource MaterialDesignIconButton}"
+                                  ToolTip="MaterialDesignIconButton">
+                                            <TextBlock>10</TextBlock>
+                                        </Button>
+                                    </StackPanel>
+                                </Grid>
+                            </TabItem>
+                            <!--Chi tiết hóa đơn-->
+                            <TabItem Header="Chi tiết hóa đơn" Visibility="Collapsed">
+                                <Grid Background="{DynamicResource PrimaryHueMidForegroundBrush}">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="50"></RowDefinition>
+                                        <RowDefinition Height="100"></RowDefinition>
+                                        <RowDefinition Height="*"></RowDefinition>
+                                        <RowDefinition Height="60"></RowDefinition>
+                                    </Grid.RowDefinitions>
+                                    <!--Tiêu đề và nút back-->
+                                    <StackPanel Grid.Row="0" Orientation="Horizontal" 
+                                                HorizontalAlignment="Left" VerticalAlignment="Bottom"
+                                                Margin="10 0 0 0">
+                                        <Button
+                                            Width="40"
+                                            Height="40"
+                                            Padding="0"
+                                            HorizontalAlignment="Center"
+                                            HorizontalContentAlignment="Center"
+                                            VerticalContentAlignment="Center"
+                                            Background="Transparent"
+                                            BorderThickness="0"
+                                            Foreground="{DynamicResource SecondaryHueMidForegroundBrush}"
+                                            Style="{StaticResource MaterialDesignIconButton}">
+
+                                            <materialDesign:PackIcon
+                                                Width="25"
+                                                Height="25"
+                                                HorizontalAlignment="Center"
+                                                VerticalAlignment="Center"
+                                                Foreground="Black"
+                                                Kind="ArrowBack" />
+                                        </Button>
+                                        <TextBlock Text="Chi tiết hóa đơn" Foreground="#003D69" VerticalAlignment="Center" FontSize="20" FontWeight="Bold" Margin="8,0,0,0"/>
+                                    </StackPanel>
+                                    <!--Thông tin hóa đơn-->
+                                    <Grid Grid.Row="1">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="1*"/>
+                                            <ColumnDefinition Width="1*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <StackPanel Grid.Column="0"
+                                                HorizontalAlignment="Left" VerticalAlignment="Top"
+                                                Margin="10 5 0 0">
+                                            <TextBlock Text="Mã hóa đơn: " Foreground="#000" VerticalAlignment="Center" FontSize="13" Margin="50,0,0,5">
+                                                <TextBlock Text="4"/>
+                                            </TextBlock>
+                                            <TextBlock Text="Ngày thanh toán: " Foreground="#000" VerticalAlignment="Center" FontSize="13" Margin="50,0,0,5">
+                                                <TextBlock Text="02/04/2023"/>
+                                            </TextBlock>
+                                            <TextBlock Text="Khách hàng thanh toán: " Foreground="#000" VerticalAlignment="Center" FontSize="13" Margin="50,15,0,5">
+                                                <TextBlock Text="Kellie"/>
+                                            </TextBlock>
+                                            <TextBlock Text="Địa chỉ: " Foreground="#000" VerticalAlignment="Center" FontSize="13" Margin="50,0,0,5">
+                                                <TextBlock Text="Hà Nội"/>
+                                            </TextBlock>
+                                        </StackPanel>
+                                        <StackPanel Grid.Column="1"
+                                                HorizontalAlignment="Left" VerticalAlignment="Top"
+                                                Margin="10 5 0 0">
+                                            <TextBlock Text="Tổng tiền thanh toán: " Foreground="#000" VerticalAlignment="Center" FontSize="13" Margin="50,0,0,5">
+                                                <TextBlock Text="1,150,000" Foreground="red"/>
+                                            </TextBlock>
+                                            <TextBlock Text="Phương thức thanh toán: " Foreground="#000" VerticalAlignment="Center" FontSize="13" Margin="50,0,0,5">
+                                                <TextBlock Text="Tiền mặt"/>
+                                            </TextBlock>
+                                        </StackPanel>
+                                    </Grid>
+                                    <!--Thông tin phòng thanh toán-->
+                                    <StackPanel Grid.Row="2" HorizontalAlignment="Stretch" Margin="0 12 0 12">
+                                        <ListView MaxHeight="500" HorizontalContentAlignment="Stretch" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                                            <ListView.ItemTemplate>
+                                                <DataTemplate/>
+                                            </ListView.ItemTemplate>
+                                            <ListView.View>
+                                                <GridView AllowsColumnReorder="True" >
+                                                    <GridView.ColumnHeaderContainerStyle>
+                                                        <Style TargetType="{x:Type GridViewColumnHeader}">
+                                                            <Setter Property="Height" Value="30"/>
+                                                            <Setter Property="Background" Value="Transparent"/>
+                                                            <Setter Property="Foreground" Value="Black"/>
+                                                            <Setter Property="FontSize" Value="13"/>
+                                                            <Setter Property="FontWeight" Value="Bold"/>
+                                                            <Setter Property="Margin" Value=" 0"/>
+                                                            <Setter Property="Width" Value="Auto"/>
+                                                            <Setter Property="Padding" Value="0"/>
+                                                            <Setter Property="BorderThickness" Value="0"/>
+                                                        </Style>
+                                                    </GridView.ColumnHeaderContainerStyle>
+                                                    <GridViewColumn Header="STT" Width="55" DisplayMemberBinding="{Binding STT}"/>
+                                                    <GridViewColumn Header="Mã PTP" Width="90" DisplayMemberBinding="{Binding MaPTP}"/>
+                                                    <GridViewColumn Header="Mã phòng" Width="100" DisplayMemberBinding="{Binding MaPhong}"/>
+                                                    <GridViewColumn Header="Số ngày thuê" Width="120" DisplayMemberBinding="{Binding SoNgayThue}"/>
+                                                    <GridViewColumn Header="Số khách" Width="100" DisplayMemberBinding="{Binding SoKhach}"/>
+                                                    <GridViewColumn Header="Đơn giá" Width="120" DisplayMemberBinding="{Binding DonGia}"/>
+                                                    <GridViewColumn Header="Tổng tiền" Width="150" DisplayMemberBinding="{Binding TongTien}"/>
+                                                    <GridViewColumn Header="Ghi chú" Width="120" DisplayMemberBinding="{Binding GhiChu}"/>
+                                                </GridView>
+                                            </ListView.View>
+                                        </ListView>
+                                    </StackPanel>
+
+                                    <!--Chuyển trang-->
+                                    <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Top">
+
+                                        <Button Margin="3" Width="30" Height="30"
+                                  Background="{DynamicResource PrimaryCardForegroundBrush}"
+                                  Foreground="{DynamicResource PrimaryMidBrush}"
+                                  IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
+                                  Style="{StaticResource MaterialDesignIconButton}"
+                                  ToolTip="MaterialDesignIconButton">
+                                            <TextBlock>1</TextBlock>
+
+                                        </Button>
+                                        <Button Margin="3" Height="30" Width="30"
+                                  Background="Transparent"
+                                        Foreground="{DynamicResource SecondaryHueMidForegroundBrush}"
+                                  IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
+                                  Style="{StaticResource MaterialDesignIconButton}"
+                                  ToolTip="MaterialDesignIconButton">
+                                            <TextBlock>2</TextBlock>
+                                        </Button>
+                                        <Button Margin="3" Height="30" Width="30"
+                                  Background="Transparent"
+                                        Foreground="{DynamicResource SecondaryHueMidForegroundBrush}"
+                                  IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
+                                  Style="{StaticResource MaterialDesignIconButton}"
+                                  ToolTip="MaterialDesignIconButton">
+                                            <TextBlock>3</TextBlock>
+                                        </Button>
+                                        <Button Margin="3" Height="30" Width="30"
+                                  Background="Transparent"
+                                        Foreground="{DynamicResource SecondaryHueMidForegroundBrush}"
+                                  IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
+                                  Style="{StaticResource MaterialDesignIconButton}"
+                                  ToolTip="MaterialDesignIconButton">
+                                            <TextBlock>...</TextBlock>
+                                        </Button>
+                                        <Button Margin="3" Height="30" Width="30"
+                                  Background="Transparent"
+                                        Foreground="{DynamicResource SecondaryHueMidForegroundBrush}"
+                                  IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
+                                  Style="{StaticResource MaterialDesignIconButton}"
+                                  ToolTip="MaterialDesignIconButton">
+                                            <TextBlock>10</TextBlock>
+                                        </Button>
+                                    </StackPanel>
+                                </Grid>
+                            </TabItem>
+                        </TabControl>
+                    </TabItem>
+                    <TabItem
+                Header="Báo cáo">
+                        <!--báo cáo-->
+                    </TabItem>
+                    <TabItem
+                Header="Qui định">
                         <!--Qui định-->
                         <Grid>
                             <Grid.RowDefinitions>
