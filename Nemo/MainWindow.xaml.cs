@@ -14,6 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Collections.ObjectModel;
 
 namespace Nemo
 {
@@ -30,15 +31,13 @@ namespace Nemo
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            var KhachHang = new KhachHang()
-            {
-                MaKH = "001",
-                TenKH = "Nguyễn Văn A",
-                DiaChi = "Hồ Chí Minh"
-            };
-            var conn = new KhachHangDOA();
-            //conn.OpenConnection();
-            //conn.ExecuteQuery("");
+          
+            var con =new PhongViewDOA();
+
+            ObservableCollection<Phong>listPhong= con.GetListPhong();
+            //load phòng
+            ListVew_DanhMucPhong.ItemsSource = listPhong;
+
         }
 
         private void Window_Closed(object sender, EventArgs e)
@@ -46,57 +45,13 @@ namespace Nemo
 
         }
 
-        private void TabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
-
-        private void TabControl_SelectionChanged_1(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void Button_Click_1(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-
-        }
-
-        private void RadioButton_Checked(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
-
-        private void RadioButton_Checked_1(object sender, RoutedEventArgs e)
-        {
-
-        }
-
+       
         private void MenuButton_Click(object sender, RoutedEventArgs e)
         {
             PopupMenu.IsOpen = !PopupMenu.IsOpen;
         }
 
-        private void TextBox_TextChanged_1(object sender, TextChangedEventArgs e)
-        {
-
-        }
-
-   
+        
         private void ChangeButton_QD(object sender, RoutedEventArgs e)
         {
             NumOfTypes.IsEnabled = true;

@@ -9,42 +9,48 @@ using System.Windows;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.TextBox;
 using System.Diagnostics;
+using System.Data;
 
 namespace Nemo.DOA
 {
-    public class KhachHangDOA
+    public class ConnectDB
     {
         /// <summary>The main entry point for your application.</summary>
         private string connString; // Chuỗi kết nối tới database
         private NpgsqlConnection conn; // Đối tượng kết nối tới database
-        /*
-        public KhachHangDOA()
+
+        public ConnectDB()
         {
             // Khởi tạo chuỗi kết nối
-            connString = "Host=localhost;Username=postgres;Password=1;Database=postgres";
+            connString = "Server=localhost;Port=5432;Username=postgres;Password=1;Database=postgres";
 
             // Khởi tạo đối tượng kết nối
             conn = new NpgsqlConnection(connString);
         }
         public void OpenConnection()
         {
-            conn.Open(); // Mở kết nối tới database
-            Debug.WriteLine("test ok");
+            conn.Open(); 
         }
 
         public void CloseConnection()
         {
             conn.Close(); // Đóng kết nối tới database
         }
-        public NpgsqlDataReader ExecuteQuery(string query)
+        public DataTable ExecuteQuery(string query)
         {
-            string que = "SELECT * FROM phong";
-            NpgsqlCommand cmd = new NpgsqlCommand(que, conn); // Tạo đối tượng command để thực hiện truy vấn
+            
+            NpgsqlCommand cmd = new NpgsqlCommand(query, conn); // Tạo đối tượng command để thực hiện truy vấn
             NpgsqlDataReader reader = cmd.ExecuteReader(); // Thực hiện truy vấn và trả về đối tượng reader để đọc kết quả
-
-            return reader; // Trả về đối tượng reader
+            if (reader.HasRows)
+            {
+                DataTable dt=new DataTable();
+                dt.Load(reader);
+                return dt;
+            }
+            return null;
+            // Trả về đối tượng reader
         }
-        */
+
 
     }
 }
