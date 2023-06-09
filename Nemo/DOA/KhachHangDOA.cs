@@ -28,7 +28,7 @@ namespace Nemo.DOA
         }
         public void OpenConnection()
         {
-            conn.Open(); // Mở kết nối tới database
+            //conn.Open(); // Mở kết nối tới database
             Debug.WriteLine("test ok");
         }
 
@@ -36,13 +36,14 @@ namespace Nemo.DOA
         {
             conn.Close(); // Đóng kết nối tới database
         }
+        
         public NpgsqlDataReader ExecuteQuery(string query)
         {
             string que = "SELECT * FROM phong";
             NpgsqlCommand cmd = new NpgsqlCommand(que, conn); // Tạo đối tượng command để thực hiện truy vấn
             NpgsqlDataReader reader = cmd.ExecuteReader(); // Thực hiện truy vấn và trả về đối tượng reader để đọc kết quả
 
-            return reader; // Trả về đối tượng reader
+           return reader; // Trả về đối tượng reader
         }
         */
 
