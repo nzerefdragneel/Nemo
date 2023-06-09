@@ -90,5 +90,29 @@ namespace Nemo
         {
             PopupMenu.IsOpen = !PopupMenu.IsOpen;
         }
+
+        private void TextBox_TextChanged_1(object sender, TextChangedEventArgs e)
+        {
+
+        }
+
+   
+        private void ChangeButton_QD(object sender, RoutedEventArgs e)
+        {
+            NumOfTypes.IsEnabled = true;
+            NumOfTypes.Focus();
+            NumOfCustomers.IsEnabled = true;
+            PhuThu.IsEnabled = true;
+            HeSoKNN.IsEnabled = true;
+
+        }
+
+        private void SetQD(object sender, RoutedEventArgs e)
+        {
+            NumOfTypes.IsEnabled = false;
+            NumOfCustomers.IsEnabled = false;
+            PhuThu.IsEnabled = false;
+            HeSoKNN.IsEnabled = false;
+        }
     }
 }
