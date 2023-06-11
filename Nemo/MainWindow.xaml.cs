@@ -34,7 +34,7 @@ namespace Nemo
           
             var con =new PhongViewDOA();
 
-            ObservableCollection<Phong>listPhong= con.GetListPhong();
+            List<Phong>listPhong= con.GetListPhong();
             //load phòng
             ListVew_DanhMucPhong.ItemsSource = listPhong;
 

@@ -14,13 +14,13 @@ namespace Nemo.DOA
     internal class PhongViewDOA
     {
         public PhongViewDOA() { }
-        public ObservableCollection<Phong> GetListPhong()
+        public List<Phong> GetListPhong()
         {
             var conn = new ConnectDB();
             conn.OpenConnection();
             var result=conn.ExecuteQuery("select * from Phong p left join loaiphong l on p.maloaiphong=l.maloaiphong");
             conn.CloseConnection();
-            ObservableCollection<Phong> list = JArray.FromObject(result).ToObject<ObservableCollection<Phong>>();
+            List<Phong> list = JArray.FromObject(result).ToObject<List<Phong>>();
             return list;
         }
     }
