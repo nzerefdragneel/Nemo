@@ -21,6 +21,8 @@ using static System.Net.Mime.MediaTypeNames;
 using Microsoft.VisualBasic;
 using System.Windows.Forms;
 using ControlzEx.Controls;
+using Button = System.Windows.Controls.Button;
+using ListViewItem = System.Windows.Controls.ListViewItem;
 
 namespace Nemo
 {
@@ -136,7 +138,7 @@ namespace Nemo
 
         private void thanhToanBtn_Click(object sender, RoutedEventArgs e)
         {
-            MyTabControl.SelectedItem = ThanhToanTabItem;
+            //MyTabControl.SelectedItem = ThanhToanTabItem;
         }
 
         private void PhieuThuePhong_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -151,7 +153,7 @@ namespace Nemo
                 float tienThue = selectedData.TienThue;
                 int soKhach = selectedData.SoKhach;
 
-                MyTabControl.SelectedItem = ChiTietPhieuThueTabItem;
+               // MyTabControl.SelectedItem = ChiTietPhieuThueTabItem;
                 UpdateChiTietPhieuThueData(maPTP, maPhong, soKhach, ngaytao, tienThue);
             }
         }
@@ -171,7 +173,7 @@ namespace Nemo
 
         private void BackButton_Click(object sender, RoutedEventArgs e)
         {
-            MyTabControl.SelectedIndex = MyTabControl.SelectedIndex - 1;
+        //    MyTabControl.SelectedIndex = MyTabControl.SelectedIndex - 1;
         }
 
         private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -186,7 +188,7 @@ namespace Nemo
 
         private void TaoPTPBtn_Click(object sender, RoutedEventArgs e)
         {
-            MyTabControl.SelectedItem = TaoPTPTabItem;
+           // MyTabControl.SelectedItem = TaoPTPTabItem;
         }
     }
 }

@@ -7,6 +7,7 @@ namespace Nemo.DTO
     class PhongView: INotifyPropertyChanged
     {
 
+        public event PropertyChangedEventHandler? PropertyChanged;
         public ObservableCollection<Phong> ListPhong { get; set; }
         public ObservableCollection<Phong> CurPhong { get; set; }
         public int PhongDaThue { get; set; }
@@ -28,9 +29,6 @@ namespace Nemo.DTO
             prevpage = 0;
             nextpage = 2;
         }
-
-        public event PropertyChangedEventHandler? PropertyChanged;
-
         public void UpdatePaging()
         {
             totalItems = ListPhong.Count;
