@@ -14,8 +14,7 @@ namespace Nemo.DTO
         public int maloaiphong { get; set; }
         public int soluong { get; set; }
         public float gia { get; set; }
-
-
+        public string tuychon { get; set; }
 
     }
 }

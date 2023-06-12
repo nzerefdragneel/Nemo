@@ -25,33 +25,29 @@
         <modelChart:ViewModelChart/>
     </Window.DataContext>
     <Window.Resources>
-    
+
 
     </Window.Resources>
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="123*"></ColumnDefinition>
-            <ColumnDefinition Width="277*"></ColumnDefinition>
-        </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="50px"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
-        <DockPanel Grid.ColumnSpan="2" Grid.Row="0" Background="{DynamicResource PrimaryLightBrush}">
+        <DockPanel Grid.ColumnSpan="3" Grid.Row="0" Background="{DynamicResource PrimaryLightBrush}">
             <TextBlock
               Style="{DynamicResource MaterialDesignHeadline5TextBlock}" VerticalAlignment="Center" Margin="28 0 0 0"
               Text="nemo" />
-            
+
             <StackPanel  VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0 0 30 0">
-                
+
                 <Button x:Name="MenuButton" Background="Transparent" BorderBrush="Transparent" Click="MenuButton_Click" Padding="0" Height="50" UseLayoutRounding="True">
                     <StackPanel Orientation="Horizontal" >
                         <materialDesign:PackIcon Width="34" Height="34" Kind="AccountCircleOutline"/>
-                    <TextBlock FontSize="18" VerticalAlignment="Center" Margin="10 0">Admin</TextBlock>
-                    <materialDesign:PackIcon Kind="MenuDown" Width="20" Height="20" VerticalAlignment="Center" />
+                        <TextBlock FontSize="18" VerticalAlignment="Center" Margin="10 0">Admin</TextBlock>
+                        <materialDesign:PackIcon Kind="MenuDown" Width="20" Height="20" VerticalAlignment="Center" />
                     </StackPanel>
                 </Button>
-                
+
                 <Popup x:Name="PopupMenu" PlacementTarget="{Binding ElementName=MenuButton}" IsOpen="False" StaysOpen="False">
                     <Border CornerRadius="2">
                         <StackPanel Background="#555555">
@@ -73,7 +69,7 @@
                 </Popup>
             </StackPanel>
         </DockPanel>
-        <materialDesign:Card Grid.ColumnSpan="2" Grid.Row="1" Background="{DynamicResource PrimaryLightForegroundBrush}">
+        <materialDesign:Card Grid.ColumnSpan="3" Grid.Row="1" Background="{DynamicResource PrimaryLightForegroundBrush}">
             <Grid>
                 <TabControl 
                     TabStripPlacement="Left" 
@@ -179,10 +175,10 @@
                                 </Grid>
                             </DockPanel>
                             <StackPanel Grid.Row="2" Margin="10">
-                                <ScrollViewer HorizontalScrollBarVisibility="Auto">
-                                    <ListView x:Name="ListVew_DanhMucPhong" >
+                                <ScrollViewer  HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+                                    <ListView x:Name="ListView_DanhMucPhong" Height="372">
                                         <ListView.View>
-                                            <GridView AllowsColumnReorder="true" >
+                                            <GridView x:Name="GridView_DanhMucPhong" >
                                                 <GridView.ColumnHeaderContainerStyle>
                                                     <Style TargetType="{x:Type GridViewColumnHeader}">
                                                         <Setter Property="Height" Value="40"></Setter>
@@ -199,32 +195,21 @@
                                                 <GridViewColumn  Header="Tùy chọn" Width="150">
                                                     <GridViewColumn.CellTemplate>
                                                         <DataTemplate>
-                                                            <StackPanel Orientation="Horizontal">
-                                                                <Grid >
-                                                                    <Button
-                                                    materialDesign:ButtonAssist.CornerRadius="5"
+                                                            <Button Background="red"
+                                                    materialDesign:ButtonAssist.CornerRadius="5" HorizontalAlignment="Center" VerticalAlignment="Center"
                                                     Style="{StaticResource MaterialDesignRaisedLightButton}"
-                                                    ToolTip="MaterialDesignRaisedLightButton with Round Corners">
-                                                                        <TextBlock Text="{Binding maphong}" />
-                                                                    </Button>
-                                                                </Grid>
-                                                            </StackPanel>
+                                                    ToolTip="MaterialDesignRaisedLightButton with Round Corners" Click="TuyChon_Btn_Click">
+                                                                <TextBlock Text="{Binding tuychon}" />
+                                                            </Button>
                                                         </DataTemplate>
                                                     </GridViewColumn.CellTemplate>
                                                 </GridViewColumn>
                                                 <GridViewColumn Width="200" >
                                                     <GridViewColumnHeader>Mã phòng
-
-                                                        <!--<GridViewColumnHeader.ContextMenu>
-                                                        <ContextMenu  MenuItem.Click="LastNameCM_Click"      >
-                                                            <MenuItem Header="Ascending" />
-                                                            <MenuItem Header="Descending" />
-                                                        </ContextMenu>
-                                                    </GridViewColumnHeader.ContextMenu>-->
                                                     </GridViewColumnHeader>
                                                     <GridViewColumn.CellTemplate>
                                                         <DataTemplate>
-                                                            <TextBox HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding maphong}"></TextBox>
+                                                            <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding maphong}"></TextBlock>
                                                         </DataTemplate>
                                                     </GridViewColumn.CellTemplate>
                                                 </GridViewColumn>
@@ -232,18 +217,17 @@
                                                     <GridViewColumn.CellTemplate>
                                                         <DataTemplate>
                                                             <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
-                                                                <Grid>
-                                                                    <Button
+
+                                                                <Button
                                                         materialDesign:ButtonAssist.CornerRadius="5"
                                                        Style="{StaticResource MaterialDesignRaisedLightButton}"  >
-                                                                        <TextBlock Text="{Binding tinhtrang}" />
-                                                                    </Button>
-                                                                </Grid>
+                                                                    <TextBlock Text="{Binding tinhtrang}" />
+                                                                </Button>
                                                             </StackPanel>
                                                         </DataTemplate>
                                                     </GridViewColumn.CellTemplate>
                                                 </GridViewColumn>
-                                                <GridViewColumn Header="Loại phòng" Width="150" DisplayMemberBinding="{Binding maloaiphong}"/>
+                                                <GridViewColumn Header="Loại phòng" Width="150"  DisplayMemberBinding="{Binding maloaiphong}"/>
                                                 <GridViewColumn Header="Số lượng" Width="200" DisplayMemberBinding="{Binding soluong}"/>
                                                 <GridViewColumn Header="Giá" Width="100" DisplayMemberBinding="{Binding gia}"/>
                                             </GridView>
@@ -251,48 +235,34 @@
                                     </ListView>
                                 </ScrollViewer>
                             </StackPanel>
-                            <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Top">
+                            <StackPanel x:Name="Page_DanhMucPhong" Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Top">
 
-                                <Button Margin="3" Width="30" Height="30"
+                                <Button x:Name="Page_DanhMucPhong_Btn_prev"
+                                        Click="Prevpage_DanhMucPhong_Btn_Click"
+                                        Margin="3" Width="30" Height="30"
+                                  Background="{DynamicResource PrimaryMidForegroundBrush}"
+                                  Foreground="{DynamicResource  SecondaryHueMidForegroundBrush}"
+                                  IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
+                                  Style="{StaticResource MaterialDesignIconButton}"
+                                  ToolTip="MaterialDesignIconButton">
+                                    <materialDesign:PackIcon Kind="ChevronLeft" />
+
+                                </Button>
+                                <Button x:Name="Page_DanhMucPhong_Btn_cur" Margin="3" Height="30" Width="30"
                                   Background="{DynamicResource PrimaryCardForegroundBrush}"
-                                  Foreground="{DynamicResource PrimaryMidBrush}"
-                                  IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
+                                        Foreground="{DynamicResource PrimaryMidBrush}"
                                   Style="{StaticResource MaterialDesignIconButton}"
                                   ToolTip="MaterialDesignIconButton">
-                                    <TextBlock>1</TextBlock>
-
+                                    <TextBlock x:Name="Page_DanhMucPhong_text"></TextBlock>
                                 </Button>
-                                <Button Margin="3" Height="30" Width="30"
-                                  Background="Transparent"
+                                <Button x:Name="Page_DanhMucPhong_Btn_next" Margin="3" Height="30" Width="30"
+                                         Click="Nextpage_DanhMucPhong_Btn_Click"
+                                  Background="{DynamicResource PrimaryMidForegroundBrush}"
                                         Foreground="{DynamicResource SecondaryHueMidForegroundBrush}"
                                   IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
                                   Style="{StaticResource MaterialDesignIconButton}"
                                   ToolTip="MaterialDesignIconButton">
-                                    <TextBlock>2</TextBlock>
-                                </Button>
-                                <Button Margin="3" Height="30" Width="30"
-                                  Background="Transparent"
-                                        Foreground="{DynamicResource SecondaryHueMidForegroundBrush}"
-                                  IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
-                                  Style="{StaticResource MaterialDesignIconButton}"
-                                  ToolTip="MaterialDesignIconButton">
-                                    <TextBlock>3</TextBlock>
-                                </Button>
-                                <Button Margin="3" Height="30" Width="30"
-                                  Background="Transparent"
-                                        Foreground="{DynamicResource SecondaryHueMidForegroundBrush}"
-                                  IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
-                                  Style="{StaticResource MaterialDesignIconButton}"
-                                  ToolTip="MaterialDesignIconButton">
-                                    <TextBlock>...</TextBlock>
-                                </Button>
-                                <Button Margin="3" Height="30" Width="30"
-                                  Background="Transparent"
-                                        Foreground="{DynamicResource SecondaryHueMidForegroundBrush}"
-                                  IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
-                                  Style="{StaticResource MaterialDesignIconButton}"
-                                  ToolTip="MaterialDesignIconButton">
-                                    <TextBlock>10</TextBlock>
+                                    <materialDesign:PackIcon Kind="ChevronRight" />
                                 </Button>
                             </StackPanel>
                         </Grid>
@@ -545,7 +515,7 @@
 
                         </Grid>
                     </TabItem>
-                   
+
                     <TabItem  Foreground="{DynamicResource PrimaryLightBrush}" Style="{StaticResource NavigationItemStyle}" Height="65">
                         <TabItem.Header >
                             <StackPanel Orientation="Horizontal" Width="160" >
@@ -556,7 +526,7 @@
                         <TabControl>
                             <!--Bảng hóa đơn-->
                             <TabItem Header="Bảng hóa đơn" Visibility="Collapsed">
-                               
+
                                 <Grid Background="{DynamicResource PrimaryHueMidForegroundBrush}">
                                     <!--Search bar-->
                                     <Grid.RowDefinitions>

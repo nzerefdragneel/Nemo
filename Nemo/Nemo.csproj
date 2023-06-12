@@ -9,6 +9,7 @@
 
   <ItemGroup>
     <PackageReference Include="Activities.AddJobjectToJArray" Version="1.0.0" />
+    <PackageReference Include="DelegateDecompiler" Version="0.32.0" />
     <PackageReference Include="Fluent.Ribbon" Version="10.0.0" />
     <PackageReference Include="JsonConverter.Abstractions" Version="0.4.0" />
     <PackageReference Include="LiveCharts.Core" Version="0.9.8" />
