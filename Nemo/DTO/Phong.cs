@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Nemo.DTO
 {
-    internal class Phong
+    public class Phong
     {
         public int maphong { get; set; }
         public string tinhtrang { get; set; }

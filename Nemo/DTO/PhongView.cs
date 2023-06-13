@@ -23,7 +23,7 @@ namespace Nemo.DTO
             ListPhong = new ObservableCollection<Phong>();
             CurPhong = new ObservableCollection<Phong>();
             curpage = 1;           
-            perpage = 5;
+            perpage = 8;
             totalpage = 0;
             totalItems = 0;
             prevpage = 0;

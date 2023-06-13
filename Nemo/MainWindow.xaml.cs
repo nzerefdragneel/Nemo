@@ -1,5 +1,5 @@
 ﻿using Nemo.DTO;
-using Nemo.DOA;
+using Nemo.DAO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -111,7 +111,7 @@ namespace Nemo
         }
         public void Get_DanhMucPhong_View()
         {
-            var con = new PhongViewDOA();
+            var con = new PhongViewDAO();
             PhongView.ListPhong = con.GetListPhong();
             PhongView.UpdatePaging();
             ListView_DanhMucPhong.ItemsSource = PhongView.CurPhong;
@@ -173,7 +173,8 @@ namespace Nemo
 
         private void BackButton_Click(object sender, RoutedEventArgs e)
         {
-        //    MyTabControl.SelectedIndex = MyTabControl.SelectedIndex - 1;
+           MyTabControl.SelectedIndex =1;
+            ChiTietPhieuThueTabItem.Visibility = Visibility.Collapsed ;
         }
 
         private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -188,7 +189,22 @@ namespace Nemo
 
         private void TaoPTPBtn_Click(object sender, RoutedEventArgs e)
         {
-           // MyTabControl.SelectedItem = TaoPTPTabItem;
+           MyTabControl.SelectedItem = TaoPTPTabItem;
+        }
+
+        private void Themhong_Btn_click(object sender, RoutedEventArgs e)
+        {
+            var screen = new ThemPhong();
+            if (screen.ShowDialog() == true)
+            {
+                // var sv = (Book)screen.NewBook.Clone();
+                // sv.Img = new BitmapImage(new Uri(_imgList[0], UriKind.Relative));
+                Debug.WriteLine("mở oke");
+            }
+            else
+            {
+                Title = "KHONG CO DU LIEU";
+            }
         }
     }
 }

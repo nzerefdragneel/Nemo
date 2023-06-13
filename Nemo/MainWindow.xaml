@@ -71,7 +71,7 @@
         </DockPanel>
         <materialDesign:Card Grid.ColumnSpan="3" Grid.Row="1" Background="{DynamicResource PrimaryLightForegroundBrush}">
             <Grid>
-                <TabControl 
+                <TabControl x:Name="MyTabControl"
                     TabStripPlacement="Left" 
                     >
                     <TabControl.Resources>
@@ -163,7 +163,7 @@
                                     </Grid>
                                 </WrapPanel>
                                 <Grid Margin="10 0" DockPanel.Dock="Right">
-                                    <Button Height="45"
+                                    <Button Height="45" Click="Themhong_Btn_click"
                                     materialDesign:ButtonAssist.CornerRadius="10"
                                     IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
                                     Style="{StaticResource MaterialDesignRaisedButton}"
@@ -175,7 +175,7 @@
                                 </Grid>
                             </DockPanel>
                             <StackPanel Grid.Row="2" Margin="10">
-                                <ScrollViewer  HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+                                <ScrollViewer  HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" VerticalContentAlignment="Stretch">
                                     <ListView x:Name="ListView_DanhMucPhong" Height="372">
                                         <ListView.View>
                                             <GridView x:Name="GridView_DanhMucPhong" >

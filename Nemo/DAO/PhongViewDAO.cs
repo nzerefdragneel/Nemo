@@ -8,12 +8,13 @@ using Npgsql;
 using JsonConverter;
 using Newtonsoft.Json.Linq;
 using System.Collections.ObjectModel;
+using System.Data;
 
-namespace Nemo.DOA
+namespace Nemo.DAO
 {
-    internal class PhongViewDOA
+    internal class PhongViewDAO
     {
-        public PhongViewDOA() { }
+        public PhongViewDAO() { }
         public ObservableCollection<Phong> GetListPhong()
         {
             var conn = new ConnectDB();
@@ -28,6 +29,14 @@ namespace Nemo.DOA
                 else list[i].tuychon = "Chính sửa";
             }
             return list;
+        }
+        public DataTable GetListLoaiPhong()
+        {
+            var conn = new ConnectDB();
+            conn.OpenConnection();
+            var result = conn.ExecuteQuery("Select maloaiphong from loaiphong");
+            conn.CloseConnection();
+            return result;
         }
     }
 }

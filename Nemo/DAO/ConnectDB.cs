@@ -11,7 +11,7 @@ using static System.Windows.Forms.VisualStyles.VisualStyleElement.TextBox;
 using System.Diagnostics;
 using System.Data;
 
-namespace Nemo.DOA
+namespace Nemo.DAO
 {
     public class ConnectDB
     {

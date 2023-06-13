@@ -8,6 +8,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="images\**" />
+    <EmbeddedResource Remove="images\**" />
+    <None Remove="images\**" />
+    <Page Remove="images\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Activities.AddJobjectToJArray" Version="1.0.0" />
     <PackageReference Include="DelegateDecompiler" Version="0.32.0" />
     <PackageReference Include="Fluent.Ribbon" Version="10.0.0" />
@@ -21,10 +28,6 @@
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="Npgsql" Version="7.0.4" />
     <PackageReference Include="PropertyChanged.Fody" Version="4.1.0" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="images\" />
   </ItemGroup>
 
 </Project>
