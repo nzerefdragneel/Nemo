@@ -21,7 +21,7 @@ namespace Nemo.DOA
         public KhachHangDOA()
         {
             // Khởi tạo chuỗi kết nối
-            connString = "Host=localhost;Username=postgres;Password=1;Database=postgres";
+            connString = "Host=localhost;Username=postgres;Password=1;Database=nemo";
 
             // Khởi tạo đối tượng kết nối
             conn = new NpgsqlConnection(connString);
