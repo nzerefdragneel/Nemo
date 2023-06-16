@@ -15,11 +15,13 @@ namespace Nemo.DAO
     internal class HoaDonViewDAO
     {
         public HoaDonViewDAO() { }
-        public ObservableCollection<HoaDon> GetListHoaDon()
+        public ObservableCollection<HoaDon> GetListHoaDon(int sokhachquydinh, float phuthusokhach, float tilekhachnuocngoai)
         {
             var conn = new ConnectDB();
             conn.OpenConnection();
-            var result = conn.ExecuteQuery(@"select hd.mahd as mahoadon,
+            var ptsk = phuthusokhach.ToString();
+            var tlknn = tilekhachnuocngoai.ToString();
+            var result = conn.ExecuteQuery(@$"select hd.mahd as mahoadon,
 													ptp.ngaytra as ngaythanhtoan,
 													kh.tenkh as khachhang,
 													count(ptp.maptp) as sophongthanhtoan,
@@ -32,10 +34,10 @@ namespace Nemo.DAO
 													from hoadonthanhtoan hd join
 													(select ptp.maptp, ptp.mahd, 
 													case
-														when (k.sokhach < 3) and (k.kh_nuocngoai is null) then (ptp.ngaytra - ptp.ngaythue) * lp.gia
-														when (k.sokhach < 3) and (k.kh_nuocngoai = 1) then (ptp.ngaytra - ptp.ngaythue) * lp.gia * 1.5
-														when (k.sokhach = 3) and (k.kh_nuocngoai is null) then (ptp.ngaytra - ptp.ngaythue) * lp.gia * 1.25
-														else (ptp.ngaytra - ptp.ngaythue) * lp.gia * 1.25 * 1.5
+														when (k.sokhach < {sokhachquydinh}) and (k.kh_nuocngoai is null) then (ptp.ngaytra - ptp.ngaythue) * lp.gia
+														when (k.sokhach < {sokhachquydinh}) and (k.kh_nuocngoai = 1) then (ptp.ngaytra - ptp.ngaythue) * lp.gia * {tlknn}
+														when (k.sokhach = {sokhachquydinh}) and (k.kh_nuocngoai is null) then (ptp.ngaytra - ptp.ngaythue) * lp.gia * {phuthusokhach}
+														else (ptp.ngaytra - ptp.ngaythue) * lp.gia * {ptsk} * {tlknn}
 													end
 													as tongtienptp
 													from phieuthuephong ptp join phong p on ptp.maphongthue = p.maphong

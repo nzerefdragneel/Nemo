@@ -10,8 +10,6 @@ namespace Nemo.DTO
         public event PropertyChangedEventHandler? PropertyChanged;
         public ObservableCollection<HoaDon> ListHoaDon { get; set; }
         public ObservableCollection<HoaDon> CurHoaDon { get; set; }
-    //    public int PhongDaThue { get; set; }
-    //    public int PhongTrong { get; set; }
         public int prevpage { get; set; } = 0;
         public int curpage { get; set; } = 0;
         public int nextpage { get; set; } = 0;
@@ -23,7 +21,7 @@ namespace Nemo.DTO
             ListHoaDon = new ObservableCollection<HoaDon>();
             CurHoaDon = new ObservableCollection<HoaDon>();
             curpage = 1;
-            perpage = 8;
+            perpage = 16;
             totalpage = 0;
             totalItems = 0;
             prevpage = 0;

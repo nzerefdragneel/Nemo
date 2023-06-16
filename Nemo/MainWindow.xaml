@@ -683,10 +683,9 @@
                                 <TextBlock Text="Hóa đơn" FontSize="16" VerticalAlignment="Center"  />
                             </StackPanel>
                         </TabItem.Header>
-                        <TabControl>
+                        <TabControl x:Name="TabControl_HoaDon">
                             <!--Bảng các hóa đơn-->
                             <TabItem Header="Bảng hóa đơn" Visibility="Collapsed">
-
                                 <Grid Background="{DynamicResource PrimaryHueMidForegroundBrush}">
                                     <!--Search bar-->
                                     <Grid.RowDefinitions>
@@ -713,8 +712,10 @@
                                     </StackPanel>
 
                                     <!--List view các hóa đơn-->
-                                    <StackPanel Grid.Row="1" Margin="10" HorizontalAlignment="Stretch">
-                                        <ListView x:Name="ListView_HoaDon" MaxHeight="580" HorizontalContentAlignment="Stretch" ScrollViewer.HorizontalScrollBarVisibility="Disabled" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                    <ScrollViewer x:Name="ScrollViewer_HoaDon" Grid.Row="1" Margin="16" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" VerticalContentAlignment="Stretch">
+                                        <ListView x:Name="ListView_HoaDon" MaxHeight="580" HorizontalContentAlignment="Stretch" HorizontalAlignment="Center" VerticalAlignment="Top"
+                                                  PreviewMouseWheel="HoaDon_PreviewMouseWheel"
+                                                  SelectionChanged="HoaDon_SelectionChanged">
                                             <ListView.ItemTemplate>
                                                 <DataTemplate/>
                                             </ListView.ItemTemplate>
@@ -722,7 +723,7 @@
                                                 <GridView x:Name="GridView_HoaDon" AllowsColumnReorder="True" >
                                                     <GridView.ColumnHeaderContainerStyle>
                                                         <Style TargetType="{x:Type GridViewColumnHeader}">
-                                                            <Setter Property="Height" Value="36"/>
+                                                            <Setter Property="Height" Value="38"/>
                                                             <Setter Property="Background" Value="Transparent"/>
                                                             <Setter Property="Foreground" Value="Black"/>
                                                             <Setter Property="FontSize" Value="15"/>
@@ -734,15 +735,15 @@
                                                         </Style>
                                                     </GridView.ColumnHeaderContainerStyle>
                                                     <GridViewColumn Header="STT" Width="60" DisplayMemberBinding="{Binding stt}"/>
-                                                    <GridViewColumn Header="Mã hóa đơn" Width="160" DisplayMemberBinding="{Binding mahoadon}"/>
-                                                    <GridViewColumn Header="Ngày thanh toán" Width="180" DisplayMemberBinding="{Binding ngaythanhtoan}"/>
+                                                    <GridViewColumn Header="Mã hóa đơn" Width="140" DisplayMemberBinding="{Binding mahoadon}"/>
+                                                    <GridViewColumn Header="Ngày thanh toán" Width="180" DisplayMemberBinding="{Binding ngaythanhtoan, StringFormat='{}{0:dd/MM/yyyy}'}"/>
                                                     <GridViewColumn Header="Số phòng thanh toán" Width="170" DisplayMemberBinding="{Binding sophongthanhtoan}"/>
                                                     <GridViewColumn Header="Khách hàng" Width="180" DisplayMemberBinding="{Binding khachhang}"/>
-                                                    <GridViewColumn Header="Tổng tiền" Width="180" DisplayMemberBinding="{Binding tongtien}"/>
+                                                    <GridViewColumn Header="Tổng tiền" Width="180" DisplayMemberBinding="{Binding tongtien, StringFormat='{}{0:N0}'}"/>
                                                 </GridView>
                                             </ListView.View>
                                         </ListView>
-                                    </StackPanel>
+                                    </ScrollViewer>
                                     <!--Chuyển trang-->
                                     <StackPanel x:Name="Page_HoaDon" Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Top">
                                         <Button x:Name="Page_HoaDon_Btn_prev"
@@ -755,13 +756,13 @@
                                   ToolTip="MaterialDesignIconButton">
                                             <materialDesign:PackIcon Kind="ChevronLeft" />
                                         </Button>
-                                            <Button x:Name="Page_HoaDon_Btn_cur" Margin="3" Height="30" Width="30"
+                                        <Button x:Name="Page_HoaDon_Btn_cur" Margin="3" Height="30" Width="30"
                                   Background="{DynamicResource PrimaryCardForegroundBrush}"
                                         Foreground="{DynamicResource PrimaryMidBrush}"
                                   Style="{StaticResource MaterialDesignIconButton}"
                                   ToolTip="MaterialDesignIconButton">
-                                                <TextBlock x:Name="Page_HoaDon_text"></TextBlock>
-                                            </Button>
+                                            <TextBlock x:Name="Page_HoaDon_text"></TextBlock>
+                                        </Button>
                                         <Button x:Name="Page_HoaDon_Btn_next" Margin="3" Height="30" Width="30"
                                          Click="Nextpage_HoaDon_Btn_Click"
                                   Background="{DynamicResource PrimaryMidForegroundBrush}"
@@ -778,7 +779,7 @@
                             <TabItem Header="Chi tiết hóa đơn" Visibility="Collapsed">
                                 <Grid Background="{DynamicResource PrimaryHueMidForegroundBrush}">
                                     <Grid.RowDefinitions>
-                                        <RowDefinition Height="50"></RowDefinition>
+                                        <RowDefinition Height="60"></RowDefinition>
                                         <RowDefinition Height="100"></RowDefinition>
                                         <RowDefinition Height="*"></RowDefinition>
                                         <RowDefinition Height="60"></RowDefinition>
@@ -786,7 +787,7 @@
                                     <!--Tiêu đề và nút back-->
                                     <StackPanel Grid.Row="0" Orientation="Horizontal" 
                                                 HorizontalAlignment="Left" VerticalAlignment="Bottom"
-                                                Margin="10 0 0 0">
+                                                Margin="25 0 0 0">
                                         <Button
                                             Width="40"
                                             Height="40"
@@ -797,17 +798,18 @@
                                             Background="Transparent"
                                             BorderThickness="0"
                                             Foreground="{DynamicResource SecondaryHueMidForegroundBrush}"
-                                            Style="{StaticResource MaterialDesignIconButton}">
+                                            Style="{StaticResource MaterialDesignIconButton}"
+                                            Click="BackBtn_ChiTietHoaDon_Click">
 
                                             <materialDesign:PackIcon
-                                                Width="25"
-                                                Height="25"
+                                                Width="32"
+                                                Height="32"
                                                 HorizontalAlignment="Center"
                                                 VerticalAlignment="Center"
                                                 Foreground="Black"
                                                 Kind="ArrowBack" />
                                         </Button>
-                                        <TextBlock Text="Chi tiết hóa đơn" Foreground="#003D69" VerticalAlignment="Center" FontSize="20" FontWeight="Bold" Margin="8,0,0,0"/>
+                                        <TextBlock Text="Chi tiết hóa đơn" Foreground="#003D69" VerticalAlignment="Center" FontSize="25" FontWeight="Bold" Margin="18,0,0,0"/>
                                     </StackPanel>
                                     <!--Thông tin hóa đơn-->
                                     <Grid Grid.Row="1">
@@ -817,34 +819,37 @@
                                         </Grid.ColumnDefinitions>
                                         <StackPanel Grid.Column="0"
                                                 HorizontalAlignment="Left" VerticalAlignment="Top"
-                                                Margin="10 5 0 0">
-                                            <TextBlock Text="Mã hóa đơn: " Foreground="#000" VerticalAlignment="Center" FontSize="13" Margin="50,0,0,5">
-                                                <TextBlock Text="4"/>
+                                                Margin="35,16,0,0">
+                                            <TextBlock Text="Mã hóa đơn: " Foreground="#000" VerticalAlignment="Center" FontSize="15" Margin="50,0,0,5">
+                                                <TextBlock x:Name="TextBlock_MaHoaDon_ChiTietHoaDon" Text=""/>
                                             </TextBlock>
-                                            <TextBlock Text="Ngày thanh toán: " Foreground="#000" VerticalAlignment="Center" FontSize="13" Margin="50,0,0,5">
-                                                <TextBlock Text="02/04/2023"/>
+                                            <TextBlock Text="Ngày thanh toán: " Foreground="#000" VerticalAlignment="Center" FontSize="15" Margin="50,0,0,5">
+                                                <TextBlock x:Name="TextBlock_NgayThanhToan_ChiTietHoaDon"/>
                                             </TextBlock>
-                                            <TextBlock Text="Khách hàng thanh toán: " Foreground="#000" VerticalAlignment="Center" FontSize="13" Margin="50,10,0,5">
-                                                <TextBlock Text="Kellie"/>
-                                            </TextBlock>
-                                            <TextBlock Text="Địa chỉ: " Foreground="#000" VerticalAlignment="Center" FontSize="13" Margin="50,0,0,5">
-                                                <TextBlock Text="Hà Nội"/>
+                                            <TextBlock Text="Tổng tiền thanh toán: " Foreground="#000" VerticalAlignment="Center" FontSize="15" Margin="50,10,0,5">
+                                                <TextBlock x:Name="TextBlock_TongTien_ChiTietHoaDon" Foreground="red"/>
                                             </TextBlock>
                                         </StackPanel>
                                         <StackPanel Grid.Column="1"
                                                 HorizontalAlignment="Left" VerticalAlignment="Top"
-                                                Margin="10 5 0 0">
-                                            <TextBlock Text="Tổng tiền thanh toán: " Foreground="#000" VerticalAlignment="Center" FontSize="13" Margin="50,0,0,5">
-                                                <TextBlock Text="1,150,000" Foreground="red"/>
+                                                Margin="35,16,0,0">
+                                            <TextBlock Text="Khách hàng thanh toán: " Foreground="#000" VerticalAlignment="Center" FontSize="15" Margin="50,0,0,5">
+                                                <TextBlock x:Name="TextBlock_KhachHang_ChiTietHoaDon" Text=""/>
                                             </TextBlock>
-                                            <TextBlock Text="Phương thức thanh toán: " Foreground="#000" VerticalAlignment="Center" FontSize="13" Margin="50,0,0,5">
-                                                <TextBlock Text="Tiền mặt"/>
+                                            <TextBlock Text="Số phòng thanh toán: " Foreground="#000" VerticalAlignment="Center" FontSize="15" Margin="50,0,0,5">
+                                                <TextBlock x:Name="TextBlock_SoPhongThanhToan_ChiTietHoaDon" Text=""/>
                                             </TextBlock>
                                         </StackPanel>
                                     </Grid>
-                                    <!--Thông tin phòng thanh toán-->
-                                    <StackPanel Grid.Row="2" HorizontalAlignment="Stretch" Margin="0 18 0 12">
-                                        <ListView x:Name="ListView_ChiTietHoaDon" MaxHeight="500" HorizontalContentAlignment="Stretch" ScrollViewer.HorizontalScrollBarVisibility="Disabled" HorizontalAlignment="Center">
+                                    <!--Thông tin các phiếu thuê phòng-->
+                                    <ScrollViewer x:Name="ScrollViewer_ChiTietHoaDon" Grid.Row="2" Margin="30,22,30,16" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" VerticalContentAlignment="Stretch">
+                                        <ListView x:Name="ListView_ChiTietHoaDon" 
+                                                  ScrollViewer.HorizontalScrollBarVisibility="Disabled" 
+                                                  ScrollViewer.VerticalScrollBarVisibility="Disabled"
+                                                  MaxHeight="500" 
+                                                  HorizontalContentAlignment="Stretch" HorizontalAlignment="Center"
+                                                  PreviewMouseWheel="ChiTietHoaDon_PreviewMouseWheel"
+                                                  SelectionChanged="ChiTietHoaDon_SelectionChanged" VerticalAlignment="Top">
                                             <ListView.ItemTemplate>
                                                 <DataTemplate/>
                                             </ListView.ItemTemplate>
@@ -852,7 +857,7 @@
                                                 <GridView x:Name="GridView_ChiTietHoaDon" AllowsColumnReorder="True" >
                                                     <GridView.ColumnHeaderContainerStyle>
                                                         <Style TargetType="{x:Type GridViewColumnHeader}">
-                                                            <Setter Property="Height" Value="36"/>
+                                                            <Setter Property="Height" Value="38"/>
                                                             <Setter Property="Background" Value="Transparent"/>
                                                             <Setter Property="Foreground" Value="Black"/>
                                                             <Setter Property="FontSize" Value="15"/>
@@ -863,39 +868,39 @@
                                                             <Setter Property="BorderThickness" Value="0"/>
                                                         </Style>
                                                     </GridView.ColumnHeaderContainerStyle>
-                                                    <GridViewColumn Header="STT" Width="60" DisplayMemberBinding="{Binding STT}"/>
-                                                    <GridViewColumn Header="Mã PTP" Width="100" DisplayMemberBinding="{Binding MaPTP}"/>
-                                                    <GridViewColumn Header="Mã phòng" Width="110" DisplayMemberBinding="{Binding MaPhong}"/>
-                                                    <GridViewColumn Header="Số ngày thuê" Width="130" DisplayMemberBinding="{Binding SoNgayThue}"/>
-                                                    <GridViewColumn Header="Số khách" Width="110" DisplayMemberBinding="{Binding SoKhach}"/>
-                                                    <GridViewColumn Header="Đơn giá" Width="125" DisplayMemberBinding="{Binding DonGia}"/>
-                                                    <GridViewColumn Header="Tổng tiền" Width="155" DisplayMemberBinding="{Binding TongTien}"/>
-                                                    <GridViewColumn Header="Ghi chú" Width="130" DisplayMemberBinding="{Binding GhiChu}"/>
+                                                    <GridViewColumn Header="STT" Width="60" DisplayMemberBinding="{Binding stt}"/>
+                                                    <GridViewColumn Header="Mã PTP" Width="100" DisplayMemberBinding="{Binding maptp}"/>
+                                                    <GridViewColumn Header="Mã phòng" Width="110" DisplayMemberBinding="{Binding maphong}"/>
+                                                    <GridViewColumn Header="Số ngày thuê" Width="130" DisplayMemberBinding="{Binding songaythue}"/>
+                                                    <GridViewColumn Header="Số khách" Width="110" DisplayMemberBinding="{Binding sokhach}"/>
+                                                    <GridViewColumn Header="Đơn giá" Width="125" DisplayMemberBinding="{Binding dongia}"/>
+                                                    <GridViewColumn Header="Tổng tiền" Width="155" DisplayMemberBinding="{Binding tongtien}"/>
+                                                    <GridViewColumn Header="Ghi chú" Width="250" DisplayMemberBinding="{Binding ghichu}"/>
                                                 </GridView>
                                             </ListView.View>
                                         </ListView>
-                                    </StackPanel>
+                                    </ScrollViewer>
 
                                     <!--Chuyển trang-->
-                                    <!--<StackPanel x:Name="Page_ChiTietHoaDon" Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Top">
+                                    <StackPanel x:Name="Page_ChiTietHoaDon" Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Top">
                                         <Button x:Name="Page_ChiTietHoaDon_Btn_prev"
-                                        Click="Prevpage_HoaDon_Btn_Click"
+                                        Click="Prevpage_ChiTietHoaDon_Btn_Click"
                                         Margin="3" Width="30" Height="30"
                                   Background="{DynamicResource PrimaryMidForegroundBrush}"
                                   Foreground="{DynamicResource  SecondaryHueMidForegroundBrush}"
                                   IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
                                   Style="{StaticResource MaterialDesignIconButton}"
                                   ToolTip="MaterialDesignIconButton">
-                                                <materialDesign:PackIcon Kind="ChevronLeft" />
+                                            <materialDesign:PackIcon Kind="ChevronLeft" />
 
-                                            </Button>
+                                        </Button>
                                         <Button x:Name="Page_ChiTietHoaDon_Btn_cur" Margin="3" Height="30" Width="30"
                                   Background="{DynamicResource PrimaryCardForegroundBrush}"
                                         Foreground="{DynamicResource PrimaryMidBrush}"
                                   Style="{StaticResource MaterialDesignIconButton}"
                                   ToolTip="MaterialDesignIconButton">
                                             <TextBlock x:Name="Page_ChiTietHoaDon_text"></TextBlock>
-                                            </Button>
+                                        </Button>
                                         <Button x:Name="Page_ChiTietHoaDon_Btn_next" Margin="3" Height="30" Width="30"
                                          Click="Nextpage_ChiTietHoaDon_Btn_Click"
                                   Background="{DynamicResource PrimaryMidForegroundBrush}"
@@ -905,12 +910,145 @@
                                   ToolTip="MaterialDesignIconButton">
                                             <materialDesign:PackIcon Kind="ChevronRight" />
                                         </Button>
-                                    </StackPanel>-->
+                                    </StackPanel>
+                                </Grid>
+                            </TabItem>
+                            <!--Chi tiết phiếu thuê phòng-->
+                            <TabItem Header="Chi tiết phiếu thuê phòng" Visibility="Collapsed">
+                                <Grid Background="{DynamicResource PrimaryHueMidForegroundBrush}">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="60"></RowDefinition>
+                                        <RowDefinition Height="100"></RowDefinition>
+                                        <RowDefinition Height="*"></RowDefinition>
+                                        <RowDefinition Height="60"></RowDefinition>
+                                    </Grid.RowDefinitions>
+                                    <!--Tiêu đề và nút back-->
+                                    <StackPanel Grid.Row="0" Orientation="Horizontal" 
+                                                HorizontalAlignment="Left" VerticalAlignment="Bottom"
+                                                Margin="25 0 0 0">
+                                        <Button
+                                            Width="40"
+                                            Height="40"
+                                            Padding="0"
+                                            HorizontalAlignment="Center"
+                                            HorizontalContentAlignment="Center"
+                                            VerticalContentAlignment="Center"
+                                            Background="Transparent"
+                                            BorderThickness="0"
+                                            Foreground="{DynamicResource SecondaryHueMidForegroundBrush}"
+                                            Style="{StaticResource MaterialDesignIconButton}"
+                                            Click="BackBtn_ChiTietPTP_HD_Click">
+
+                                            <materialDesign:PackIcon
+                                                Width="32"
+                                                Height="32"
+                                                HorizontalAlignment="Center"
+                                                VerticalAlignment="Center"
+                                                Foreground="Black"
+                                                Kind="ArrowBack" />
+                                        </Button>
+                                        <TextBlock Text="Chi tiết phiếu thuê phòng" Foreground="#003D69" VerticalAlignment="Center" FontSize="25" FontWeight="Bold" Margin="18,0,0,0"/>
+                                    </StackPanel>
+                                    <!--Thông tin hóa đơn-->
+                                    <Grid Grid.Row="1">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="1*"/>
+                                            <ColumnDefinition Width="1*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <StackPanel Grid.Column="0"
+                                                HorizontalAlignment="Left" VerticalAlignment="Top"
+                                                Margin="35,16,0,0">
+                                            <TextBlock Text="Mã phiếu thuê: " Foreground="#000" VerticalAlignment="Center" FontSize="15" Margin="50,0,0,5">
+                                                <TextBlock x:Name="TextBlock_MaPTP_ChiTietPTP_HD" Text=""/>
+                                            </TextBlock>
+                                            <TextBlock Text="Mã phòng: " Foreground="#000" VerticalAlignment="Center" FontSize="15" Margin="50,0,0,5">
+                                                <TextBlock x:Name="TextBlock_MaPhong_ChiTietPTP_HD"/>
+                                            </TextBlock>
+                                            <TextBlock Text="Ghi chú: " Foreground="#000" VerticalAlignment="Center" FontSize="15" Margin="50,10,0,5">
+                                                <TextBlock x:Name="TextBlock_GhiChu_ChiTietPTP_HD"/>
+                                            </TextBlock>
+                                        </StackPanel>
+                                        <StackPanel Grid.Column="1"
+                                                HorizontalAlignment="Left" VerticalAlignment="Top"
+                                                Margin="35,16,0,0">
+                                            <TextBlock Text="Ngày thuê: " Foreground="#000" VerticalAlignment="Center" FontSize="15" Margin="50,0,0,5">
+                                                <TextBlock x:Name="TextBlock_NgayThue_ChiTietPTP_HD" Text=""/>
+                                            </TextBlock>
+                                            <TextBlock Text="Ngày trả: " Foreground="#000" VerticalAlignment="Center" FontSize="15" Margin="50,0,0,5">
+                                                <TextBlock x:Name="TextBlock_NgayTra_ChiTietPTP_HD" Text=""/>
+                                            </TextBlock>
+                                        </StackPanel>
+                                    </Grid>
+                                    <!--Thông tin các phiếu thuê phòng-->
+                                    <ScrollViewer x:Name="ScrollViewer_ChiTietPTP_HD" Grid.Row="2" Margin="30,22,30,16" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" VerticalContentAlignment="Stretch">
+                                        <ListView x:Name="ListView_ChiTietPTP_HD" 
+                                                  ScrollViewer.HorizontalScrollBarVisibility="Disabled" 
+                                                  ScrollViewer.VerticalScrollBarVisibility="Disabled"
+                                                  MaxHeight="500" 
+                                                  HorizontalContentAlignment="Stretch" HorizontalAlignment="Center"
+                                                  PreviewMouseWheel="ChiTietPTP_HD_PreviewMouseWheel"
+                                                  VerticalAlignment="Top">
+                                            <ListView.ItemTemplate>
+                                                <DataTemplate/>
+                                            </ListView.ItemTemplate>
+                                            <ListView.View>
+                                                <GridView x:Name="GridView_ChiTietPTP_HD" AllowsColumnReorder="True" >
+                                                    <GridView.ColumnHeaderContainerStyle>
+                                                        <Style TargetType="{x:Type GridViewColumnHeader}">
+                                                            <Setter Property="Height" Value="38"/>
+                                                            <Setter Property="Background" Value="Transparent"/>
+                                                            <Setter Property="Foreground" Value="Black"/>
+                                                            <Setter Property="FontSize" Value="15"/>
+                                                            <Setter Property="FontWeight" Value="Bold"/>
+                                                            <Setter Property="Margin" Value=" 0"/>
+                                                            <Setter Property="Width" Value="Auto"/>
+                                                            <Setter Property="Padding" Value="0"/>
+                                                            <Setter Property="BorderThickness" Value="0"/>
+                                                        </Style>
+                                                    </GridView.ColumnHeaderContainerStyle>
+                                                    <GridViewColumn Header="STT" Width="80" DisplayMemberBinding="{Binding stt}"/>
+                                                    <GridViewColumn Header="Khách hàng" Width="210" DisplayMemberBinding="{Binding khachhang}"/>
+                                                    <GridViewColumn Header="Loại khách" Width="180" DisplayMemberBinding="{Binding loaikhach}"/>
+                                                    <GridViewColumn Header="Định danh" Width="210" DisplayMemberBinding="{Binding dinhdanh}"/>
+                                                    <GridViewColumn Header="Địa chỉ" Width="200" DisplayMemberBinding="{Binding diachi}"/>
+                                                </GridView>
+                                            </ListView.View>
+                                        </ListView>
+                                    </ScrollViewer>
+
+                                    <!--Chuyển trang-->
+                                    <StackPanel x:Name="Page_ChiTietPTP_HD" Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Top">
+                                        <Button x:Name="Page_ChiTietPTP_HD_Btn_prev"
+                                        Click="Prevpage_ChiTietPTP_HD_Btn_Click"
+                                        Margin="3" Width="30" Height="30"
+                                  Background="{DynamicResource PrimaryMidForegroundBrush}"
+                                  Foreground="{DynamicResource  SecondaryHueMidForegroundBrush}"
+                                  IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
+                                  Style="{StaticResource MaterialDesignIconButton}"
+                                  ToolTip="MaterialDesignIconButton">
+                                            <materialDesign:PackIcon Kind="ChevronLeft" />
+
+                                        </Button>
+                                        <Button x:Name="Page_ChiTietPTP_HD_Btn_cur" Margin="3" Height="30" Width="30"
+                                  Background="{DynamicResource PrimaryCardForegroundBrush}"
+                                        Foreground="{DynamicResource PrimaryMidBrush}"
+                                  Style="{StaticResource MaterialDesignIconButton}"
+                                  ToolTip="MaterialDesignIconButton">
+                                            <TextBlock x:Name="Page_ChiTietPTP_HD_text"></TextBlock>
+                                        </Button>
+                                        <Button x:Name="Page_ChiTietPTP_HD_Btn_next" Margin="3" Height="30" Width="30"
+                                         Click="Nextpage_ChiTietPTP_HD_Btn_Click"
+                                  Background="{DynamicResource PrimaryMidForegroundBrush}"
+                                        Foreground="{DynamicResource SecondaryHueMidForegroundBrush}"
+                                  IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
+                                  Style="{StaticResource MaterialDesignIconButton}"
+                                  ToolTip="MaterialDesignIconButton">
+                                            <materialDesign:PackIcon Kind="ChevronRight" />
+                                        </Button>
+                                    </StackPanel>
                                 </Grid>
                             </TabItem>
                         </TabControl>
-                                   
-                         
                     </TabItem>
             
                     <!--Chi tiết phiếu thuê phòng-->
