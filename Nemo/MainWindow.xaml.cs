@@ -32,6 +32,7 @@ namespace Nemo
     public partial class MainWindow : Window
     {
         PhongView PhongView = new PhongView();
+        HoaDonView HoaDonView = new HoaDonView();
         public MainWindow()
         {
             InitializeComponent();
@@ -58,6 +59,7 @@ namespace Nemo
 
             //load phòng
             Get_DanhMucPhong_View();
+            Get_HoaDon_View();
         }
 
         private void Window_Closed(object sender, EventArgs e)
@@ -206,5 +208,29 @@ namespace Nemo
                 Title = "KHONG CO DU LIEU";
             }
         }
+
+        public void Get_HoaDon_View()
+        {
+            var con = new HoaDonViewDAO();
+            HoaDonView.ListHoaDon = con.GetListHoaDon();
+            HoaDonView.UpdatePaging();
+            ListView_HoaDon.ItemsSource = HoaDonView.CurHoaDon;
+            Page_HoaDon_text.Text = HoaDonView.curpage.ToString();
+        }
+
+        private void Nextpage_HoaDon_Btn_Click(object sender, RoutedEventArgs e)
+        {
+            if (HoaDonView.curpage < HoaDonView.totalpage) { HoaDonView.curpage = HoaDonView.curpage + 1; }
+            Page_HoaDon_text.Text = HoaDonView.curpage.ToString();
+            HoaDonView.UpdatePaging();
+            ListView_HoaDon.ItemsSource = HoaDonView.CurHoaDon;
+        }
+
+        private void Prevpage_HoaDon_Btn_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+
     }
 }

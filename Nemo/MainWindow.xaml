@@ -684,7 +684,7 @@
                             </StackPanel>
                         </TabItem.Header>
                         <TabControl>
-                            <!--Bảng hóa đơn-->
+                            <!--Bảng các hóa đơn-->
                             <TabItem Header="Bảng hóa đơn" Visibility="Collapsed">
 
                                 <Grid Background="{DynamicResource PrimaryHueMidForegroundBrush}">
@@ -712,20 +712,20 @@
                                         </Border>
                                     </StackPanel>
 
-                                    <!--Data-->
+                                    <!--List view các hóa đơn-->
                                     <StackPanel Grid.Row="1" Margin="10" HorizontalAlignment="Stretch">
-                                        <ListView Name="lvBill" MaxHeight="580" HorizontalContentAlignment="Stretch" ScrollViewer.HorizontalScrollBarVisibility="Disabled" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                        <ListView x:Name="ListView_HoaDon" MaxHeight="580" HorizontalContentAlignment="Stretch" ScrollViewer.HorizontalScrollBarVisibility="Disabled" HorizontalAlignment="Center" VerticalAlignment="Center">
                                             <ListView.ItemTemplate>
                                                 <DataTemplate/>
                                             </ListView.ItemTemplate>
                                             <ListView.View>
-                                                <GridView AllowsColumnReorder="True" >
+                                                <GridView x:Name="GridView_HoaDon" AllowsColumnReorder="True" >
                                                     <GridView.ColumnHeaderContainerStyle>
                                                         <Style TargetType="{x:Type GridViewColumnHeader}">
-                                                            <Setter Property="Height" Value="30"/>
+                                                            <Setter Property="Height" Value="36"/>
                                                             <Setter Property="Background" Value="Transparent"/>
                                                             <Setter Property="Foreground" Value="Black"/>
-                                                            <Setter Property="FontSize" Value="13"/>
+                                                            <Setter Property="FontSize" Value="15"/>
                                                             <Setter Property="FontWeight" Value="Bold"/>
                                                             <Setter Property="Margin" Value=" 0"/>
                                                             <Setter Property="Width" Value="Auto"/>
@@ -733,59 +733,43 @@
                                                             <Setter Property="BorderThickness" Value="0"/>
                                                         </Style>
                                                     </GridView.ColumnHeaderContainerStyle>
-                                                    <GridViewColumn Header="STT" Width="60" DisplayMemberBinding="{Binding MaHD}"/>
-                                                    <GridViewColumn Header="Mã hóa đơn" Width="200" DisplayMemberBinding="{Binding MaHD}"/>
-                                                    <GridViewColumn Header="Ngày thanh toán" Width="200" DisplayMemberBinding="{Binding NgayTra}"/>
-                                                    <GridViewColumn Header="Số phòng thanh toán" Width="170" DisplayMemberBinding="{Binding SoPhong}"/>
-                                                    <GridViewColumn Header="Khách hàng" Width="200" DisplayMemberBinding="{Binding KhachHang}"/>
-                                                    <GridViewColumn Header="Tổng tiền" Width="130" DisplayMemberBinding="{Binding TongTien}"/>
+                                                    <GridViewColumn Header="STT" Width="60" DisplayMemberBinding="{Binding stt}"/>
+                                                    <GridViewColumn Header="Mã hóa đơn" Width="160" DisplayMemberBinding="{Binding mahoadon}"/>
+                                                    <GridViewColumn Header="Ngày thanh toán" Width="180" DisplayMemberBinding="{Binding ngaythanhtoan}"/>
+                                                    <GridViewColumn Header="Số phòng thanh toán" Width="170" DisplayMemberBinding="{Binding sophongthanhtoan}"/>
+                                                    <GridViewColumn Header="Khách hàng" Width="180" DisplayMemberBinding="{Binding khachhang}"/>
+                                                    <GridViewColumn Header="Tổng tiền" Width="180" DisplayMemberBinding="{Binding tongtien}"/>
                                                 </GridView>
                                             </ListView.View>
                                         </ListView>
                                     </StackPanel>
                                     <!--Chuyển trang-->
-                                    <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Top">
-
-                                        <Button Margin="3" Width="30" Height="30"
+                                    <StackPanel x:Name="Page_HoaDon" Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Top">
+                                        <Button x:Name="Page_HoaDon_Btn_prev"
+                                        Click="Prevpage_HoaDon_Btn_Click"
+                                        Margin="3" Width="30" Height="30"
+                                  Background="{DynamicResource PrimaryMidForegroundBrush}"
+                                  Foreground="{DynamicResource  SecondaryHueMidForegroundBrush}"
+                                  IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
+                                  Style="{StaticResource MaterialDesignIconButton}"
+                                  ToolTip="MaterialDesignIconButton">
+                                            <materialDesign:PackIcon Kind="ChevronLeft" />
+                                        </Button>
+                                            <Button x:Name="Page_HoaDon_Btn_cur" Margin="3" Height="30" Width="30"
                                   Background="{DynamicResource PrimaryCardForegroundBrush}"
-                                  Foreground="{DynamicResource PrimaryMidBrush}"
-                                  IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
+                                        Foreground="{DynamicResource PrimaryMidBrush}"
                                   Style="{StaticResource MaterialDesignIconButton}"
                                   ToolTip="MaterialDesignIconButton">
-                                            <TextBlock>1</TextBlock>
-
-                                        </Button>
-                                        <Button Margin="3" Height="30" Width="30"
-                                  Background="Transparent"
+                                                <TextBlock x:Name="Page_HoaDon_text"></TextBlock>
+                                            </Button>
+                                        <Button x:Name="Page_HoaDon_Btn_next" Margin="3" Height="30" Width="30"
+                                         Click="Nextpage_HoaDon_Btn_Click"
+                                  Background="{DynamicResource PrimaryMidForegroundBrush}"
                                         Foreground="{DynamicResource SecondaryHueMidForegroundBrush}"
                                   IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
                                   Style="{StaticResource MaterialDesignIconButton}"
                                   ToolTip="MaterialDesignIconButton">
-                                            <TextBlock>2</TextBlock>
-                                        </Button>
-                                        <Button Margin="3" Height="30" Width="30"
-                                  Background="Transparent"
-                                        Foreground="{DynamicResource SecondaryHueMidForegroundBrush}"
-                                  IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
-                                  Style="{StaticResource MaterialDesignIconButton}"
-                                  ToolTip="MaterialDesignIconButton">
-                                            <TextBlock>3</TextBlock>
-                                        </Button>
-                                        <Button Margin="3" Height="30" Width="30"
-                                  Background="Transparent"
-                                        Foreground="{DynamicResource SecondaryHueMidForegroundBrush}"
-                                  IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
-                                  Style="{StaticResource MaterialDesignIconButton}"
-                                  ToolTip="MaterialDesignIconButton">
-                                            <TextBlock>...</TextBlock>
-                                        </Button>
-                                        <Button Margin="3" Height="30" Width="30"
-                                  Background="Transparent"
-                                        Foreground="{DynamicResource SecondaryHueMidForegroundBrush}"
-                                  IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
-                                  Style="{StaticResource MaterialDesignIconButton}"
-                                  ToolTip="MaterialDesignIconButton">
-                                            <TextBlock>10</TextBlock>
+                                            <materialDesign:PackIcon Kind="ChevronRight" />
                                         </Button>
                                     </StackPanel>
                                 </Grid>
@@ -840,7 +824,7 @@
                                             <TextBlock Text="Ngày thanh toán: " Foreground="#000" VerticalAlignment="Center" FontSize="13" Margin="50,0,0,5">
                                                 <TextBlock Text="02/04/2023"/>
                                             </TextBlock>
-                                            <TextBlock Text="Khách hàng thanh toán: " Foreground="#000" VerticalAlignment="Center" FontSize="13" Margin="50,15,0,5">
+                                            <TextBlock Text="Khách hàng thanh toán: " Foreground="#000" VerticalAlignment="Center" FontSize="13" Margin="50,10,0,5">
                                                 <TextBlock Text="Kellie"/>
                                             </TextBlock>
                                             <TextBlock Text="Địa chỉ: " Foreground="#000" VerticalAlignment="Center" FontSize="13" Margin="50,0,0,5">
@@ -859,19 +843,19 @@
                                         </StackPanel>
                                     </Grid>
                                     <!--Thông tin phòng thanh toán-->
-                                    <StackPanel Grid.Row="2" HorizontalAlignment="Stretch" Margin="0 12 0 12">
-                                        <ListView MaxHeight="500" HorizontalContentAlignment="Stretch" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                                    <StackPanel Grid.Row="2" HorizontalAlignment="Stretch" Margin="0 18 0 12">
+                                        <ListView x:Name="ListView_ChiTietHoaDon" MaxHeight="500" HorizontalContentAlignment="Stretch" ScrollViewer.HorizontalScrollBarVisibility="Disabled" HorizontalAlignment="Center">
                                             <ListView.ItemTemplate>
                                                 <DataTemplate/>
                                             </ListView.ItemTemplate>
                                             <ListView.View>
-                                                <GridView AllowsColumnReorder="True" >
+                                                <GridView x:Name="GridView_ChiTietHoaDon" AllowsColumnReorder="True" >
                                                     <GridView.ColumnHeaderContainerStyle>
                                                         <Style TargetType="{x:Type GridViewColumnHeader}">
-                                                            <Setter Property="Height" Value="30"/>
+                                                            <Setter Property="Height" Value="36"/>
                                                             <Setter Property="Background" Value="Transparent"/>
                                                             <Setter Property="Foreground" Value="Black"/>
-                                                            <Setter Property="FontSize" Value="13"/>
+                                                            <Setter Property="FontSize" Value="15"/>
                                                             <Setter Property="FontWeight" Value="Bold"/>
                                                             <Setter Property="Margin" Value=" 0"/>
                                                             <Setter Property="Width" Value="Auto"/>
@@ -879,64 +863,49 @@
                                                             <Setter Property="BorderThickness" Value="0"/>
                                                         </Style>
                                                     </GridView.ColumnHeaderContainerStyle>
-                                                    <GridViewColumn Header="STT" Width="55" DisplayMemberBinding="{Binding STT}"/>
-                                                    <GridViewColumn Header="Mã PTP" Width="90" DisplayMemberBinding="{Binding MaPTP}"/>
-                                                    <GridViewColumn Header="Mã phòng" Width="100" DisplayMemberBinding="{Binding MaPhong}"/>
-                                                    <GridViewColumn Header="Số ngày thuê" Width="120" DisplayMemberBinding="{Binding SoNgayThue}"/>
-                                                    <GridViewColumn Header="Số khách" Width="100" DisplayMemberBinding="{Binding SoKhach}"/>
-                                                    <GridViewColumn Header="Đơn giá" Width="120" DisplayMemberBinding="{Binding DonGia}"/>
-                                                    <GridViewColumn Header="Tổng tiền" Width="150" DisplayMemberBinding="{Binding TongTien}"/>
-                                                    <GridViewColumn Header="Ghi chú" Width="120" DisplayMemberBinding="{Binding GhiChu}"/>
+                                                    <GridViewColumn Header="STT" Width="60" DisplayMemberBinding="{Binding STT}"/>
+                                                    <GridViewColumn Header="Mã PTP" Width="100" DisplayMemberBinding="{Binding MaPTP}"/>
+                                                    <GridViewColumn Header="Mã phòng" Width="110" DisplayMemberBinding="{Binding MaPhong}"/>
+                                                    <GridViewColumn Header="Số ngày thuê" Width="130" DisplayMemberBinding="{Binding SoNgayThue}"/>
+                                                    <GridViewColumn Header="Số khách" Width="110" DisplayMemberBinding="{Binding SoKhach}"/>
+                                                    <GridViewColumn Header="Đơn giá" Width="125" DisplayMemberBinding="{Binding DonGia}"/>
+                                                    <GridViewColumn Header="Tổng tiền" Width="155" DisplayMemberBinding="{Binding TongTien}"/>
+                                                    <GridViewColumn Header="Ghi chú" Width="130" DisplayMemberBinding="{Binding GhiChu}"/>
                                                 </GridView>
                                             </ListView.View>
                                         </ListView>
                                     </StackPanel>
 
                                     <!--Chuyển trang-->
-                                    <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Top">
+                                    <!--<StackPanel x:Name="Page_ChiTietHoaDon" Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Top">
+                                        <Button x:Name="Page_ChiTietHoaDon_Btn_prev"
+                                        Click="Prevpage_HoaDon_Btn_Click"
+                                        Margin="3" Width="30" Height="30"
+                                  Background="{DynamicResource PrimaryMidForegroundBrush}"
+                                  Foreground="{DynamicResource  SecondaryHueMidForegroundBrush}"
+                                  IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
+                                  Style="{StaticResource MaterialDesignIconButton}"
+                                  ToolTip="MaterialDesignIconButton">
+                                                <materialDesign:PackIcon Kind="ChevronLeft" />
 
-                                        <Button Margin="3" Width="30" Height="30"
+                                            </Button>
+                                        <Button x:Name="Page_ChiTietHoaDon_Btn_cur" Margin="3" Height="30" Width="30"
                                   Background="{DynamicResource PrimaryCardForegroundBrush}"
-                                  Foreground="{DynamicResource PrimaryMidBrush}"
-                                  IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
+                                        Foreground="{DynamicResource PrimaryMidBrush}"
                                   Style="{StaticResource MaterialDesignIconButton}"
                                   ToolTip="MaterialDesignIconButton">
-                                            <TextBlock>1</TextBlock>
-
-                                        </Button>
-                                        <Button Margin="3" Height="30" Width="30"
-                                  Background="Transparent"
+                                            <TextBlock x:Name="Page_ChiTietHoaDon_text"></TextBlock>
+                                            </Button>
+                                        <Button x:Name="Page_ChiTietHoaDon_Btn_next" Margin="3" Height="30" Width="30"
+                                         Click="Nextpage_ChiTietHoaDon_Btn_Click"
+                                  Background="{DynamicResource PrimaryMidForegroundBrush}"
                                         Foreground="{DynamicResource SecondaryHueMidForegroundBrush}"
                                   IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
                                   Style="{StaticResource MaterialDesignIconButton}"
                                   ToolTip="MaterialDesignIconButton">
-                                            <TextBlock>2</TextBlock>
+                                            <materialDesign:PackIcon Kind="ChevronRight" />
                                         </Button>
-                                        <Button Margin="3" Height="30" Width="30"
-                                  Background="Transparent"
-                                        Foreground="{DynamicResource SecondaryHueMidForegroundBrush}"
-                                  IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
-                                  Style="{StaticResource MaterialDesignIconButton}"
-                                  ToolTip="MaterialDesignIconButton">
-                                            <TextBlock>3</TextBlock>
-                                        </Button>
-                                        <Button Margin="3" Height="30" Width="30"
-                                  Background="Transparent"
-                                        Foreground="{DynamicResource SecondaryHueMidForegroundBrush}"
-                                  IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
-                                  Style="{StaticResource MaterialDesignIconButton}"
-                                  ToolTip="MaterialDesignIconButton">
-                                            <TextBlock>...</TextBlock>
-                                        </Button>
-                                        <Button Margin="3" Height="30" Width="30"
-                                  Background="Transparent"
-                                        Foreground="{DynamicResource SecondaryHueMidForegroundBrush}"
-                                  IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
-                                  Style="{StaticResource MaterialDesignIconButton}"
-                                  ToolTip="MaterialDesignIconButton">
-                                            <TextBlock>10</TextBlock>
-                                        </Button>
-                                    </StackPanel>
+                                    </StackPanel>-->
                                 </Grid>
                             </TabItem>
                         </TabControl>
