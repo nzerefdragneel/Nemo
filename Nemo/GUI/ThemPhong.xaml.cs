@@ -34,12 +34,12 @@ namespace Nemo
             ListLoaiPhong = con.GetListLoaiPhong();
             ChonLoaiPhong_Cbb.ItemsSource =ListLoaiPhong.DefaultView;
             ChonLoaiPhong_Cbb.DisplayMemberPath = "maloaiphong";
+            ChonLoaiPhong_Cbb.SelectedValuePath = "maloaiphong";
         }
         
 
         private void QuayLai_Btn_click(object sender, RoutedEventArgs e)
         {
-            Debug.WriteLine(ListLoaiPhong);
             DialogResult = false;
             this.Close();
         }
@@ -47,8 +47,31 @@ namespace Nemo
         private void ThemPhong_Btn_Click(object sender, RoutedEventArgs e)
         {
             //kiểm tra điều kiện
-            DialogResult = true;
-            this.Close();
+            var loaiphongselect= ChonLoaiPhong_Cbb.SelectedIndex;
+            if (loaiphongselect!=-1)
+            {
+                var loaiphong = ChonLoaiPhong_Cbb.SelectedValue.ToString();
+                int loaiphongvalue = int.Parse(loaiphong);
+                var number = Maphong_textbox.Text;
+                int maphong;
+                if (!int.TryParse(number, out maphong))
+                {
+                    MessageBox.Show("Mã phòng là số nguyên", "Warning", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+                else
+                {
+                    PhongMoi.maphong = maphong;
+                    PhongMoi.maloaiphong = loaiphongvalue; 
+                    
+
+                    DialogResult = true;
+                    this.Close();
+                }
+            }
+            else
+            {
+                MessageBox.Show("Chọn loại phòng", "Warning", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
         }
     }
   

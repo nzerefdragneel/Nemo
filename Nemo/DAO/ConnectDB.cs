@@ -49,7 +49,11 @@ namespace Nemo.DAO
             return null;
             // Trả về đối tượng reader
         }
-
+        public void UpdateQuery(string query)
+        {
+            NpgsqlCommand cmd = new NpgsqlCommand(query, conn); // Tạo đối tượng command để thực hiện truy vấn
+            cmd.ExecuteReader();
+        }
 
     }
 }

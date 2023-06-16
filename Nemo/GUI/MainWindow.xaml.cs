@@ -111,7 +111,7 @@ namespace Nemo
         }
         public void Get_DanhMucPhong_View()
         {
-            var con = new PhongViewDAO();
+            PhongViewDAO con = new PhongViewDAO();
             PhongView.ListPhong = con.GetListPhong();
             PhongView.UpdatePaging();
             ListView_DanhMucPhong.ItemsSource = PhongView.CurPhong;
@@ -197,9 +197,9 @@ namespace Nemo
             var screen = new ThemPhong();
             if (screen.ShowDialog() == true)
             {
-                // var sv = (Book)screen.NewBook.Clone();
-                // sv.Img = new BitmapImage(new Uri(_imgList[0], UriKind.Relative));
-                Debug.WriteLine("mở oke");
+                var phongmoi = (Phong)screen.PhongMoi.Clone();
+                var conn = new PhongViewDAO();
+                conn.ThemPhongMoi(phongmoi);
             }
             else
             {

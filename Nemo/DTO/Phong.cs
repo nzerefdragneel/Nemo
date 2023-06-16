@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Nemo.DTO
 {
-    public class Phong
+    public class Phong:ICloneable
     {
         public int maphong { get; set; }
         public string tinhtrang { get; set; }
@@ -16,5 +16,10 @@ namespace Nemo.DTO
         public float gia { get; set; }
         public string tuychon { get; set; }
 
+
+        public object Clone()
+        {
+            return MemberwiseClone();
+        }
     }
 }
