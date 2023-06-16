@@ -961,10 +961,10 @@
                                             <TextBlock Text="Mã phiếu thuê: " Foreground="#000" VerticalAlignment="Center" FontSize="15" Margin="50,0,0,5">
                                                 <TextBlock x:Name="TextBlock_MaPTP_ChiTietPTP_HD" Text=""/>
                                             </TextBlock>
-                                            <TextBlock Text="Mã phòng: " Foreground="#000" VerticalAlignment="Center" FontSize="15" Margin="50,0,0,5">
+                                            <TextBlock Text="Mã phòng: " Foreground="#000" VerticalAlignment="Center" FontSize="15" Margin="50,3,0,5">
                                                 <TextBlock x:Name="TextBlock_MaPhong_ChiTietPTP_HD"/>
                                             </TextBlock>
-                                            <TextBlock Text="Ghi chú: " Foreground="#000" VerticalAlignment="Center" FontSize="15" Margin="50,10,0,5">
+                                            <TextBlock Text="Ghi chú: " Foreground="#000" VerticalAlignment="Center" FontSize="15" Margin="50,3,0,5">
                                                 <TextBlock x:Name="TextBlock_GhiChu_ChiTietPTP_HD"/>
                                             </TextBlock>
                                         </StackPanel>
@@ -974,7 +974,7 @@
                                             <TextBlock Text="Ngày thuê: " Foreground="#000" VerticalAlignment="Center" FontSize="15" Margin="50,0,0,5">
                                                 <TextBlock x:Name="TextBlock_NgayThue_ChiTietPTP_HD" Text=""/>
                                             </TextBlock>
-                                            <TextBlock Text="Ngày trả: " Foreground="#000" VerticalAlignment="Center" FontSize="15" Margin="50,0,0,5">
+                                            <TextBlock Text="Ngày trả: " Foreground="#000" VerticalAlignment="Center" FontSize="15" Margin="50,3,0,5">
                                                 <TextBlock x:Name="TextBlock_NgayTra_ChiTietPTP_HD" Text=""/>
                                             </TextBlock>
                                         </StackPanel>
@@ -1007,10 +1007,10 @@
                                                         </Style>
                                                     </GridView.ColumnHeaderContainerStyle>
                                                     <GridViewColumn Header="STT" Width="80" DisplayMemberBinding="{Binding stt}"/>
-                                                    <GridViewColumn Header="Khách hàng" Width="210" DisplayMemberBinding="{Binding khachhang}"/>
-                                                    <GridViewColumn Header="Loại khách" Width="180" DisplayMemberBinding="{Binding loaikhach}"/>
-                                                    <GridViewColumn Header="Định danh" Width="210" DisplayMemberBinding="{Binding dinhdanh}"/>
-                                                    <GridViewColumn Header="Địa chỉ" Width="200" DisplayMemberBinding="{Binding diachi}"/>
+                                                    <GridViewColumn Header="Khách hàng" Width="220" DisplayMemberBinding="{Binding khachhang}"/>
+                                                    <GridViewColumn Header="Loại khách" Width="190" DisplayMemberBinding="{Binding loaikhach}"/>
+                                                    <GridViewColumn Header="Định danh" Width="220" DisplayMemberBinding="{Binding dinhdanh}"/>
+                                                    <GridViewColumn Header="Địa chỉ" Width="210" DisplayMemberBinding="{Binding diachi}"/>
                                                 </GridView>
                                             </ListView.View>
                                         </ListView>

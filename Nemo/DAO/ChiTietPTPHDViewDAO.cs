@@ -19,7 +19,7 @@ namespace Nemo.DAO
         {
             var conn = new ConnectDB();
             conn.OpenConnection();
-            var result = conn.ExecuteQuery($@"select kh.tenkh,
+            var result = conn.ExecuteQuery($@"select kh.tenkh as khachhang,
                                                 case
 	                                                when tn.cccd is null then 'Nước ngoài'
 	                                                else 'Nội địa'
