@@ -44,7 +44,7 @@
                 <Button x:Name="MenuButton" Background="Transparent" BorderBrush="Transparent" Click="MenuButton_Click" Padding="0" Height="50" UseLayoutRounding="True">
                     <StackPanel Orientation="Horizontal" >
                         <materialDesign:PackIcon Width="34" Height="34" Kind="AccountCircleOutline"/>
-                        <TextBlock FontSize="18" VerticalAlignment="Center" Margin="10 0">Admin</TextBlock>
+                        <TextBlock x:Name="Admin_textblock" FontSize="18" VerticalAlignment="Center" Margin="10 0">Admin</TextBlock>
                         <materialDesign:PackIcon Kind="MenuDown" Width="20" Height="20" VerticalAlignment="Center" />
                     </StackPanel>
                 </Button>

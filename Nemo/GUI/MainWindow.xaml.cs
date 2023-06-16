@@ -23,6 +23,7 @@ using System.Windows.Forms;
 using ControlzEx.Controls;
 using Button = System.Windows.Controls.Button;
 using ListViewItem = System.Windows.Controls.ListViewItem;
+using System.Configuration;
 
 namespace Nemo
 {
@@ -57,7 +58,10 @@ namespace Nemo
         {
 
             //load phòng
+
             Get_DanhMucPhong_View();
+            var username = ConfigurationManager.AppSettings["LastUsername"];
+            Admin_textblock.Text = username;
         }
 
         private void Window_Closed(object sender, EventArgs e)
