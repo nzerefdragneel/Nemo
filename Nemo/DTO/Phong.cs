@@ -9,7 +9,7 @@ namespace Nemo.DTO
 {
     public class Phong:ICloneable
     {
-        public int maphong { get; set; }
+        public int maphong { get; set; } 
         public string tinhtrang { get; set; }
         public int maloaiphong { get; set; }
         public int soluong { get; set; }
