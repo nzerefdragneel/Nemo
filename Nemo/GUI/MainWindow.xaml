@@ -52,13 +52,13 @@
                 <Popup x:Name="PopupMenu" PlacementTarget="{Binding ElementName=MenuButton}" IsOpen="False" StaysOpen="False">
                     <Border CornerRadius="2">
                         <StackPanel Background="#555555">
-                            <Button Background="Transparent" BorderBrush="Transparent"   Padding="0" UseLayoutRounding="True">
+                            <Button Background="Transparent" BorderBrush="Transparent"   Padding="0" UseLayoutRounding="True" Click="Dangxuat_Btn_click">
                                 <StackPanel Orientation="Horizontal">
                                     <materialDesign:PackIcon Kind="Logout" Width="20" Height="20" VerticalAlignment="Center" />
                                     <TextBlock Margin="10 0 0 0" VerticalAlignment="Center">Đăng xuất</TextBlock>
                                 </StackPanel>
                             </Button>
-                            <Button Background="Transparent" BorderBrush="Transparent" Padding="10 0" UseLayoutRounding="True">
+                            <Button Background="Transparent" BorderBrush="Transparent" Padding="10 0" UseLayoutRounding="True" Click="Doimatkhau_btn_CLick">
                                 <StackPanel Orientation="Horizontal">
                                     <materialDesign:PackIcon Kind="FormTextboxPassword" Width="20" Height="20" VerticalAlignment="Center" />
                                     <TextBlock Margin="10 0 0 0" VerticalAlignment="Center">Đổi mật khẩu</TextBlock>

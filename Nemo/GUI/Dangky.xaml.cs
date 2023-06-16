@@ -31,8 +31,28 @@ namespace Nemo.GUI
             string username = TenTk_textbox.Text;
             string password = Password_Box.Password;
             string confirmpwd = ConfirmPassword_Box.Password;
-
-            if (confirmpwd == password) {
+            var dangky = new DangkyDAO();
+            if (username == "")
+            {
+                Warning_textblock.Text = "Bạn chưa nhập tên đăng nhập!";
+            }
+            else if (password == "")
+            {
+                Warning_textblock.Text = "Bạn chưa nhập mật khẩu!";
+            }
+            else if(confirmpwd=="")
+            {
+                Warning_textblock.Text = "Bạn chưa xác nhận mật khẩu!";
+            }
+            else if(confirmpwd != password)
+            {
+                Warning_textblock.Text = "Mật khẩu không khớp!";
+            }
+            else if (!dangky.CheckUserName(username))
+            {
+                Warning_textblock.Text = "Tên đăng nhập đã tồn tại!";
+            }
+            else  {
                 var passwordInBytes = Encoding.UTF8.GetBytes(password);
                 var entropy = new byte[20];
                 using (var rng = new RNGCryptoServiceProvider())
@@ -51,7 +71,7 @@ namespace Nemo.GUI
                 config.AppSettings.Settings["Entropy"].Value = entropy64;
                 config.Save(ConfigurationSaveMode.Modified);
                 ConfigurationManager.RefreshSection("appSettings");
-                var dangky = new DangkyDAO();
+               
                 var tk = new DTO.TaiKhoan(username, cypherPass64, entropy64);
                 dangky.Themtk(tk);
                 var screen = new DangNhap();
@@ -61,5 +81,12 @@ namespace Nemo.GUI
         
                 
             }
+
+        private void DangNhap_Btn_Click(object sender, RoutedEventArgs e)
+        {
+            var screen = new DangNhap();
+            screen.Show();
+            this.Close();
+        }
     }
 }

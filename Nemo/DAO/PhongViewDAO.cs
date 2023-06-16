@@ -17,12 +17,8 @@ namespace Nemo.DAO
         public ConnectDB conn;
         public PhongViewDAO() {
             conn = new ConnectDB();
-            conn.OpenConnection();
         }
-       ~PhongViewDAO()
-        {
-            conn.CloseConnection();
-        }
+      
         public ObservableCollection<Phong> GetListPhong()
         {
             var result=conn.ExecuteQuery("select * from Phong p left join loaiphong l on p.maloaiphong=l.maloaiphong");

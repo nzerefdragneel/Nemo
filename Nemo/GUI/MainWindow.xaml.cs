@@ -24,6 +24,8 @@ using ControlzEx.Controls;
 using Button = System.Windows.Controls.Button;
 using ListViewItem = System.Windows.Controls.ListViewItem;
 using System.Configuration;
+using Nemo.GUI;
+using MessageBox = System.Windows.MessageBox;
 
 namespace Nemo
 {
@@ -205,10 +207,21 @@ namespace Nemo
                 var conn = new PhongViewDAO();
                 conn.ThemPhongMoi(phongmoi);
             }
-            else
-            {
-                Title = "KHONG CO DU LIEU";
-            }
+            
+        }
+
+        private void Dangxuat_Btn_click(object sender, RoutedEventArgs e)
+        {
+            var screen = new DangNhap();
+            screen.Show();
+            this.Close();
+        }
+
+        private void Doimatkhau_btn_CLick(object sender, RoutedEventArgs e)
+        {
+            var screen = new Doimatkhau();
+            screen.ShowDialog();
+            
         }
     }
 }

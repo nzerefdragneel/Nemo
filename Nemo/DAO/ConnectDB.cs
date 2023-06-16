@@ -17,27 +17,18 @@ namespace Nemo.DAO
     {
         /// <summary>The main entry point for your application.</summary>
         private string connString; // Chuỗi kết nối tới database
-        private NpgsqlConnection conn; // Đối tượng kết nối tới database
+      
         public ConnectDB()
         {
             // Khởi tạo chuỗi kết nối
             connString = "Server=localhost;Port=5432;Username=postgres;Password=1;Database=postgres";
 
-            // Khởi tạo đối tượng kết nối
-            conn = new NpgsqlConnection(connString);
         }
-        public void OpenConnection()
-        {
-            conn.Open(); 
-        }
-
-        public void CloseConnection()
-        {
-            conn.Close(); // Đóng kết nối tới database
-        }
+        
         public DataTable ExecuteQuery(string query)
         {
-            
+             NpgsqlConnection conn=new NpgsqlConnection(connString);
+            conn.Open(); // Đối tượng kết nối tới database
             NpgsqlCommand cmd = new NpgsqlCommand(query, conn); // Tạo đối tượng command để thực hiện truy vấn
             NpgsqlDataReader reader = cmd.ExecuteReader(); // Thực hiện truy vấn và trả về đối tượng reader để đọc kết quả
             if (reader.HasRows)
@@ -46,13 +37,17 @@ namespace Nemo.DAO
                 dt.Load(reader);
                 return dt;
             }
+            conn.Close();
             return null;
             // Trả về đối tượng reader
         }
         public void UpdateQuery(string query)
         {
+            var conn = new NpgsqlConnection(connString);
+            conn.Open();
             NpgsqlCommand cmd = new NpgsqlCommand(query, conn); // Tạo đối tượng command để thực hiện truy vấn
             cmd.ExecuteReader();
+            conn.Close();
         }
 
     }
