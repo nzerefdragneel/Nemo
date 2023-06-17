@@ -15,6 +15,7 @@ namespace Nemo.DTO
         public int soluong { get; set; }
         public float gia { get; set; }
         public string tuychon { get; set; }
+        public int songaythue { get; set; } = 0;
 
     }
 }

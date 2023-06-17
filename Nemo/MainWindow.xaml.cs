@@ -23,6 +23,7 @@ using System.Windows.Forms;
 using ControlzEx.Controls;
 using Button = System.Windows.Controls.Button;
 using ListViewItem = System.Windows.Controls.ListViewItem;
+using LiveChartsCore.Measure;
 
 namespace Nemo
 {
@@ -33,10 +34,14 @@ namespace Nemo
     {
         PhongView PhongView = new PhongView();
         HoaDonView HoaDonView = new HoaDonView();
+        DoanhThuView DoanhThuView = new DoanhThuView();
+        MatDoView MatDoView = new MatDoView();
+        QuyDinhView QuyDinhView = new QuyDinhView();
+        ViewModelChart Chart = new ViewModelChart();
         public MainWindow()
         {
             InitializeComponent();
-            DataContext = new ViewModelChart();
+            DataContext = Chart;
         }
 
         class PhieuThue
@@ -60,6 +65,9 @@ namespace Nemo
             //load phòng
             Get_DanhMucPhong_View();
             Get_HoaDon_View();
+            Get_DoanhThu_View();
+            Get_QuyDinh_View();
+            
         }
 
         private void Window_Closed(object sender, EventArgs e)
@@ -70,25 +78,6 @@ namespace Nemo
         private void MenuButton_Click(object sender, RoutedEventArgs e)
         {
             PopupMenu.IsOpen = !PopupMenu.IsOpen;
-        }
-
-        
-        private void ChangeButton_QD(object sender, RoutedEventArgs e)
-        {
-            NumOfTypes.IsEnabled = true;
-            NumOfTypes.Focus();
-            NumOfCustomers.IsEnabled = true;
-            PhuThu.IsEnabled = true;
-            HeSoKNN.IsEnabled = true;
-
-        }
-
-        private void SetQD(object sender, RoutedEventArgs e)
-        {
-            NumOfTypes.IsEnabled = false;
-            NumOfCustomers.IsEnabled = false;
-            PhuThu.IsEnabled = false;
-            HeSoKNN.IsEnabled = false;
         }
 
         private void TuyChon_Btn_Click(object sender, RoutedEventArgs e)
@@ -230,7 +219,97 @@ namespace Nemo
         {
 
         }
+        //Quy Dinh
+        private void Get_QuyDinh_View()
+        {
+            QuyDinhView.getQuyDinh();
+            NumOfTypes.Text = QuyDinhView.quyDinh.soLoaiPhong.ToString();
+            NumOfCustomers.Text = QuyDinhView.quyDinh.soLuongKhachToiDa.ToString();
+            PhuThu.Text = QuyDinhView.quyDinh.tiLePhuThu.ToString();
+            HeSoKNN.Text = QuyDinhView.quyDinh.heSoKhachNN.ToString();
+        }
+        private void ChangeButton_QD(object sender, RoutedEventArgs e)
+        {
+            NumOfTypes.IsEnabled = true;
+            NumOfTypes.Focus();
+            NumOfCustomers.IsEnabled = true;
+            PhuThu.IsEnabled = true;
+            HeSoKNN.IsEnabled = true;
 
+        }
 
+        private void SetQD(object sender, RoutedEventArgs e)
+        {
+            NumOfTypes.IsEnabled = false;
+            NumOfCustomers.IsEnabled = false;
+            PhuThu.IsEnabled = false;
+            HeSoKNN.IsEnabled = false;
+            QuyDinhView.setQuyDinh(PhuThu.Text, HeSoKNN.Text,NumOfTypes.Text,NumOfCustomers.Text);
+        }
+        //Bao cao
+        //Doanh Thu
+        private void Get_DoanhThu_View()
+        {
+            DoanhThuView.setListYearExist();
+            Cbb_DoanhThu_year1.ItemsSource = DoanhThuView.listYearExist;
+            Cbb_DoanhThu_year2.ItemsSource = DoanhThuView.listYearExist;
+            Cbb_MatDo_Year1.ItemsSource = DoanhThuView.listYearExist;
+            Cbb_MatDo_year2.ItemsSource = DoanhThuView.listYearExist;
+
+        }
+
+        private void Cbb_DoanhThu_year1_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var year = Cbb_DoanhThu_year1.SelectedItem;
+            if (year == null) return;
+            DoanhThuView.year1 = Convert.ToInt16(year);
+            Cbb_DoanhThu_month.ItemsSource = DoanhThuView.getListMonthExist(DoanhThuView.year1);
+        }
+
+        private void Cbb_DoanhThu_month_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var month = Cbb_DoanhThu_month.SelectedItem;
+            if (month == null) return;
+            DoanhThuView.month = Convert.ToInt16(month);
+            DoanhThuView.settinhDoanhThuThangTheoLoai(DoanhThuView.year1, DoanhThuView.month);
+            ListView_DoanhThu.ItemsSource = DoanhThuView.tinhDoanhThuThangTheoLoai;
+            Text_tongdoanhthu.Text = DoanhThuView.tinhTongdoanhThuThang().ToString();
+            Chart.Chart_DoanhThuThang =Chart.create_chart_DoanhThuThang(DoanhThuView.tinhDoanhThuThangTheoLoai);
+            
+
+            //DataContext = Chart;
+        }
+        private void Cbb_DoanhThu_year2_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var year = Cbb_DoanhThu_year2.SelectedItem;
+            if (year == null) return;
+            DoanhThuView.year2 = Convert.ToInt16(year);
+            Chart.create_chart_DoanhThuNam(DoanhThuView.year2);
+        }
+
+        private void Cbb_MatDo_Year1_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var year = Cbb_MatDo_Year1.SelectedItem;
+            if (year == null) return;
+            MatDoView.year = Convert.ToInt16(year);
+            Cbb_MatDo_month.ItemsSource = DoanhThuView.getListMonthExist(MatDoView.year);
+        }
+
+        private void Cbb_MatDo_month_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var month = Cbb_MatDo_month.SelectedItem;
+            if (month == null) return;
+            MatDoView.month = Convert.ToInt16(month);
+            dataGrid_MatDo.ItemsSource = MatDoView.setMatDoThang();
+        }
+
+        private void Cbb_MatDo_year2_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var year = Cbb_MatDo_year2.SelectedItem;
+            if (year == null) return;
+            MatDoView.year2 = Convert.ToInt16(year);
+            Chart.create_chart_MatDoNam(MatDoView.year2);
+            var x = Chart.Chart_MatDoNam;
+        }
     }
 }

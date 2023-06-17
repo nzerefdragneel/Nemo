@@ -8,8 +8,11 @@ namespace Nemo.DTO
 {
     public class DoanhThu
     {
-        public string month { get; set; }
-        public int total { get; set; }
+        public int year { get; set; }
+        public int month { get; set; }
+        public double total { get; set; }
+        public int maloai { get; set; } 
+        public double doanhthutheomaloai { get; set; }
     }
 
 
