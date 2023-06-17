@@ -64,6 +64,8 @@ namespace Nemo
             Get_DanhMucPhong_View();
             var username = ConfigurationManager.AppSettings["LastUsername"];
             Admin_textblock.Text = username;
+            //if get quyèn
+            DAtBtn.Visibility = Visibility.Collapsed;
         }
 
         private void Window_Closed(object sender, EventArgs e)
@@ -119,6 +121,7 @@ namespace Nemo
         {
             PhongViewDAO con = new PhongViewDAO();
             PhongView.ListPhong = con.GetListPhong();
+            PhongView.ResetCurlist();
             PhongView.UpdatePaging();
             ListView_DanhMucPhong.ItemsSource = PhongView.CurPhong;
             Page_DanhMucPhong_text.Text = PhongView.curpage.ToString();
@@ -134,8 +137,12 @@ namespace Nemo
 
         private void Prevpage_DanhMucPhong_Btn_Click(object sender, RoutedEventArgs e)
         {
-
+            if (PhongView.curpage >0) { PhongView.curpage = PhongView.curpage - 1; }
+            Page_DanhMucPhong_text.Text = PhongView.curpage.ToString();
+            PhongView.UpdatePaging();
+            ListView_DanhMucPhong.ItemsSource = PhongView.CurPhong;
         }
+   
 
         private void phieuThueBtn_Click(object sender, RoutedEventArgs e)
         {
@@ -222,6 +229,35 @@ namespace Nemo
             var screen = new Doimatkhau();
             screen.ShowDialog();
             
+        }
+
+        private void Timkiem_DanhMucPhong_TextChange(object sender, TextChangedEventArgs e)
+        {
+            var keyword = Timkiem_DanhMucPhong_Textbox.Text;
+            var sub = new ObservableCollection<Phong>();
+            foreach (var p in PhongView.ListPhong)
+            {
+                var maphong=p.maphong.ToString();
+                var maloaiphong = p.maloaiphong.ToString();
+                if (maphong.Contains(keyword))
+                {
+                    sub.Add(p);
+                }else
+                if (maloaiphong.Contains(keyword))
+                {
+                    sub.Add(p);
+                }else
+                if (p.tinhtrang.Contains(keyword))
+                {
+                    sub.Add(p);
+                }
+            }
+            PhongView.CurListPhong = sub;
+            PhongView.curpage = 1;
+            Page_DanhMucPhong_text.Text = PhongView.curpage.ToString();
+            PhongView.UpdatePaging();
+            ListView_DanhMucPhong.ItemsSource = PhongView.CurPhong;
+          
         }
     }
 }

@@ -122,7 +122,7 @@
                                                    Background="Transparent"
                                                    Foreground="{DynamicResource PrimaryHueLightForegroundBrush}"
                                                    Height="29" Width="29" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                        <TextBox Height="40"  Foreground="Black" Width="Auto" Margin="0 0 20 0"
+                                        <TextBox x:Name="Timkiem_DanhMucPhong_Textbox" TextChanged="Timkiem_DanhMucPhong_TextChange" Height="40"  Foreground="Black" Width="Auto" Margin="0 0 20 0"
                                             VerticalAlignment="Bottom" FontSize="20" 
                                               materialDesign:HintAssist.Hint="Tìm kiếm">
                                         </TextBox>
@@ -1542,7 +1542,7 @@
                                         </Border>
                                     </StackPanel>
                                     <StackPanel Orientation="Horizontal" Margin="0 30">
-                                        <Button Height="50" Width="150" FontSize="25" Content="Đặt lại" Click="SetQD">
+                                        <Button x:Name="DAtBtn" Height="50" Width="150" FontSize="25" Content="Đặt lại" Click="SetQD">
                                             <Button.Template>
                                                 <ControlTemplate TargetType="Button">
                                                     <Border Background="#FF6B61"

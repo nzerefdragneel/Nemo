@@ -12,5 +12,6 @@ namespace Nemo.DTO
         public string TenTK { get; set; }
         public string MatKhau { get; set;}
         public string Muoi { get; set;}
+        public string Quyen { get; set;}
     }
 }

@@ -9,6 +9,7 @@ namespace Nemo.DTO
 
         public event PropertyChangedEventHandler? PropertyChanged;
         public ObservableCollection<Phong> ListPhong { get; set; }
+        public ObservableCollection<Phong> CurListPhong { get; set; }
         public ObservableCollection<Phong> CurPhong { get; set; }
         public int PhongDaThue { get; set; }
         public int PhongTrong { get; set; }
@@ -22,6 +23,7 @@ namespace Nemo.DTO
         {
             ListPhong = new ObservableCollection<Phong>();
             CurPhong = new ObservableCollection<Phong>();
+            CurListPhong = new ObservableCollection<Phong>();
             curpage = 1;           
             perpage = 8;
             totalpage = 0;
@@ -29,12 +31,16 @@ namespace Nemo.DTO
             prevpage = 0;
             nextpage = 2;
         }
+        public void ResetCurlist()
+        {
+            CurListPhong = ListPhong;
+        }
         public void UpdatePaging()
         {
-            totalItems = ListPhong.Count;
+            totalItems = CurListPhong.Count;
             totalpage = (totalItems / perpage) +
                 (totalItems % perpage == 0 ? 0 : 1);
-            CurPhong = new ObservableCollection<Phong>(ListPhong
+            CurPhong = new ObservableCollection<Phong>(CurListPhong
                  .Skip((curpage - 1) * perpage)
                  .Take(perpage).ToList());
         }
