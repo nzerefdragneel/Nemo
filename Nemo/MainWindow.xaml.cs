@@ -215,7 +215,7 @@ namespace Nemo
         public void Get_HoaDon_View()
         {
             var con = new HoaDonViewDAO();
-            HoaDonView.ListHoaDon = con.GetListHoaDon(3, (float)1.25, (float)1.5);
+            HoaDonView.ListHoaDon = con.GetListHoaDon();
             HoaDonView.UpdatePaging();
             ListView_HoaDon.ItemsSource = HoaDonView.CurHoaDon;
             Page_HoaDon_text.Text = HoaDonView.curpage.ToString();
@@ -273,7 +273,7 @@ namespace Nemo
             TextBlock_TongTien_ChiTietHoaDon.Text = ChiTietHoaDonView.tongtien.ToString("N0");
             TextBlock_SoPhongThanhToan_ChiTietHoaDon.Text = ChiTietHoaDonView.sophongthanhtoan.ToString();
 
-            ChiTietHoaDonView.ListChiTietHoaDon = con.GetListChiTietHoaDon(mahd, sokhachquydinh, phuthusokhach, tilekhachnuocngoai);
+            ChiTietHoaDonView.ListChiTietHoaDon = con.GetListChiTietHoaDon(mahd, sokhachquydinh);
             ChiTietHoaDonView.UpdatePaging();
             ListView_ChiTietHoaDon.ItemsSource = ChiTietHoaDonView.CurChiTietHoaDon;
             Page_ChiTietHoaDon_text.Text = ChiTietHoaDonView.curpage.ToString();

@@ -15,20 +15,12 @@ namespace Nemo.DAO
     internal class ChiTietHoaDonViewDAO
     {
         public ChiTietHoaDonViewDAO() { }
-        public ObservableCollection<ChiTietHoaDon> GetListChiTietHoaDon(int mahd, int sokhachquydinh, float phuthusokhach, float tilekhachnuocngoai)
+        public ObservableCollection<ChiTietHoaDon> GetListChiTietHoaDon(int mahd, int sokhachquydinh)
         {
             var conn = new ConnectDB();
             conn.OpenConnection();
-			var ptsk = phuthusokhach.ToString();
-			var tlknn = tilekhachnuocngoai.ToString();
             var result = conn.ExecuteQuery(@$"select distinct ptp.maptp, ptp.maphongthue as maphong, ptp.ngaytra - ptp.ngaythue as songaythue, dk.sokhach, lp.gia as dongia,
-											case
-												when dk.sokhach < {sokhachquydinh} and dk.kh_nuocngoai is null then lp.gia * (ptp.ngaytra - ptp.ngaythue)
-												when dk.sokhach = {sokhachquydinh} and dk.kh_nuocngoai is null then lp.gia * (ptp.ngaytra - ptp.ngaythue) * {ptsk}
-												when dk.sokhach < {sokhachquydinh} and dk.kh_nuocngoai = 1 then lp.gia * (ptp.ngaytra - ptp.ngaythue) * {tlknn}
-												else lp.gia * (ptp.ngaytra - ptp.ngaythue) * {ptsk} * {tlknn}
-											end
-											as tongtien,
+											ptp.tien as tongtien,
 											case
 												when dk.sokhach < {sokhachquydinh} and dk.kh_nuocngoai is null then null
 												when dk.sokhach = {sokhachquydinh} and dk.kh_nuocngoai is null then 'Phụ thu số khách'
@@ -40,6 +32,7 @@ namespace Nemo.DAO
 												join phong p on ptp.maphongthue = p.maphong
 												join lichsuthuephong lstp on ptp.maptp = lstp.maptp	
 												join loaiphong lp on p.maloaiphong = lp.maloaiphong
+												join quydinh qd on ptp.maqd = qd.maqd
 												join (select ptp2.maptp, ptp4.kh_nuocngoai, count(lstp2.makh) as sokhach
 														from phieuthuephong ptp2 
 																join lichsuthuephong lstp2 on ptp2.maptp = lstp2.maptp
