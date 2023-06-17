@@ -703,7 +703,7 @@
                                                    Background="Transparent"
                                                    Foreground="{DynamicResource PrimaryHueLightForegroundBrush}"
                                                    Height="24" Width="24" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="12,0,0,0"/>
-                                                <TextBox Height="32" Foreground="Black" Width="Auto" Margin="6,3,20,0"
+                                                <TextBox x:Name="Timkiem_HoaDon_Textbox" TextChanged="Timkiem_HoaDon_TextChange" Height="32" Foreground="Black" Width="Auto" Margin="6,3,20,0"
                                             VerticalAlignment="Bottom" FontSize="16"                               
                                               materialDesign:HintAssist.Hint="Tìm kiếm">
                                                 </TextBox>

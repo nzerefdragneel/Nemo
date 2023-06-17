@@ -216,6 +216,7 @@ namespace Nemo
         {
             var con = new HoaDonViewDAO();
             HoaDonView.ListHoaDon = con.GetListHoaDon();
+            HoaDonView.ResetCurlist();
             HoaDonView.UpdatePaging();
             ListView_HoaDon.ItemsSource = HoaDonView.CurHoaDon;
             Page_HoaDon_text.Text = HoaDonView.curpage.ToString();
@@ -278,6 +279,39 @@ namespace Nemo
             ListView_ChiTietHoaDon.ItemsSource = ChiTietHoaDonView.CurChiTietHoaDon;
             Page_ChiTietHoaDon_text.Text = ChiTietHoaDonView.curpage.ToString();
         }
+        private void Timkiem_HoaDon_TextChange(object sender, TextChangedEventArgs e)
+        {
+            var keyword = Timkiem_HoaDon_Textbox.Text;
+            var sub = new ObservableCollection<HoaDon>();
+            foreach (var hd in HoaDonView.ListHoaDon)
+            {
+                var mahd = hd.mahoadon.ToString();
+                var ngaythanhtoan = hd.ngaythanhtoan.ToString("dd'/'MM'/'yyyy");
+                var khachhang = hd.khachhang;
+
+                if (mahd.Contains(keyword))
+                {
+                    sub.Add(hd);
+                }
+                else
+                if (khachhang.Contains(keyword))
+                {
+                    sub.Add(hd);
+                }
+                else
+                if (ngaythanhtoan.Contains(keyword) && keyword.Contains('/'))
+                {
+                    sub.Add(hd);
+                }
+            }
+            HoaDonView.CurListHoaDon = sub;
+            HoaDonView.curpage = 1;
+            Page_HoaDon_text.Text = HoaDonView.curpage.ToString();
+            HoaDonView.UpdatePaging();
+            ListView_HoaDon.ItemsSource = HoaDonView.CurHoaDon;
+
+        }
+
         private void Nextpage_ChiTietHoaDon_Btn_Click(object sender, RoutedEventArgs e)
         {
             if (ChiTietHoaDonView.curpage < ChiTietHoaDonView.totalpage) { ChiTietHoaDonView.curpage = ChiTietHoaDonView.curpage + 1; }
