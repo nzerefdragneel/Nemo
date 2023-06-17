@@ -32,31 +32,19 @@ namespace Nemo
     public partial class MainWindow : Window
     {
         PhongView PhongView = new PhongView();
+        PhieuThuePhongView PTPView = new PhieuThuePhongView();
+        ChiTietPTPView ChiTietPTPView = new ChiTietPTPView();
         public MainWindow()
         {
             InitializeComponent();
             DataContext = new ViewModelChart();
         }
-
-        class PhieuThue
-        {
-            public int MaPT { get; set; }
-            public DateTime NgayTao { get; set; }
-            public string Phong { get; set; }
-            public int SoKhach { get; set; }
-            public float TienThue { get; set; }
-        }
-
-        List<PhieuThue> danhSachPhieuThue = new List<PhieuThue>()
-        {
-            new PhieuThue() { MaPT = 1, NgayTao = new DateTime(2023, 6, 9), Phong = "Phòng A", SoKhach = 2, TienThue = 100 },
-            new PhieuThue() { MaPT = 2, NgayTao = new DateTime(2023, 6, 10), Phong = "Phòng B", SoKhach = 3, TienThue = 150 },
-        };
         
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
 
             //load phòng
+            Get_PhieuThuePhong_View();
             Get_DanhMucPhong_View();
         }
 
@@ -131,6 +119,31 @@ namespace Nemo
 
         }
 
+        public void Get_PhieuThuePhong_View()
+        {
+            var con = new PhieuThuePhongViewDAO();
+            PTPView.listPTP = con.GetListPTP();
+            PTPView.UpdatePaging();
+            ListView_PhieuThuePhong.ItemsSource = PTPView.curPTP;
+            Page_PhieuThuePhong_text.Text = PTPView.curpage.ToString();
+
+        }
+        private void Nextpage_PhieuThuePhong_Btn_Click(object sender, RoutedEventArgs e)
+        {
+            if (PTPView.curpage < PTPView.totalpage) { PTPView.curpage = PTPView.curpage + 1; }
+            Page_PhieuThuePhong_text.Text = PTPView.curpage.ToString();
+            PTPView.UpdatePaging();
+            ListView_PhieuThuePhong.ItemsSource = PTPView.curPTP;
+        }
+
+        private void Prevpage_PhieuThuePhong_Btn_Click(object sender, RoutedEventArgs e)
+        {
+            if (PTPView.curpage > 1) { PTPView.curpage = PTPView.curpage - 1; }
+            Page_PhieuThuePhong_text.Text = PTPView.curpage.ToString();
+            PTPView.UpdatePaging();
+            ListView_PhieuThuePhong.ItemsSource = PTPView.curPTP;
+        }
+
         private void phieuThueBtn_Click(object sender, RoutedEventArgs e)
         {
 
@@ -141,29 +154,33 @@ namespace Nemo
             //MyTabControl.SelectedItem = ThanhToanTabItem;
         }
 
-        private void PhieuThuePhong_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void ListView_PhieuThuePhong_Click(object sender, SelectionChangedEventArgs e)
         {
-            var selectedData = (PhieuThue)MyListView.SelectedItem;
+            var selectedData = (PhieuThuePhong)ListView_PhieuThuePhong.SelectedItem;
 
             if (selectedData != null)
             {
-                int maPTP = selectedData.MaPT;
-                string maPhong = selectedData.Phong;
-                DateTime ngaytao = selectedData.NgayTao;
-                float tienThue = selectedData.TienThue;
-                int soKhach = selectedData.SoKhach;
+                ChiTietPTPView.maPTP = selectedData.maPTP;
+                ChiTietPTPView.maPhongThue = selectedData.maPhongThue;
+                ChiTietPTPView.ngayThue = selectedData.ngayThue;
+                ChiTietPTPView.tienThue = selectedData.tienThue;
 
-               // MyTabControl.SelectedItem = ChiTietPhieuThueTabItem;
-                UpdateChiTietPhieuThueData(maPTP, maPhong, soKhach, ngaytao, tienThue);
+                TabControl_PhieuThuePhong.SelectedItem = ChiTietPhieuThueTabItem;
+                UpdateChiTietPhieuThueData(ChiTietPTPView);
             }
         }
-        private void UpdateChiTietPhieuThueData(int maPTP, string maPhong, int soKhach, DateTime ngayTao, float tienThue)
+        private void UpdateChiTietPhieuThueData(ChiTietPTPView CT)
         {
-            MaPTPTextBlock.Text = MaPTPTextBlock_HD.Text =  maPTP.ToString();
-            MaPhongTextBlock.Text = MaPhongTextBlock_HD.Text = maPhong;
-            /*SoKhachTextBlock.Text = soKhach.ToString();*/
-            NgayTaoTextBlock.Text = NgayTaoTextBlock_HD.Text = ngayTao.ToString();
-            TienThueTextBlock.Text = TienThueTextBlock_HD.Text = tienThue.ToString();
+            var con = new ChiTietPTPViewDAO();
+            MaPTPTextBlock.Text = MaPTPTextBlock_HD.Text =  CT.maPTP.ToString();
+            MaPhongTextBlock.Text = MaPhongTextBlock_HD.Text = CT.maPhongThue.ToString();
+            NgayTaoTextBlock.Text = NgayTaoTextBlock_HD.Text = CT.ngayThue.ToString("dd'/'MM'/'yyyy");
+            TienThueTextBlock.Text = TienThueTextBlock_HD.Text = CT.tienThue.ToString("N0") + " VNĐ";
+
+            CT.listChiTietPTP = con.GetListPTP(CT.maPTP);
+            CT.UpdatePaging();
+            ListView_ChiTietPTP.ItemsSource = CT.curChiTietPTP;
+            /*Page_ChiTietHoaDon_text.Text = CT.curpage.ToString();*/
         }
 
         private void TabControl_SelectionChanged_2(object sender, SelectionChangedEventArgs e)
@@ -171,13 +188,13 @@ namespace Nemo
 
         }
 
-        private void BackButton_Click(object sender, RoutedEventArgs e)
+        private void BackButton_PhieuThuePhong_Click(object sender, RoutedEventArgs e)
         {
-           MyTabControl.SelectedIndex =1;
-            ChiTietPhieuThueTabItem.Visibility = Visibility.Collapsed ;
+            TabControl_PhieuThuePhong.SelectedIndex -= 1;
+            /*ChiTietPhieuThueTabItem.Visibility = Visibility.Collapsed;*/
         }
 
-        private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        /*private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (comboBox.SelectedItem != null)
             {
@@ -185,7 +202,7 @@ namespace Nemo
                 comboBox.Text = selectedItem.Content.ToString();
                 Console.WriteLine("Selected item: {0}", selectedItem.Content);
             }
-        }
+        }*/
 
         private void TaoPTPBtn_Click(object sender, RoutedEventArgs e)
         {
