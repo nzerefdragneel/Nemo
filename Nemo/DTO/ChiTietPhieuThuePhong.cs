@@ -15,5 +15,7 @@ namespace Nemo.DTO
         public string dinhDanh { get; set; }
         public string diaChi { get; set; }
         public string ghiChu { get; set; }
+        public double tiLePhuThu { get; set; }
+        public int sl_khachtoida { get; set; }
     }
 }

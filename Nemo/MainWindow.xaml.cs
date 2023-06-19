@@ -23,6 +23,8 @@ using System.Windows.Forms;
 using ControlzEx.Controls;
 using Button = System.Windows.Controls.Button;
 using ListViewItem = System.Windows.Controls.ListViewItem;
+using System.Globalization;
+using static System.Net.WebRequestMethods;
 
 namespace Nemo
 {
@@ -34,6 +36,7 @@ namespace Nemo
         PhongView PhongView = new PhongView();
         PhieuThuePhongView PTPView = new PhieuThuePhongView();
         ChiTietPTPView ChiTietPTPView = new ChiTietPTPView();
+        
         public MainWindow()
         {
             InitializeComponent();
@@ -123,10 +126,14 @@ namespace Nemo
         {
             var con = new PhieuThuePhongViewDAO();
             PTPView.listPTP = con.GetListPTP();
+            PTPView.PhongDaThue = con.getCountPhong()[0];
+            PTPView.PhongTrong = con.getCountPhong()[1];
             PTPView.UpdatePaging();
             ListView_PhieuThuePhong.ItemsSource = PTPView.curPTP;
             Page_PhieuThuePhong_text.Text = PTPView.curpage.ToString();
 
+            soPhongConTrong_PTP.Text = $"Số phòng còn trống\n{PTPView.PhongTrong}";
+            soPhongDaThue_PTP.Text = $"Số phòng đã thuê\n{PTPView.PhongDaThue}";
         }
         private void Nextpage_PhieuThuePhong_Btn_Click(object sender, RoutedEventArgs e)
         {
@@ -174,13 +181,13 @@ namespace Nemo
             var con = new ChiTietPTPViewDAO();
             MaPTPTextBlock.Text = MaPTPTextBlock_HD.Text =  CT.maPTP.ToString();
             MaPhongTextBlock.Text = MaPhongTextBlock_HD.Text = CT.maPhongThue.ToString();
-            NgayTaoTextBlock.Text = NgayTaoTextBlock_HD.Text = CT.ngayThue.ToString("dd'/'MM'/'yyyy");
+            NgayTaoTextBlock.Text = NgayTaoTextBlock_HD.Text = CT.ngayThue;
             TienThueTextBlock.Text = TienThueTextBlock_HD.Text = CT.tienThue.ToString("N0") + " VNĐ";
 
             CT.listChiTietPTP = con.GetListPTP(CT.maPTP);
             CT.UpdatePaging();
             ListView_ChiTietPTP.ItemsSource = CT.curChiTietPTP;
-            /*Page_ChiTietHoaDon_text.Text = CT.curpage.ToString();*/
+            ListView_ChiTietPTP_HoaDon.ItemsSource = CT.curChiTietPTP;
         }
 
         private void TabControl_SelectionChanged_2(object sender, SelectionChangedEventArgs e)
@@ -190,23 +197,13 @@ namespace Nemo
 
         private void BackButton_PhieuThuePhong_Click(object sender, RoutedEventArgs e)
         {
-            TabControl_PhieuThuePhong.SelectedIndex -= 1;
-            /*ChiTietPhieuThueTabItem.Visibility = Visibility.Collapsed;*/
+            TabControl_PhieuThuePhong.SelectedIndex = 0;
+            ChiTietPhieuThueTabItem.Visibility = Visibility.Collapsed;
         }
 
-        /*private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void ThanhToanBtn_PTP_Click(object sender, RoutedEventArgs e)
         {
-            if (comboBox.SelectedItem != null)
-            {
-                ComboBoxItem selectedItem = comboBox.SelectedItem as ComboBoxItem;
-                comboBox.Text = selectedItem.Content.ToString();
-                Console.WriteLine("Selected item: {0}", selectedItem.Content);
-            }
-        }*/
-
-        private void TaoPTPBtn_Click(object sender, RoutedEventArgs e)
-        {
-           MyTabControl.SelectedItem = TaoPTPTabItem;
+            TabControl_PhieuThuePhong.SelectedItem = ThanhToanTabItem;
         }
 
         private void Themhong_Btn_click(object sender, RoutedEventArgs e)
@@ -222,6 +219,179 @@ namespace Nemo
             {
                 Title = "KHONG CO DU LIEU";
             }
+        }
+
+        private void TabControl_PhieuThuePhong_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+
+        private void TaoPTPBtn_PTP_Click(object sender, RoutedEventArgs e)
+        {
+            TabControl_PhieuThuePhong.SelectedItem = TaoPTPTabItem;
+            DateTime currentDate = DateTime.Now;
+            inputNgayThue_PTP.Text = currentDate.ToString("dd'/'MM'/'yyyy");
+        }
+
+        private void lapHoaDonBtn_PTP_Click(object sender, RoutedEventArgs e)
+        {
+            string dinhDanh = DinhDanhTextBox.Text;
+            string maptp = MaPTPTextBlock_HD.Text;
+
+            var conn_kh = new KhachHangViewDAO();
+            var kh = new KhachHang();
+            kh = conn_kh.getMaKhachHangByDinhDanh(dinhDanh);
+            if (kh == null)
+            {
+                errorDinhDanh.Visibility = Visibility;
+            }
+            else
+            {
+                errorDinhDanh.Visibility = Visibility.Collapsed;
+                var conn_hd = new HoaDonViewDAO();
+                int mahd = conn_hd.createHoaDon(int.Parse(kh.MaKH));
+
+                var conn_ptp = new PhieuThuePhongViewDAO();
+                conn_ptp.thanhToanPTP(int.Parse(maptp), mahd);
+
+                Get_PhieuThuePhong_View();
+                TabControl_PhieuThuePhong.SelectedIndex = 0;
+            }
+        }
+
+        private void ThemKHBtn_PTP_Click(object sender, RoutedEventArgs e)
+        {
+            ComboBoxItem selectedComboBoxItem = (ComboBoxItem)inputLoaiPhong_PTP.SelectedItem;
+            string loaiPhong = selectedComboBoxItem.Content.ToString();
+
+            string soPhong = inputSoPhong_PTP.Text;
+            string ngayThue = inputNgayThue_PTP.Text;
+            DateTime dt = DateTime.ParseExact(ngayThue, "dd/MM/yyyy", CultureInfo.InvariantCulture);
+            string ngayThueFormatted = dt.ToString("yyyy-MM-dd");
+
+            string tenKH = inputTenKhach_PTP.Text;
+            selectedComboBoxItem = (ComboBoxItem)inputLoaiKhach_PTP.SelectedItem;
+            string loaiKH = selectedComboBoxItem.Content.ToString();
+
+            string diaChi = inputDiaChi_PTP.Text;
+            selectedComboBoxItem = (ComboBoxItem)inputLoaiDinhDanh_PTP.SelectedItem;
+            string loaiDD = selectedComboBoxItem.Content.ToString();
+            string soDD = inputSoDinhDanh_PTP.Text;
+
+            var kh = new KhachHang()
+            {
+                TenKH = tenKH,
+                loaiKH = loaiKH,
+                DiaChi = diaChi,
+                dinhDanh = soDD,
+            };
+            int loaiPhongInt;
+            if (loaiPhong == "Loại A")
+                loaiPhongInt = 1;
+            else
+            {
+                if (loaiPhong == "Loại B")
+                    loaiPhongInt = 2;
+                else loaiPhongInt = 3;
+            }
+
+            var conn_kh = new KhachHangViewDAO();
+            var conn_phong = new PhongViewDAO();
+            var conn_ptp = new PhieuThuePhongViewDAO();
+
+            int soPhongInt;
+            if (int.TryParse(soPhong, out soPhongInt))
+            {
+                string tinhtrang = conn_phong.checkTinhTrang(soPhongInt, loaiPhongInt);
+                if (tinhtrang == "Còn trống")
+                {
+                    if (string.IsNullOrEmpty(tenKH) || 
+                        string.IsNullOrEmpty(loaiKH) || 
+                        string.IsNullOrEmpty(diaChi) || 
+                        string.IsNullOrEmpty(loaiDD) || 
+                        string.IsNullOrEmpty(soDD))
+                    {
+                        errorThieuThongTin_PTP.Visibility = Visibility; 
+                        errorSoPhong_PTP.Visibility = Visibility.Collapsed;
+                    }
+                    else
+                    {
+                        int makh_moiThem = conn_kh.addKhachHang(kh);
+                        var ptp = new PhieuThuePhong()
+                        {
+                            ngayThue = ngayThueFormatted,
+                            maPhongThue = Convert.ToInt32(soPhong)
+                        };
+
+                        /*System.Windows.MessageBox.Show(ptp.maPhongThue.ToString() + " + " + ptp.ngayThue.ToString());*/
+
+                        int maptp_new = conn_ptp.addPTP(ptp);
+
+                        conn_ptp.addLichSu(maptp_new, makh_moiThem);
+                        conn_phong.updateTinhTrang(soPhongInt, maptp_new);
+                        int soKhach = conn_ptp.countSoKhachInPTP(maptp_new);
+
+                        errorSoPhong_PTP.Visibility = Visibility.Collapsed;
+                        errorThieuThongTin_PTP.Visibility = Visibility.Collapsed;
+                        soKhachDaThem_PTP.Text = $"Số khách đã thêm: {soKhach}";
+                    }
+                }
+                else
+                {
+                    if (tinhtrang == null)
+                    {
+                        errorSoPhong_PTP.Text = "*Phòng không tồn tại";
+                        errorSoPhong_PTP.Visibility = Visibility;
+                    }
+                    else
+                    {
+                        if (tinhtrang == "Đang đợi")
+                        {
+                            int maptp = conn_ptp.getMaPTP(ngayThueFormatted, soPhongInt);
+                            int makh_moiThem = conn_kh.addKhachHang(kh);
+
+                            conn_ptp.addLichSu(maptp, makh_moiThem);
+                            conn_phong.updateTinhTrang(soPhongInt, maptp);
+                            bool checkFull = conn_phong.checkFull(soPhongInt);
+                            if(checkFull == true)
+                            {
+                                errorSoPhong_PTP.Text = "*Phòng đã đầy";
+                                errorSoPhong_PTP.Visibility = Visibility;
+                            }
+                            int soKhach = conn_ptp.countSoKhachInPTP(maptp);
+
+                            errorSoPhong_PTP.Visibility = Visibility.Collapsed;
+                            errorThieuThongTin_PTP.Visibility = Visibility.Collapsed;
+                            soKhachDaThem_PTP.Text = $"Số khách đã thêm: {soKhach}";
+                        }
+                        else
+                        {
+                            errorSoPhong_PTP.Text = "*Phòng đã đầy";
+                            errorSoPhong_PTP.Visibility = Visibility;
+                        }
+                    }
+                }
+            }
+            else
+            {
+                errorSoPhong_PTP.Text = "*Phòng không tồn tại";
+                errorSoPhong_PTP.Visibility = Visibility;
+            }
+        }
+
+        private void DoneBtn_PTP_Click(object sender, RoutedEventArgs e)
+        {
+            errorSoPhong_PTP.Visibility = Visibility.Collapsed;
+            errorThieuThongTin_PTP.Visibility = Visibility.Collapsed;
+
+            string soPhong = inputSoPhong_PTP.Text;
+            int soPhongInt;
+            int.TryParse(soPhong, out soPhongInt);
+
+            var conn_phong = new PhongViewDAO();
+            conn_phong.updateTinhTrang(soPhongInt, 0, true);
+
+            TabControl_PhieuThuePhong.SelectedIndex = 0;
         }
     }
 }

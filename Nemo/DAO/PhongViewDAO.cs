@@ -9,6 +9,8 @@ using JsonConverter;
 using Newtonsoft.Json.Linq;
 using System.Collections.ObjectModel;
 using System.Data;
+using LiveChartsCore.Geo;
+using static System.Net.WebRequestMethods;
 
 namespace Nemo.DAO
 {
@@ -37,6 +39,70 @@ namespace Nemo.DAO
             var result = conn.ExecuteQuery("Select maloaiphong from loaiphong");
             conn.CloseConnection();
             return result;
+        }
+        public string checkTinhTrang(int maphong, int loaiphong)
+        {
+            var conn = new ConnectDB();
+            conn.OpenConnection();
+            var result = conn.ExecuteQuery($"select tinhtrang from phong where maphong = '{maphong}' and maloaiphong = '{loaiphong}'\r\n");
+            conn.CloseConnection();
+
+            if (result == null)
+            {
+                return null;
+            }
+
+            object value = result.Rows[0]["tinhtrang"];
+            return value.ToString();
+        }
+        public void updateTinhTrang(int maphong, int maptp, bool done = false)
+        {
+            var conn = new ConnectDB();
+            conn.OpenConnection();
+
+            if (done == true)
+            {
+                conn.ExecuteQuery(@$"update phong
+									set tinhtrang = 'Đã thuê'
+									where maphong = {maphong}");
+                return;
+            }
+
+            conn.ExecuteQuery(@$"UPDATE phong
+								SET tinhtrang = 
+									CASE
+										WHEN (
+											SELECT COUNT(*)
+											FROM lichsuthuephong lsp
+											JOIN phieuthuephong ptp ON lsp.maptp = ptp.maptp
+											WHERE ptp.maptp = {maptp}
+										) = (
+											SELECT sl_khachtoida
+											FROM quydinh
+											WHERE maqd = (
+												SELECT maqd
+												FROM phieuthuephong
+												WHERE maptp = {maptp}
+												LIMIT 1
+											)
+										) THEN CAST('Đã thuê' AS room_status)
+										ELSE CAST('Đang đợi' AS room_status)
+									END
+								WHERE maphong = {maphong};");
+            conn.CloseConnection();
+        }
+        public bool checkFull(int maphong)
+        {
+            var conn = new ConnectDB();
+            conn.OpenConnection();
+
+            var result = conn.ExecuteQuery(@$"select tinhtrang
+                                                from phong
+                                                where maphong = {maphong}");
+            conn.CloseConnection();
+            if (result.Rows[0]["tinhtrang"].ToString() == "Đã thuê")
+                return true;
+            return false;
         }
     }
 }
