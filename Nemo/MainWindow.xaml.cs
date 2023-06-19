@@ -400,99 +400,8 @@ namespace Nemo
             Get_PhieuThuePhong_View();
         }
 
-        /*private static T FindVisualChild<T>(DependencyObject parent) where T : DependencyObject
-        {
-            if (parent == null)
-                return null;
-
-            int childCount = VisualTreeHelper.GetChildrenCount(parent);
-            for (int i = 0; i < childCount; i++)
-            {
-                DependencyObject child = VisualTreeHelper.GetChild(parent, i);
-
-                if (child is T typedChild)
-                    return typedChild;
-
-                T childResult = FindVisualChild<T>(child);
-                if (childResult != null)
-                    return childResult;
-            }
-
-            return null;
-        }
-        private static List<T> FindVisualChildren<T>(DependencyObject parent) where T : DependencyObject
-        {
-            List<T> results = new List<T>();
-            int childCount = VisualTreeHelper.GetChildrenCount(parent);
-
-            for (int i = 0; i < childCount; i++)
-            {
-                DependencyObject child = VisualTreeHelper.GetChild(parent, i);
-
-                if (child is T typedChild)
-                {
-                    results.Add(typedChild);
-                }
-
-                List<T> childResults = FindVisualChildren<T>(child);
-                results.AddRange(childResults);
-            }
-
-            return results;
-        }
-        private void UpdateHeaderCheckBoxState()
-        {
-            if (ListView_PhieuThuePhong != null && ListView_PhieuThuePhong.HasItems)
-            {
-                bool allChecked = true;
-
-                foreach (object item in ListView_PhieuThuePhong.Items)
-                {
-                    ListViewItem listViewItem = ListView_PhieuThuePhong.ItemContainerGenerator.ContainerFromItem(item) as ListViewItem;
-                    if (listViewItem != null)
-                    {
-                        CheckBox checkBox = FindVisualChild<CheckBox>(listViewItem);
-                        if (checkBox != null)
-                        {
-                            if (checkBox.IsChecked == false)
-                            {
-                                allChecked = false;
-                                break;
-                            }
-                        }
-                    }
-                }
-
-                HeaderCheckBox_PTP.IsChecked = allChecked;
-            }
-            else
-            {
-                HeaderCheckBox_PTP.IsChecked = false;
-            }
-        }
-        private void SetChildCheckBoxesState(bool isChecked)
-        {
-            List<CheckBox> childCheckBoxes = FindVisualChildren<CheckBox>(ListView_PhieuThuePhong);
-            foreach (CheckBox checkBox in childCheckBoxes)
-            {
-                checkBox.IsChecked = isChecked;
-            }
-
-            UpdateHeaderCheckBoxState();
-        }
-        private void HeaderCheckBox_PTP_Checked(object sender, RoutedEventArgs e)
-        {
-            SetChildCheckBoxesState(true);
-        }
-
-        private void HeaderCheckBox_PTP_Unchecked(object sender, RoutedEventArgs e)
-        {
-            SetChildCheckBoxesState(false);
-        }*/
-
         private void ItemCheckBox_PTP_Checked(object sender, RoutedEventArgs e)
         {
-            /*UpdateHeaderCheckBoxState();*/
             CheckBox checkBox = (CheckBox)sender;
             string maPTP = checkBox.CommandParameter.ToString();
             selectedMaPTPList.Add(Convert.ToInt32(maPTP));
@@ -500,7 +409,6 @@ namespace Nemo
         }
         private void ItemCheckBox_PTP_UnChecked(object sender, RoutedEventArgs e)
         {
-            /*UpdateHeaderCheckBoxState();*/
             CheckBox checkBox = (CheckBox)sender;
             string maPTP = checkBox.CommandParameter.ToString();
             selectedMaPTPList.Remove(Convert.ToInt32(maPTP));
@@ -524,7 +432,6 @@ namespace Nemo
 
             PTPView_ThanhToan.UpdatePaging();
             ListView_ChiTietPTP_ThanhToanNhieu.ItemsSource = PTPView_ThanhToan.curPTP;
-            /*Page_PhieuThuePhong_text.Text = PTPView_ThanhToan.curpage.ToString();*/
         }
 
         private void ListView_ChiTietPTP_ThanhToanNhieu_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -569,6 +476,41 @@ namespace Nemo
                 Get_PhieuThuePhong_View();
                 TabControl_PhieuThuePhong.SelectedIndex = 0;
             }
+        }
+
+        private void TimKiem_PTP_TextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            var keyword = TimKiem_PTP_TextBox.Text;
+            
+            var sub = new ObservableCollection<PhieuThuePhong>();
+            foreach (var ptp in PTPView.listPTP)
+            {
+                var maptp = ptp.maPTP.ToString();
+                var ngayThue = ptp.ngayThue;
+                var maPhongThue = ptp.maPhongThue.ToString();
+
+                if (maptp.Contains(keyword))
+                {
+                    sub.Add(ptp);
+                }
+                else
+                if (maPhongThue.Contains(keyword))
+                {
+                    sub.Add(ptp);
+                }
+                else
+                if (ngayThue.Contains(keyword) && keyword.Contains('/'))
+                {
+                    sub.Add(ptp);
+                }
+            }
+            
+            PTPView.curPTP = sub;
+            PTPView.curpage = 1;
+
+            PTPView.UpdatePaging();
+            ListView_PhieuThuePhong.ItemsSource = sub;
+            Page_PhieuThuePhong_text.Text = PTPView.curpage.ToString();
         }
     }
 }
