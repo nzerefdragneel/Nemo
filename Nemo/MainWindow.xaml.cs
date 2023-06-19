@@ -202,8 +202,22 @@ namespace Nemo
 
         private void BackButton_PhieuThuePhong_Click(object sender, RoutedEventArgs e)
         {
-            TabControl_PhieuThuePhong.SelectedIndex = 0;
-            ChiTietPhieuThueTabItem.Visibility = Visibility.Collapsed;
+            if (TabControl_PhieuThuePhong.SelectedItem == ThanhToanTabItem || TabControl_PhieuThuePhong.SelectedItem == ChiTietPhieuThueTabItem)
+            {
+                TabControl_PhieuThuePhong.SelectedIndex -= 1;
+            }
+            else
+            {
+                if (TabControl_PhieuThuePhong.SelectedItem == ThanhToanNhieuTabItem || TabControl_PhieuThuePhong.SelectedItem == TaoPTPTabItem)
+                {
+                    TabControl_PhieuThuePhong.SelectedIndex = 0;
+                }
+                /*else
+                {
+                    TabControl_PhieuThuePhong.SelectedIndex = 1;
+                }*/
+            }
+
         }
 
         private void ThanhToanBtn_PTP_Click(object sender, RoutedEventArgs e)
