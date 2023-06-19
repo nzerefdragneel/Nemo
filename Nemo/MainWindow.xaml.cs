@@ -21,22 +21,27 @@ using static System.Net.Mime.MediaTypeNames;
 using Microsoft.VisualBasic;
 using System.Windows.Forms;
 using ControlzEx.Controls;
+using CheckBox = System.Windows.Controls.CheckBox;
 using Button = System.Windows.Controls.Button;
 using ListViewItem = System.Windows.Controls.ListViewItem;
 using System.Globalization;
 using static System.Net.WebRequestMethods;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace Nemo
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class MainWindow : System.Windows.Window
     {
         PhongView PhongView = new PhongView();
         PhieuThuePhongView PTPView = new PhieuThuePhongView();
         ChiTietPTPView ChiTietPTPView = new ChiTietPTPView();
-        
+
+        PhieuThuePhongView PTPView_ThanhToan = new PhieuThuePhongView();
+        List<int> selectedMaPTPList = new List<int>();
+
         public MainWindow()
         {
             InitializeComponent();
@@ -392,6 +397,178 @@ namespace Nemo
             conn_phong.updateTinhTrang(soPhongInt, 0, true);
 
             TabControl_PhieuThuePhong.SelectedIndex = 0;
+            Get_PhieuThuePhong_View();
+        }
+
+        /*private static T FindVisualChild<T>(DependencyObject parent) where T : DependencyObject
+        {
+            if (parent == null)
+                return null;
+
+            int childCount = VisualTreeHelper.GetChildrenCount(parent);
+            for (int i = 0; i < childCount; i++)
+            {
+                DependencyObject child = VisualTreeHelper.GetChild(parent, i);
+
+                if (child is T typedChild)
+                    return typedChild;
+
+                T childResult = FindVisualChild<T>(child);
+                if (childResult != null)
+                    return childResult;
+            }
+
+            return null;
+        }
+        private static List<T> FindVisualChildren<T>(DependencyObject parent) where T : DependencyObject
+        {
+            List<T> results = new List<T>();
+            int childCount = VisualTreeHelper.GetChildrenCount(parent);
+
+            for (int i = 0; i < childCount; i++)
+            {
+                DependencyObject child = VisualTreeHelper.GetChild(parent, i);
+
+                if (child is T typedChild)
+                {
+                    results.Add(typedChild);
+                }
+
+                List<T> childResults = FindVisualChildren<T>(child);
+                results.AddRange(childResults);
+            }
+
+            return results;
+        }
+        private void UpdateHeaderCheckBoxState()
+        {
+            if (ListView_PhieuThuePhong != null && ListView_PhieuThuePhong.HasItems)
+            {
+                bool allChecked = true;
+
+                foreach (object item in ListView_PhieuThuePhong.Items)
+                {
+                    ListViewItem listViewItem = ListView_PhieuThuePhong.ItemContainerGenerator.ContainerFromItem(item) as ListViewItem;
+                    if (listViewItem != null)
+                    {
+                        CheckBox checkBox = FindVisualChild<CheckBox>(listViewItem);
+                        if (checkBox != null)
+                        {
+                            if (checkBox.IsChecked == false)
+                            {
+                                allChecked = false;
+                                break;
+                            }
+                        }
+                    }
+                }
+
+                HeaderCheckBox_PTP.IsChecked = allChecked;
+            }
+            else
+            {
+                HeaderCheckBox_PTP.IsChecked = false;
+            }
+        }
+        private void SetChildCheckBoxesState(bool isChecked)
+        {
+            List<CheckBox> childCheckBoxes = FindVisualChildren<CheckBox>(ListView_PhieuThuePhong);
+            foreach (CheckBox checkBox in childCheckBoxes)
+            {
+                checkBox.IsChecked = isChecked;
+            }
+
+            UpdateHeaderCheckBoxState();
+        }
+        private void HeaderCheckBox_PTP_Checked(object sender, RoutedEventArgs e)
+        {
+            SetChildCheckBoxesState(true);
+        }
+
+        private void HeaderCheckBox_PTP_Unchecked(object sender, RoutedEventArgs e)
+        {
+            SetChildCheckBoxesState(false);
+        }*/
+
+        private void ItemCheckBox_PTP_Checked(object sender, RoutedEventArgs e)
+        {
+            /*UpdateHeaderCheckBoxState();*/
+            CheckBox checkBox = (CheckBox)sender;
+            string maPTP = checkBox.CommandParameter.ToString();
+            selectedMaPTPList.Add(Convert.ToInt32(maPTP));
+            ThanhToanOut_PTP.Visibility = Visibility;
+        }
+        private void ItemCheckBox_PTP_UnChecked(object sender, RoutedEventArgs e)
+        {
+            /*UpdateHeaderCheckBoxState();*/
+            CheckBox checkBox = (CheckBox)sender;
+            string maPTP = checkBox.CommandParameter.ToString();
+            selectedMaPTPList.Remove(Convert.ToInt32(maPTP));
+            if (selectedMaPTPList.Count == 0)
+                ThanhToanOut_PTP.Visibility = Visibility.Collapsed;
+        }
+
+        private void ThanhToanOut_PTP_Click(object sender, RoutedEventArgs e)
+        {
+            TabControl_PhieuThuePhong.SelectedItem = ThanhToanNhieuTabItem;
+            var con = new PhieuThuePhongViewDAO();
+            PTPView_ThanhToan.listPTP = con.getListSelected(selectedMaPTPList);
+            float tongTien = 0;
+            for (int i = 0; i < PTPView_ThanhToan.listPTP.Count; i++)
+            {
+                tongTien += PTPView_ThanhToan.listPTP[i].tienThue;
+            }
+
+            MaPTPText_ThanhToanNhieu_Block_HD.Text = tongTien.ToString("N0") + " VNĐ";
+            soPhongTT_ThanhToanNhieu_TextBlock_HD.Text = PTPView_ThanhToan.listPTP.Count.ToString();
+
+            PTPView_ThanhToan.UpdatePaging();
+            ListView_ChiTietPTP_ThanhToanNhieu.ItemsSource = PTPView_ThanhToan.curPTP;
+            /*Page_PhieuThuePhong_text.Text = PTPView_ThanhToan.curpage.ToString();*/
+        }
+
+        private void ListView_ChiTietPTP_ThanhToanNhieu_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var selectedData = (PhieuThuePhong)ListView_ChiTietPTP_ThanhToanNhieu.SelectedItem;
+
+            if (selectedData != null)
+            {
+                ChiTietPTPView.maPTP = selectedData.maPTP;
+                ChiTietPTPView.maPhongThue = selectedData.maPhongThue;
+                ChiTietPTPView.ngayThue = selectedData.ngayThue;
+                ChiTietPTPView.tienThue = selectedData.tienThue;
+
+                TabControl_PhieuThuePhong.SelectedItem = ChiTietPhieuThueTabItem;
+                thanhToanBtn.Visibility = Visibility.Collapsed;
+                UpdateChiTietPhieuThueData(ChiTietPTPView);
+            }
+        }
+
+        private void lapHoaDonBtn_ThanhToanNhieu_Click(object sender, RoutedEventArgs e)
+        {
+            string dinhDanh = DinhDanh_ThanhToanNhieu_TextBox.Text;
+
+            var conn_kh = new KhachHangViewDAO();
+            var kh = new KhachHang();
+            kh = conn_kh.getMaKhachHangByDinhDanh(dinhDanh);
+            if (kh == null)
+            {
+                errorDinhDanh_ThanhToanNhieu.Visibility = Visibility;
+            }
+            else
+            {
+                errorDinhDanh_ThanhToanNhieu.Visibility = Visibility.Collapsed;
+                var conn_hd = new HoaDonViewDAO();
+                int mahd = conn_hd.createHoaDon(int.Parse(kh.MaKH));
+
+                var conn_ptp = new PhieuThuePhongViewDAO();
+                for (int i = 0; i < selectedMaPTPList.Count; i++)
+                {
+                    conn_ptp.thanhToanPTP(selectedMaPTPList[i], mahd);
+                }
+                Get_PhieuThuePhong_View();
+                TabControl_PhieuThuePhong.SelectedIndex = 0;
+            }
         }
     }
 }
