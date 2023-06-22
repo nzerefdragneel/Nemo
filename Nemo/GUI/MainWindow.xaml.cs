@@ -66,6 +66,7 @@ namespace Nemo
             Admin_textblock.Text = username;
             //if get quyèn
             DAtBtn.Visibility = Visibility.Collapsed;
+            //update
         }
 
         private void Window_Closed(object sender, EventArgs e)
@@ -108,23 +109,26 @@ namespace Nemo
             }
             ListViewItem item = parent as ListViewItem;
             int index = ListView_DanhMucPhong.Items.IndexOf(item.DataContext);
-            if (PhongView.ListPhong[index].tuychon=="Chỉnh sửa")
+            var screen = new Suaphong(PhongView.CurPhong[index]);
+            if (screen.ShowDialog() == true)
             {
-                Debug.WriteLine("Chỉnh sửa");
+                var phongmoi = (Phong)screen.PhongMoi.Clone();
+                var conn = new PhongViewDAO();
+                conn.Suaphong(phongmoi);
+                Get_DanhMucPhong_View();
             }
-            else
-            {
-                Debug.WriteLine("Thuê Phòng");
-            }
+
         }
         public void Get_DanhMucPhong_View()
         {
             PhongViewDAO con = new PhongViewDAO();
             PhongView.ListPhong = con.GetListPhong();
+            PhongView.Tinhtrangphong = con.GetListTinhTrang();
             PhongView.ResetCurlist();
             PhongView.UpdatePaging();
             ListView_DanhMucPhong.ItemsSource = PhongView.CurPhong;
             Page_DanhMucPhong_text.Text = PhongView.curpage.ToString();
+            //get số lượng tình trạng phòng
 
         }
         private void Nextpage_DanhMucPhong_Btn_Click(object sender, RoutedEventArgs e)
@@ -213,6 +217,7 @@ namespace Nemo
                 var phongmoi = (Phong)screen.PhongMoi.Clone();
                 var conn = new PhongViewDAO();
                 conn.ThemPhongMoi(phongmoi);
+                Get_DanhMucPhong_View();
             }
             
         }
@@ -259,5 +264,43 @@ namespace Nemo
             ListView_DanhMucPhong.ItemsSource = PhongView.CurPhong;
           
         }
+
+        private void PhongThue_DanhMucPhong_Btn_Click(object sender, RoutedEventArgs e)
+        {
+            PhongViewDAO con = new PhongViewDAO();
+            PhongView.CurListPhong = con.GetListPhongLoai("Đã thuê");
+            PhongView.UpdatePaging();
+            ListView_DanhMucPhong.ItemsSource = PhongView.CurPhong;
+            Page_DanhMucPhong_text.Text = PhongView.curpage.ToString();
+        }
+
+        private void ConTrong_DanhMucPhong_Btn_Click(object sender, RoutedEventArgs e)
+        {
+            PhongViewDAO con = new PhongViewDAO();
+            PhongView.CurListPhong = con.GetListPhongLoai("Còn trống");
+            PhongView.UpdatePaging();
+            ListView_DanhMucPhong.ItemsSource = PhongView.CurPhong;
+            Page_DanhMucPhong_text.Text = PhongView.curpage.ToString();
+        }
+
+        private void Dangdoi_DanhMucPhong_Btn_Click(object sender, RoutedEventArgs e)
+        {
+            PhongViewDAO con = new PhongViewDAO();
+            PhongView.CurListPhong = con.GetListPhongLoai("Đang đợi");
+            PhongView.UpdatePaging();
+            ListView_DanhMucPhong.ItemsSource = PhongView.CurPhong;
+            Page_DanhMucPhong_text.Text = PhongView.curpage.ToString();
+        }
+
+        private void Dangsuachua_DanhMucPhong_Btn_Click(object sender, RoutedEventArgs e)
+        {
+            PhongViewDAO con = new PhongViewDAO();
+            PhongView.CurListPhong = con.GetListPhongLoai("Đang sửa chữa");
+            PhongView.UpdatePaging();
+            ListView_DanhMucPhong.ItemsSource = PhongView.CurPhong;
+            Page_DanhMucPhong_text.Text = PhongView.curpage.ToString();
+        }
+
+       
     }
 }

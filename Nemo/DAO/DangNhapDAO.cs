@@ -21,6 +21,7 @@ namespace Nemo.DAO
             if (username == "") return null;
             var query = "select * from Taikhoan where tentk=\'" + username + "\'";
             var result = conn.ExecuteQuery(query);
+            if (result == null) return null;
             List<TaiKhoan> list = JArray.FromObject(result).ToObject<List<TaiKhoan>>();
             if (result != null) return list[0];
             return null;

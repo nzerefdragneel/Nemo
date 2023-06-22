@@ -30,6 +30,7 @@
 
     </Window.Resources>
     <Grid>
+      
         <Grid.RowDefinitions>
             <RowDefinition Height="50px"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
@@ -132,44 +133,55 @@
                             <DockPanel Grid.Row="1">
                                 <WrapPanel DockPanel.Dock="Left" VerticalAlignment="Center" Orientation="Horizontal" HorizontalAlignment="Center">
                                     <Grid Margin="10 0">
-                                        <Button Height="45"
+                                        <Button Height="45" Click="PhongThue_DanhMucPhong_Btn_Click"
                                     materialDesign:ButtonAssist.CornerRadius="10"
                                     IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
                                     Style="{StaticResource MaterialDesignRaisedButton}"
                                     Background="Transparent" Foreground="{DynamicResource SecondaryHueMidForegroundBrush}"
-                                    ToolTip="MaterialDesignRaisedButton with Round Corners">
-                                            <TextBlock TextWrapping="Wrap"
-                                            Text="Số phòng đã thuê 10/10" />
+                                  >
+                                            <TextBlock TextWrapping="Wrap" x:Name="Dathue_DanhMucPhong_Textbox"
+                                            Text="Đã thuê" />
                                         </Button>
                                     </Grid>
                                     <Grid Margin="10 0" >
-                                        <Button Height="45"
+
+                                        <Button Height="45" Click="ConTrong_DanhMucPhong_Btn_Click"
                                     materialDesign:ButtonAssist.CornerRadius="10"
                                       Style="{StaticResource MaterialDesignRaisedButton}"
                                     Background="Transparent" Foreground="{DynamicResource SecondaryHueMidForegroundBrush}"
-                                    ToolTip="MaterialDesignRaisedButton with Round Corners">
+                                   >
                                             <TextBlock TextWrapping="Wrap"
-                                            Text="Số phòng đã thuê 10/10" />
+                                            Text="Còn trống" />
                                         </Button>
                                     </Grid>
                                     <Grid Margin="10 0">
-                                        <Button Height="45"
+                                        <Button Height="45"  Click="Dangdoi_DanhMucPhong_Btn_Click"
                                     materialDesign:ButtonAssist.CornerRadius="10"
                                   Style="{StaticResource MaterialDesignRaisedButton}"
                                     Background="Transparent" Foreground="{DynamicResource SecondaryHueMidForegroundBrush}"
-                                    ToolTip="MaterialDesignRaisedButton with Round Corners">
+                                    >
                                             <TextBlock TextWrapping="Wrap"
-                                            Text="Số phòng đã thuê 10/10" />
+                                            Text="Đang đợi" />
+                                        </Button>
+                                    </Grid>
+                                    <Grid Margin="10 0">
+                                        <Button Height="45" Click="Dangsuachua_DanhMucPhong_Btn_Click"
+                                    materialDesign:ButtonAssist.CornerRadius="10"
+                                  Style="{StaticResource MaterialDesignRaisedButton}"
+                                    Background="Transparent" Foreground="{DynamicResource SecondaryHueMidForegroundBrush}"
+                                  >
+                                            <TextBlock TextWrapping="Wrap"
+                                            Text="Đang sửa chữa" />
                                         </Button>
                                     </Grid>
                                 </WrapPanel>
-                                <Grid Margin="10 0" DockPanel.Dock="Right">
-                                    <Button Height="45" Click="Themhong_Btn_click"
+                                <Grid Margin="10 0"  >
+                                    <Button Height="45" Click="Themhong_Btn_click" HorizontalAlignment="Right"
                                     materialDesign:ButtonAssist.CornerRadius="10"
                                     IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
                                     Style="{StaticResource MaterialDesignRaisedButton}"
                                     Background="{DynamicResource PrimaryDarkForegroundBrush}" Foreground="{DynamicResource SecondaryHueMidForegroundBrush}"
-                                    ToolTip="MaterialDesignRaisedButton with Round Corners">
+                                   >
                                         <TextBlock TextWrapping="Wrap" Foreground="{DynamicResource PrimaryMidBrush}"
                                             Text="Thêm phòng" />
                                     </Button>
@@ -177,7 +189,7 @@
                             </DockPanel>
                             <StackPanel Grid.Row="2" Margin="10">
                                 <ScrollViewer  HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" VerticalContentAlignment="Stretch">
-                                    <ListView x:Name="ListView_DanhMucPhong" Height="372">
+                                    <ListView x:Name="ListView_DanhMucPhong" Height="372" >
                                         <ListView.View>
                                             <GridView x:Name="GridView_DanhMucPhong" >
                                                 <GridView.ColumnHeaderContainerStyle>
@@ -196,17 +208,17 @@
                                                 <GridViewColumn  Header="Tùy chọn" Width="150">
                                                     <GridViewColumn.CellTemplate>
                                                         <DataTemplate>
-                                                            <Button Background="red"
+                                                            <Button Background="blue"
                                                     materialDesign:ButtonAssist.CornerRadius="5" HorizontalAlignment="Center" VerticalAlignment="Center"
                                                     Style="{StaticResource MaterialDesignRaisedLightButton}"
                                                     ToolTip="MaterialDesignRaisedLightButton with Round Corners" Click="TuyChon_Btn_Click">
-                                                                <TextBlock Text="{Binding tuychon}" />
+                                                                <TextBlock Text="Sửa phòng" />
                                                             </Button>
                                                         </DataTemplate>
                                                     </GridViewColumn.CellTemplate>
                                                 </GridViewColumn>
-                                                <GridViewColumn Width="200" >
-                                                    <GridViewColumnHeader>Mã phòng
+                                                <GridViewColumn Width="250" >
+                                                    <GridViewColumnHeader Width="250">Mã phòng
                                                     </GridViewColumnHeader>
                                                     <GridViewColumn.CellTemplate>
                                                         <DataTemplate>
@@ -214,7 +226,7 @@
                                                         </DataTemplate>
                                                     </GridViewColumn.CellTemplate>
                                                 </GridViewColumn>
-                                                <GridViewColumn Header="Tình trạng" Width="150" >
+                                                <GridViewColumn Header="Tình trạng" Width="200" >
                                                     <GridViewColumn.CellTemplate>
                                                         <DataTemplate>
                                                             <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
@@ -229,8 +241,7 @@
                                                     </GridViewColumn.CellTemplate>
                                                 </GridViewColumn>
                                                 <GridViewColumn Header="Loại phòng" Width="150"  DisplayMemberBinding="{Binding maloaiphong}"/>
-                                                <GridViewColumn Header="Số lượng" Width="200" DisplayMemberBinding="{Binding soluong}"/>
-                                                <GridViewColumn Header="Giá" Width="100" DisplayMemberBinding="{Binding gia}"/>
+                                                <GridViewColumn Header="Giá" Width="200" DisplayMemberBinding="{Binding gia}"/>
                                             </GridView>
                                         </ListView.View>
                                     </ListView>
@@ -941,23 +952,23 @@
                                 </Grid>
                             </TabItem>
                         </TabControl>
-                                   
-                         
+
+
                     </TabItem>
-            
+
                     <!--Chi tiết phiếu thuê phòng-->
-                <TabItem x:Name="ChiTietPhieuThueTabItem" Header="Chi tiết phiếu thuê phòng" Visibility="Collapsed">
-                    <Grid Background="{DynamicResource PrimaryHueMidForegroundBrush}">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="50"></RowDefinition>
-                            <RowDefinition Height="100"></RowDefinition>
-                            <RowDefinition Height="*"></RowDefinition>
-                            <RowDefinition Height="60"></RowDefinition>
-                        </Grid.RowDefinitions>
-                        <StackPanel Grid.Row="0" Orientation="Horizontal" 
+                    <TabItem x:Name="ChiTietPhieuThueTabItem" Header="Chi tiết phiếu thuê phòng" Visibility="Collapsed">
+                        <Grid Background="{DynamicResource PrimaryHueMidForegroundBrush}">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="50"></RowDefinition>
+                                <RowDefinition Height="100"></RowDefinition>
+                                <RowDefinition Height="*"></RowDefinition>
+                                <RowDefinition Height="60"></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <StackPanel Grid.Row="0" Orientation="Horizontal" 
                                             HorizontalAlignment="Left" VerticalAlignment="Bottom"
                                             Margin="10 0 0 0">
-                            <Button
+                                <Button
                                         Width="40"
                                         Height="40"
                                         Padding="0"
@@ -970,92 +981,92 @@
                                         Style="{StaticResource MaterialDesignIconButton}"
                                         Click="BackButton_Click">
 
-                                <materialDesign:PackIcon
+                                    <materialDesign:PackIcon
                                             Width="25"
                                             Height="25"
                                             HorizontalAlignment="Center"
                                             VerticalAlignment="Center"
                                             Foreground="Black"
                                             Kind="ArrowBack" />
-                            </Button>
-                            <TextBlock Text="Chi tiết phiếu thuê phòng" Foreground="#4A8DB7" VerticalAlignment="Center" FontSize="20" FontWeight="Bold" Margin="8,0,0,0"/>
-                        </StackPanel>
-                            
-                        <Grid Grid.Row="1">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="1*"/>
-                                <ColumnDefinition Width="1*"/>
-                            </Grid.ColumnDefinitions>
-                            <StackPanel Grid.Column="0"
+                                </Button>
+                                <TextBlock Text="Chi tiết phiếu thuê phòng" Foreground="#4A8DB7" VerticalAlignment="Center" FontSize="20" FontWeight="Bold" Margin="8,0,0,0"/>
+                            </StackPanel>
+
+                            <Grid Grid.Row="1">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="1*"/>
+                                    <ColumnDefinition Width="1*"/>
+                                </Grid.ColumnDefinitions>
+                                <StackPanel Grid.Column="0"
                                             HorizontalAlignment="Left" VerticalAlignment="Top"
                                             Margin="10 5 0 0">
 
-                                <TextBlock Foreground="#000" VerticalAlignment="Center" FontSize="13" Margin="50,0,0,5">
+                                    <TextBlock Foreground="#000" VerticalAlignment="Center" FontSize="13" Margin="50,0,0,5">
                                     <Run Text="Mã phiếu thuê: "/>
                                     <Run x:Name="MaPTPTextBlock" Text=""/>
-                                </TextBlock>
+                                    </TextBlock>
 
-                                <TextBlock Foreground="#000" VerticalAlignment="Center" FontSize="13" Margin="50,0,0,5">
+                                    <TextBlock Foreground="#000" VerticalAlignment="Center" FontSize="13" Margin="50,0,0,5">
                                     <Run Text="Ngày thuê phòng: "/>
-                                    <Run x:Name="NgayTaoTextBlock" Text=""/>            
-                                </TextBlock>
+                                    <Run x:Name="NgayTaoTextBlock" Text=""/>
+                                    </TextBlock>
 
-                                <TextBlock Foreground="#000" VerticalAlignment="Center" FontSize="13" Margin="50,0,0,5">
+                                    <TextBlock Foreground="#000" VerticalAlignment="Center" FontSize="13" Margin="50,0,0,5">
                                     <Run Text="Phòng: "/>
                                     <Run x:Name="MaPhongTextBlock" Text=""/>
-                                </TextBlock>
+                                    </TextBlock>
 
-                            </StackPanel>
-                            <StackPanel Grid.Column="1"
+                                </StackPanel>
+                                <StackPanel Grid.Column="1"
                                 HorizontalAlignment="Left" VerticalAlignment="Top"
                                 Margin="10 5 0 0">
-                                <TextBlock Foreground="#000" VerticalAlignment="Center" FontSize="13" Margin="250,0,0,5">
+                                    <TextBlock Foreground="#000" VerticalAlignment="Center" FontSize="13" Margin="250,0,0,5">
                                     <Run Text="Số tiền cho đến nay: " Foreground="#000"/>
                                     <Run x:Name="TienThueTextBlock" Text="$12.67" Foreground="Red"/>
-                                </TextBlock>
-                            </StackPanel>
-                                
-                        </Grid>
+                                    </TextBlock>
+                                </StackPanel>
 
-                        <Grid Grid.Row="2">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                            </Grid.RowDefinitions>
-                            <StackPanel Grid.Row="0" HorizontalAlignment="Stretch" Margin="0 12 0 12">
-                                <ListView MaxHeight="500" HorizontalContentAlignment="Stretch" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
-                                    <ListView.ItemTemplate>
-                                        <DataTemplate/>
-                                    </ListView.ItemTemplate>
-                                    <ListView.View>
-                                        <GridView AllowsColumnReorder="True" >
-                                            <GridView.ColumnHeaderContainerStyle>
-                                                <Style TargetType="{x:Type GridViewColumnHeader}">
-                                                    <Setter Property="Height" Value="30"/>
-                                                    <Setter Property="Background" Value="Transparent"/>
-                                                    <Setter Property="Foreground" Value="Black"/>
-                                                    <Setter Property="FontSize" Value="13"/>
-                                                    <Setter Property="FontWeight" Value="Bold"/>
-                                                    <Setter Property="Margin" Value=" 0"/>
-                                                    <Setter Property="Width" Value="Auto"/>
-                                                    <Setter Property="Padding" Value="0"/>
-                                                    <Setter Property="BorderThickness" Value="0"/>
-                                                </Style>
-                                            </GridView.ColumnHeaderContainerStyle>
-                                            <GridViewColumn Header="STT" Width="55" DisplayMemberBinding="{Binding STT}"/>
-                                            <GridViewColumn Header="Khách hàng" Width="200" DisplayMemberBinding="{Binding MaPTP}"/>
-                                            <GridViewColumn Header="Loại khách" Width="100" DisplayMemberBinding="{Binding MaPhong}"/>
-                                            <GridViewColumn Header="Hệ số" Width="80" DisplayMemberBinding="{Binding SoNgayThue}"/>
-                                            <GridViewColumn Header="Định danh" Width="120" DisplayMemberBinding="{Binding SoKhach}"/>
-                                            <GridViewColumn Header="Địa chỉ" Width="200" DisplayMemberBinding="{Binding DonGia}"/>
-                                            <GridViewColumn Header="Ghi chú" Width="240" DisplayMemberBinding="{Binding GhiChu}"/>
-                                        </GridView>
-                                    </ListView.View>
-                                </ListView>
-                            </StackPanel>
+                            </Grid>
 
-                            <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0 100 50 0">
-                                <Button Height="45"
+                            <Grid Grid.Row="2">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <StackPanel Grid.Row="0" HorizontalAlignment="Stretch" Margin="0 12 0 12">
+                                    <ListView MaxHeight="500" HorizontalContentAlignment="Stretch" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                                        <ListView.ItemTemplate>
+                                            <DataTemplate/>
+                                        </ListView.ItemTemplate>
+                                        <ListView.View>
+                                            <GridView AllowsColumnReorder="True" >
+                                                <GridView.ColumnHeaderContainerStyle>
+                                                    <Style TargetType="{x:Type GridViewColumnHeader}">
+                                                        <Setter Property="Height" Value="30"/>
+                                                        <Setter Property="Background" Value="Transparent"/>
+                                                        <Setter Property="Foreground" Value="Black"/>
+                                                        <Setter Property="FontSize" Value="13"/>
+                                                        <Setter Property="FontWeight" Value="Bold"/>
+                                                        <Setter Property="Margin" Value=" 0"/>
+                                                        <Setter Property="Width" Value="Auto"/>
+                                                        <Setter Property="Padding" Value="0"/>
+                                                        <Setter Property="BorderThickness" Value="0"/>
+                                                    </Style>
+                                                </GridView.ColumnHeaderContainerStyle>
+                                                <GridViewColumn Header="STT" Width="55" DisplayMemberBinding="{Binding STT}"/>
+                                                <GridViewColumn Header="Khách hàng" Width="200" DisplayMemberBinding="{Binding MaPTP}"/>
+                                                <GridViewColumn Header="Loại khách" Width="100" DisplayMemberBinding="{Binding MaPhong}"/>
+                                                <GridViewColumn Header="Hệ số" Width="80" DisplayMemberBinding="{Binding SoNgayThue}"/>
+                                                <GridViewColumn Header="Định danh" Width="120" DisplayMemberBinding="{Binding SoKhach}"/>
+                                                <GridViewColumn Header="Địa chỉ" Width="200" DisplayMemberBinding="{Binding DonGia}"/>
+                                                <GridViewColumn Header="Ghi chú" Width="240" DisplayMemberBinding="{Binding GhiChu}"/>
+                                            </GridView>
+                                        </ListView.View>
+                                    </ListView>
+                                </StackPanel>
+
+                                <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0 100 50 0">
+                                    <Button Height="45"
                                                 Name="thanhToanBtn"
                                                 Click="thanhToanBtn_Click"
                                     materialDesign:ButtonAssist.CornerRadius="10"
@@ -1063,58 +1074,58 @@
                                     Style="{StaticResource MaterialDesignRaisedButton}"
                                     Background="{DynamicResource PrimaryDarkForegroundBrush}" Foreground="{DynamicResource SecondaryHueMidForegroundBrush}"
                                     ToolTip="MaterialDesignRaisedButton with Round Corners">
-                                    <TextBlock TextWrapping="Wrap" Foreground="{DynamicResource PrimaryMidBrush}"
+                                        <TextBlock TextWrapping="Wrap" Foreground="{DynamicResource PrimaryMidBrush}"
                                             Text="Thanh toán" />
-                                </Button>
-                            </StackPanel>
-                        </Grid>
+                                    </Button>
+                                </StackPanel>
+                            </Grid>
 
-                        <!-- số trang -->
-                        <StackPanel Grid.Row="4" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Top">
-                            <Button Margin="3" Width="30" Height="30"
+                            <!-- số trang -->
+                            <StackPanel Grid.Row="4" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Top">
+                                <Button Margin="3" Width="30" Height="30"
                                 Background="{DynamicResource PrimaryCardForegroundBrush}"
                                 Foreground="{DynamicResource PrimaryMidBrush}"
                                 IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
                                 Style="{StaticResource MaterialDesignIconButton}"
                                 ToolTip="MaterialDesignIconButton">
-                                <TextBlock>1</TextBlock>
+                                    <TextBlock>1</TextBlock>
 
-                            </Button>
-                            <Button Margin="3" Height="30" Width="30"
+                                </Button>
+                                <Button Margin="3" Height="30" Width="30"
                                 Background="Transparent"
                                     Foreground="{DynamicResource SecondaryHueMidForegroundBrush}"
                                 IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
                                 Style="{StaticResource MaterialDesignIconButton}"
                                 ToolTip="MaterialDesignIconButton">
-                                <TextBlock>2</TextBlock>
-                            </Button>
-                            <Button Margin="3" Height="30" Width="30"
+                                    <TextBlock>2</TextBlock>
+                                </Button>
+                                <Button Margin="3" Height="30" Width="30"
                                 Background="Transparent"
                                     Foreground="{DynamicResource SecondaryHueMidForegroundBrush}"
                                 IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
                                 Style="{StaticResource MaterialDesignIconButton}"
                                 ToolTip="MaterialDesignIconButton">
-                                <TextBlock>3</TextBlock>
-                            </Button>
-                            <Button Margin="3" Height="30" Width="30"
+                                    <TextBlock>3</TextBlock>
+                                </Button>
+                                <Button Margin="3" Height="30" Width="30"
                                 Background="Transparent"
                                     Foreground="{DynamicResource SecondaryHueMidForegroundBrush}"
                                 IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
                                 Style="{StaticResource MaterialDesignIconButton}"
                                 ToolTip="MaterialDesignIconButton">
-                                <TextBlock>...</TextBlock>
-                            </Button>
-                            <Button Margin="3" Height="30" Width="30"
+                                    <TextBlock>...</TextBlock>
+                                </Button>
+                                <Button Margin="3" Height="30" Width="30"
                                 Background="Transparent"
                                     Foreground="{DynamicResource SecondaryHueMidForegroundBrush}"
                                 IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
                                 Style="{StaticResource MaterialDesignIconButton}"
                                 ToolTip="MaterialDesignIconButton">
-                                <TextBlock>10</TextBlock>
-                            </Button>
-                        </StackPanel>
-                    </Grid>
-                </TabItem>
+                                    <TextBlock>10</TextBlock>
+                                </Button>
+                            </StackPanel>
+                        </Grid>
+                    </TabItem>
                     <!--Thanh toán-->
                     <TabItem x:Name="ThanhToanTabItem" Header="Thanh toán" Visibility="Collapsed">
                         <Grid Background="{DynamicResource PrimaryHueMidForegroundBrush}">
@@ -1123,7 +1134,7 @@
                                 <RowDefinition Height="100"></RowDefinition>
                                 <RowDefinition Height="80"></RowDefinition>
                                 <RowDefinition Height="*"></RowDefinition>
-                        </Grid.RowDefinitions>
+                            </Grid.RowDefinitions>
                             <StackPanel Grid.Row="0" Orientation="Horizontal" 
                                             HorizontalAlignment="Left" VerticalAlignment="Bottom"
                                             Margin="10 0 0 0">
@@ -1175,7 +1186,7 @@
                                             <ComboBoxItem Content="Thẻ" IsSelected="True"/>
                                         </ComboBox>
                                     </Border>
-                                    
+
                                 </Grid>
 
                                 <Grid>
@@ -1284,7 +1295,7 @@
                             </Grid>
                         </Grid>
                     </TabItem>
-                <!--tạo phiếu thuê phòng-->
+                    <!--tạo phiếu thuê phòng-->
                     <TabItem x:Name="TaoPTPTabItem" Header="Tạo phiếu thuê phòng" Visibility="Collapsed">
                         <Grid Background="{DynamicResource PrimaryHueMidForegroundBrush}">
                             <Grid.RowDefinitions>

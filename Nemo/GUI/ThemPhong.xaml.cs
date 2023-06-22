@@ -48,8 +48,10 @@ namespace Nemo
         {
             //kiểm tra điều kiện
             var loaiphongselect= ChonLoaiPhong_Cbb.SelectedIndex;
+
             if (loaiphongselect!=-1)
             {
+                var conn = new PhongViewDAO();
                 var loaiphong = ChonLoaiPhong_Cbb.SelectedValue.ToString();
                 int loaiphongvalue = int.Parse(loaiphong);
                 var number = Maphong_textbox.Text;
@@ -58,14 +60,16 @@ namespace Nemo
                 {
                     MessageBox.Show("Mã phòng là số nguyên", "Warning", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
-                else
+                else if (conn.Kiemtramaphong(maphong) == true)
                 {
                     PhongMoi.maphong = maphong;
                     PhongMoi.maloaiphong = loaiphongvalue; 
-                    
-
                     DialogResult = true;
                     this.Close();
+                }
+                else
+                {
+                    MessageBox.Show("Mã phòng đã tồn tại", "Warning", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
             }
             else
