@@ -19,14 +19,14 @@ namespace Nemo.DTO
             var con = new QuyDinhDAO();
             quyDinh= con.getQuyDinh();
         }
-        public void setQuyDinh(string tile, string heso,string soloai,string sokhach)
+        public void addQuyDinh(string tile, string heso,string soloai,string sokhach)
         {
             var con = new QuyDinhDAO();
             quyDinh.tiLePhuThu = Convert.ToSingle(tile);
             quyDinh.heSoKhachNN = Convert.ToSingle(heso);
-            quyDinh.soLoaiPhong = Convert.ToInt32(soloai);
-            quyDinh.soLuongKhachToiDa = Convert.ToInt32(sokhach);
-            con.setQuyDinh(quyDinh);
+            quyDinh.soLoaiPhong = Convert.ToInt16(soloai);
+            quyDinh.soLuongKhachToiDa = Convert.ToInt16(sokhach);
+            con.addQuyDinh(quyDinh);
         }
     }
 }

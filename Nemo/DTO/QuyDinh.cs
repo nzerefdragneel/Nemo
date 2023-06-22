@@ -8,6 +8,7 @@ namespace Nemo.DTO
 {
     public class QuyDinh
     {
+        public int maQD { set; get; }
         public float heSoKhachNN { get; set; }
         public float tiLePhuThu { get; set; }
         public int soLuongKhachToiDa { get; set; }

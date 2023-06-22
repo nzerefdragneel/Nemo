@@ -24,6 +24,8 @@ using ControlzEx.Controls;
 using Button = System.Windows.Controls.Button;
 using ListViewItem = System.Windows.Controls.ListViewItem;
 using LiveChartsCore.Measure;
+using System.Windows;
+using MessageBox = System.Windows.Forms.MessageBox;
 
 namespace Nemo
 {
@@ -223,6 +225,7 @@ namespace Nemo
         private void Get_QuyDinh_View()
         {
             QuyDinhView.getQuyDinh();
+            Text_QuyDinh_ma.Text = QuyDinhView.quyDinh.maQD.ToString();
             NumOfTypes.Text = QuyDinhView.quyDinh.soLoaiPhong.ToString();
             NumOfCustomers.Text = QuyDinhView.quyDinh.soLuongKhachToiDa.ToString();
             PhuThu.Text = QuyDinhView.quyDinh.tiLePhuThu.ToString();
@@ -230,21 +233,14 @@ namespace Nemo
         }
         private void ChangeButton_QD(object sender, RoutedEventArgs e)
         {
-            NumOfTypes.IsEnabled = true;
-            NumOfTypes.Focus();
-            NumOfCustomers.IsEnabled = true;
-            PhuThu.IsEnabled = true;
-            HeSoKNN.IsEnabled = true;
-
+            QuyDinhView.addQuyDinh(PhuThu.Text, HeSoKNN.Text, NumOfTypes.Text, NumOfCustomers.Text);
+            MessageBox.Show("Thay đổi thành công");
+            Get_QuyDinh_View();
         }
 
         private void SetQD(object sender, RoutedEventArgs e)
         {
-            NumOfTypes.IsEnabled = false;
-            NumOfCustomers.IsEnabled = false;
-            PhuThu.IsEnabled = false;
-            HeSoKNN.IsEnabled = false;
-            QuyDinhView.setQuyDinh(PhuThu.Text, HeSoKNN.Text,NumOfTypes.Text,NumOfCustomers.Text);
+            Get_QuyDinh_View();
         }
         //Bao cao
         //Doanh Thu

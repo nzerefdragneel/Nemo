@@ -24,6 +24,7 @@
     <Window.DataContext>
         <modelChart:ViewModelChart/>
     </Window.DataContext>
+
     <Window.Resources>
 
 
@@ -1430,38 +1431,38 @@
                                 <Border Grid.Column="2" CornerRadius="20" BorderBrush="#555555" BorderThickness="1" Height="80"  FlowDirection="RightToLeft">
                                     <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
                                         <TextBlock Foreground="Black" FontSize="18" Text="MÃ QUY ĐỊNH"/>
-                                        <TextBlock Foreground="Black" FontSize="40" HorizontalAlignment="Center" FontWeight="Bold" ><Run Text="04"/></TextBlock>
+                                        <TextBlock x:Name="Text_QuyDinh_ma" Foreground="Black" FontSize="40" HorizontalAlignment="Center" FontWeight="Bold" />
                                     </StackPanel>
                                 </Border>
                             </Grid>
+                            
                             <Border Grid.Row="1" Margin="60 0" Height="400" CornerRadius="10" BorderThickness="1" BorderBrush="#666869" Padding="20">
                                 <StackPanel HorizontalAlignment="Center">
                                     <StackPanel Margin="10" Orientation="Horizontal">
                                         <TextBlock FontSize="25" Foreground="Black">Số lượng loại phòng</TextBlock>
                                         <Border CornerRadius="10" Margin="300 0 0 0"  Width="80" Height="40" BorderThickness="1" BorderBrush="Black">
                                             <TextBox x:Name="NumOfTypes" BorderThickness="0" TextAlignment="Center" Padding="0"
-                                              FontSize="25" VerticalAlignment="Center" Foreground="Black"
-                                              IsEnabled="False" />
+                                              FontSize="25" VerticalAlignment="Center" Foreground="Black"/>
                                         </Border>
                                     </StackPanel>
                                     <StackPanel Margin="10" Orientation="Horizontal">
                                         <TextBlock FontSize="25" Foreground="Black">Số lượng khách tối đa</TextBlock>
                                         <Border CornerRadius="10" Margin="280 0 0 0"  Width="80" Height="40" BorderThickness="1" BorderBrush="Black">
-                                            <TextBox x:Name="NumOfCustomers" BorderThickness="0" TextAlignment="Center" Padding="0" IsEnabled="False"
+                                            <TextBox x:Name="NumOfCustomers" BorderThickness="0" TextAlignment="Center" Padding="0"
                                               FontSize="25" VerticalAlignment="Center" Foreground="Black" />
                                         </Border>
                                     </StackPanel>
                                     <StackPanel Margin="10" Orientation="Horizontal">
                                         <TextBlock FontSize="25" Foreground="Black">Tỷ lệ phụ thu</TextBlock>
                                         <Border CornerRadius="10" Margin="380 0 0 0"  Width="80" Height="40" BorderThickness="1" BorderBrush="Black">
-                                            <TextBox x:Name="PhuThu" BorderThickness="0" TextAlignment="Center" Padding="0" IsEnabled="False"
+                                            <TextBox x:Name="PhuThu" BorderThickness="0" TextAlignment="Center" Padding="0"
                                               FontSize="25" VerticalAlignment="Center" Foreground="Black" />
                                         </Border>
                                     </StackPanel>
                                     <StackPanel Margin="10" Orientation="Horizontal">
                                         <TextBlock FontSize="25" Foreground="Black">Hệ số khách nước ngoài</TextBlock>
                                         <Border CornerRadius="10" Margin="250 0 0 0"  Width="80" Height="40" BorderThickness="1" BorderBrush="Black">
-                                            <TextBox x:Name="HeSoKNN" BorderThickness="0" TextAlignment="Center" Padding="0" IsEnabled="False"
+                                            <TextBox x:Name="HeSoKNN" BorderThickness="0" TextAlignment="Center" Padding="0"
                                               FontSize="25" VerticalAlignment="Center" Foreground="Black"/>
                                         </Border>
                                     </StackPanel>

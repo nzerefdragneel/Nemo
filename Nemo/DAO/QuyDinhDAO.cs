@@ -22,18 +22,21 @@ namespace Nemo.DAO
         }
         public QuyDinh getQuyDinh()
         {
-            var rs = conn.ExecuteQuery("select * from quydinh");
+            var rs = conn.ExecuteQuery("SELECT * FROM quydinh WHERE maqd = (SELECT MAX(maqd) FROM quydinh);");
             var Qd = new QuyDinh();
-            Qd.tiLePhuThu = Convert.ToSingle(rs.Rows[0]["tilephuthu"]);
-            Qd.heSoKhachNN = Convert.ToSingle(rs.Rows[0]["hesokhachnuocngoai"]);
-            Qd.soLuongKhachToiDa = Convert.ToInt32(rs.Rows[0]["sl_khachtoida"]);
-            Qd.soLoaiPhong = Convert.ToInt32(rs.Rows[0]["sl_loaiphong"]);
+            DataRow r = rs.Rows[0];
+            Qd.maQD = Convert.ToInt16(r["maqd"]);
+            Qd.tiLePhuThu = Convert.ToSingle(r["tilephuthu"]);
+            Qd.heSoKhachNN = Convert.ToSingle(r["hesokhachnuocngoai"]);
+            Qd.soLuongKhachToiDa = Convert.ToInt16(r["sl_khachtoida"]);
+            Qd.soLoaiPhong = Convert.ToInt16(r["sl_loaiphong"]);
             return Qd;
         }
-        public void setQuyDinh(QuyDinh qd)
+        public void addQuyDinh(QuyDinh qd)
         {
-            conn.ExecuteQuery($"UPDATE quydinh SET tilephuthu={qd.tiLePhuThu}, hesokhachnuocngoai={qd.heSoKhachNN}," +
-                $" sl_khachtoida={qd.soLuongKhachToiDa}, sl_loaiphong={qd.soLoaiPhong}");
+            conn.ExecuteQuery($@"INSERT INTO quydinh(
+	                            tilephuthu, hesokhachnuocngoai, sl_khachtoida, sl_loaiphong)
+	                            VALUES ({qd.tiLePhuThu}, {qd.heSoKhachNN}, {qd.soLuongKhachToiDa}, {qd.soLoaiPhong});");
         }
     }
 }
