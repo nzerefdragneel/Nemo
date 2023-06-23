@@ -25,6 +25,7 @@
     <Window.DataContext>
         <modelChart:ViewModelChart/>
     </Window.DataContext>
+
     <Window.Resources>
 
 
@@ -474,12 +475,14 @@
                                      Header="Doanh Thu">
                                         <Grid>
                                             <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="57*"/>
-                                                <ColumnDefinition Width="43*"/>
+                                                <ColumnDefinition Width="4.7*"/>
+                                                <ColumnDefinition Width="5.3"/>
                                             </Grid.ColumnDefinitions>
                                             <Grid.RowDefinitions>
-                                                <RowDefinition Height="4.5*"></RowDefinition>
-                                                <RowDefinition Height="5.5*"></RowDefinition>
+                                                <RowDefinition Height="4.5*"/>
+                                                <RowDefinition Height="1*"/>
+                                                <RowDefinition Height="4.5*"/>
+
                                             </Grid.RowDefinitions>
                                             <Grid  Grid.Row="0" Grid.ColumnSpan="2" >
                                                 <Grid.ColumnDefinitions>
@@ -488,7 +491,7 @@
                                                 </Grid.ColumnDefinitions>
                                                 <StackPanel Grid.Column="0" HorizontalAlignment="Left">
                                                     <StackPanel Orientation="Horizontal">
-                                                        <ComboBox
+                                                        <ComboBox x:Name="Cbb_DoanhThu_year1" SelectionChanged="Cbb_DoanhThu_year1_SelectionChanged"
                                                       Background="#F1F1F1"
                                                       Foreground="#003D69"
                                                       HorizontalAlignment="Left"
@@ -497,67 +500,53 @@
                                                       Height="35"
                                                       FontSize="14"
                                                       BorderThickness="0"
-                                                      Padding="10 0"
-                                                      materialDesign:HintAssist.Hint="Tháng"
-                                                      Style="{StaticResource MaterialDesignOutlinedComboBox}" >
-                                                            <ComboBoxItem
-                                                        Content="1" />
-                                                            <ComboBoxItem
-                                                        Content="2" />
-                                                            <ComboBoxItem
-                                                        Content="3" />
-                                                        </ComboBox>
-                                                        <ComboBox
-                                                      Background="#F1F1F1"
-                                                      Foreground="#003D69"
-                                                      HorizontalAlignment="Left"
-                                                      BorderThickness="0"
-                                                      Margin="10"
-                                                      Width="100"
-                                                      Height="35"
-                                                      FontSize="14"
                                                       Padding="10 0"
                                                       materialDesign:HintAssist.Hint="Năm"
-                                                      Style="{StaticResource MaterialDesignOutlinedComboBox}" >
-                                                            <ComboBoxItem
-                                                        Content="2021" />
-                                                            <ComboBoxItem
-                                                        Content="2022" />
-                                                            <ComboBoxItem
-                                                        Content="2023" />
-                                                        </ComboBox>
+                                                      Style="{StaticResource MaterialDesignOutlinedComboBox}" />
+                                                        <ComboBox x:Name="Cbb_DoanhThu_month" SelectionChanged="Cbb_DoanhThu_month_SelectionChanged"
+                                                      Background="#F1F1F1"
+                                                      Foreground="#003D69"
+                                                      HorizontalAlignment="Left"
+                                                      BorderThickness="0"
+                                                      Margin="10"
+                                                      Width="100"
+                                                      Height="35"
+                                                      FontSize="14"
+                                                      Padding="10 0"
+                                                      materialDesign:HintAssist.Hint="Tháng"
+                                                      Style="{StaticResource MaterialDesignOutlinedComboBox}" />
                                                     </StackPanel>
                                                     <Border Margin="10 0" CornerRadius="10" BorderThickness="2" BorderBrush="#4A8DB7" Padding="5 0">
                                                         <StackPanel>
+                                                            <ListView x:Name="ListView_DoanhThu">
+                                                                <ListView.ItemTemplate>
+                                                                    <DataTemplate>
+                                                                        <StackPanel Margin="10" Orientation="Horizontal">
+                                                                            <TextBlock FontSize="18" Foreground="Black" Text="{Binding Path=maloai, StringFormat='Mã loại {0}'}"/>
+                                                                            <TextBlock Margin="100 0 0 0" FontSize="18" Foreground="Black" Text="{Binding doanhthutheomaloai}"/>
+                                                                        </StackPanel>
+                                                                    </DataTemplate>
+                                                                </ListView.ItemTemplate>
+                                                            </ListView>
                                                             <StackPanel Margin="10" Orientation="Horizontal">
-                                                                <TextBlock FontSize="18" Foreground="Black">Loai phong A</TextBlock>
-                                                                <TextBlock Margin="100 0 0 0" FontSize="18" Foreground="Black">2000000</TextBlock>
+                                                                <TextBlock FontSize="18" Foreground="Black" Margin="5 0 0 0" Text="Tổng cộng"/>
+                                                                <TextBlock x:Name="Text_tongdoanhthu" Margin="90 0 0 0" FontSize="18" Foreground="Black" Text="0"/>
                                                             </StackPanel>
-                                                            <StackPanel Margin="10" Orientation="Horizontal">
-                                                                <TextBlock FontSize="18" Foreground="Black">Loai phong A</TextBlock>
-                                                                <TextBlock Margin="100 0 0 0" FontSize="18" Foreground="Black">2000000</TextBlock>
-                                                            </StackPanel>
-                                                            <StackPanel Margin="10" Orientation="Horizontal">
-                                                                <TextBlock FontSize="18" Foreground="Black">Loai phong A</TextBlock>
-                                                                <TextBlock Margin="100 0 0 0" FontSize="18" Foreground="Black">2000000</TextBlock>
-                                                            </StackPanel>
-                                                            <StackPanel Margin="10" Orientation="Horizontal">
-                                                                <TextBlock FontSize="18" Foreground="Black">Loai phong A</TextBlock>
-                                                                <TextBlock Margin="100 0 0 0" FontSize="18" Foreground="Black">2000000</TextBlock>
-                                                            </StackPanel>
+                                                            
                                                         </StackPanel>
                                                     </Border>
                                                 </StackPanel>
-                                                <Grid Grid.Column="1">
-                                                    <lvc:PieChart
-                                                Series="{Binding DoanhThuThang}"
+                                                <Grid  Grid.Column="1">
+                                                    <lvc:PieChart 
+                                                Series="{Binding Chart_DoanhThuThang}"
                                                 LegendPosition="Right"  Grid.RowSpan="3" Margin="0,0,38,0">
                                                     </lvc:PieChart>
                                                 </Grid>
                                             </Grid>
 
-                                            <StackPanel Orientation="Vertical" Grid.ColumnSpan="2" Margin="0,241,0,0" Grid.RowSpan="2" >
-                                                <ComboBox 
+                                            <StackPanel Grid.Row="1">
+                                                
+                                                <ComboBox x:Name="Cbb_DoanhThu_year2" SelectionChanged="Cbb_DoanhThu_year2_SelectionChanged"
                                               Background="#F1F1F1"
                                               Foreground="#003D69"
                                               HorizontalAlignment="Left"
@@ -568,18 +557,11 @@
                                               FontSize="14"
                                               Padding="10 0"
                                               materialDesign:HintAssist.Hint="Năm"
-                                              Style="{StaticResource MaterialDesignOutlinedComboBox}" >
-                                                    <ComboBoxItem
-                                                Content="2021" />
-                                                    <ComboBoxItem
-                                                Content="2022" />
-                                                    <ComboBoxItem
-                                                Content="2023" />
-                                                </ComboBox>
+                                              Style="{StaticResource MaterialDesignOutlinedComboBox}" />
                                             </StackPanel>
-                                            <Grid  Grid.Row="1" Margin="10 35 0 0" Grid.ColumnSpan="2">
+                                            <Grid Grid.Row="2">
                                                 <lvc:CartesianChart
-                                                Series="{Binding DoanhThuNam}"
+                                                Series="{Binding Chart_DoanhThuNam}"
                                                 XAxes="{Binding XAxes}"
                                                 LegendPosition="Right" >
                                                 </lvc:CartesianChart>
@@ -588,10 +570,14 @@
                                     </TabItem>
                                     <TabItem
                                             Header="Mật độ sử dụng phòng">
-                                        <!--Mat do -->
-                                        <StackPanel HorizontalAlignment="Center" Width="999">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="4*"/>
+                                                <ColumnDefinition Width="6*"/>
+                                            </Grid.ColumnDefinitions>
+                                        <StackPanel Grid.Column="0">
                                             <StackPanel Orientation="Horizontal">
-                                                <ComboBox
+                                                <ComboBox x:Name="Cbb_MatDo_Year1" SelectionChanged="Cbb_MatDo_Year1_SelectionChanged"
                                                       Background="#F1F1F1"
                                                       Foreground="#003D69"
                                                       HorizontalAlignment="Left"
@@ -600,69 +586,26 @@
                                                       Height="35"
                                                       FontSize="14"
                                                       BorderThickness="0"
-                                                      Padding="10 0"
-                                                      materialDesign:HintAssist.Hint="Tháng"
-                                                      Style="{StaticResource MaterialDesignOutlinedComboBox}" >
-                                                    <ComboBoxItem
-                                                        Content="1" />
-                                                    <ComboBoxItem
-                                                        Content="2" />
-                                                    <ComboBoxItem
-                                                        Content="3" />
-                                                </ComboBox>
-                                                <ComboBox
-                                                      Background="#F1F1F1"
-                                                      Foreground="#003D69"
-                                                      HorizontalAlignment="Left"
-                                                      BorderThickness="0"
-                                                      Margin="10"
-                                                      Width="100"
-                                                      Height="35"
-                                                      FontSize="14"
                                                       Padding="10 0"
                                                       materialDesign:HintAssist.Hint="Năm"
-                                                      Style="{StaticResource MaterialDesignOutlinedComboBox}">
-                                                    <ComboBoxItem
-                                                        Content="2021" />
-                                                    <ComboBoxItem
-                                                        Content="2022" />
-                                                    <ComboBoxItem
-                                                        Content="2023" />
-                                                </ComboBox>
-
-                                            </StackPanel>
-                                            <StackPanel Orientation="Horizontal">
-                                                <ComboBox
+                                                      Style="{StaticResource MaterialDesignOutlinedComboBox}"/>
+                                                <ComboBox x:Name="Cbb_MatDo_month" SelectionChanged="Cbb_MatDo_month_SelectionChanged"
                                                       Background="#F1F1F1"
                                                       Foreground="#003D69"
                                                       HorizontalAlignment="Left"
+                                                      BorderThickness="0"
                                                       Margin="10"
-                                                      Width="220"
+                                                      Width="100"
                                                       Height="35"
                                                       FontSize="14"
-                                                      BorderThickness="0"
                                                       Padding="10 0"
-                                                      materialDesign:HintAssist.Hint="Phòng"
-                                                      Style="{StaticResource MaterialDesignOutlinedComboBox}">
-                                                    <ComboBoxItem
-                                                        Content="101" />
-                                                    <ComboBoxItem
-                                                        Content="201" />
-                                                    <ComboBoxItem
-                                                        Content="303" />
-                                                </ComboBox>
-                                                <Border Margin="180 0 0 0" CornerRadius="10" BorderThickness="2" BorderBrush="#4A8DB7">
-                                                    <StackPanel Height="43">
-                                                        <StackPanel Margin="10" Orientation="Horizontal">
-                                                            <TextBlock FontSize="18" Foreground="Black">Số ngày cho thuê</TextBlock>
-                                                            <TextBlock Margin="100 0 0 0" FontSize="18" Foreground="Black">20 ngày</TextBlock>
-                                                        </StackPanel>
-                                                    </StackPanel>
-                                                </Border>
+                                                      materialDesign:HintAssist.Hint="Tháng"
+                                                      Style="{StaticResource MaterialDesignOutlinedComboBox}"/>
+
                                             </StackPanel>
                                             <StackPanel Margin="10 20" HorizontalAlignment="left">
                                                 <ScrollViewer  HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
-                                                    <DataGrid x:Name="dataGrid" Background="#F1F1F1" FontSize="15"
+                                                    <DataGrid x:Name="dataGrid_MatDo" Background="#F1F1F1" FontSize="15" IsReadOnly="True"
                                                         AutoGenerateColumns="False">
                                                         <DataGrid.Resources>
                                                             <Style TargetType="DataGridColumnHeader">
@@ -673,14 +616,38 @@
                                                             </Style>
                                                         </DataGrid.Resources>
                                                         <DataGrid.Columns >
-                                                            <DataGridTextColumn Header="Phòng" Binding="{Binding Room}" />
-                                                            <DataGridTextColumn Header="Loại" Binding="{Binding Type}" />
-                                                            <DataGridTextColumn Header="Số ngày cho thuê trong tháng" Binding="{Binding NumberOfDays}" />
+                                                            <DataGridTextColumn Header="Phòng" Binding="{Binding maphong}" />
+                                                            <DataGridTextColumn Header="Loại" Binding="{Binding maloaiphong}" />
+                                                            <DataGridTextColumn Header="Số ngày cho thuê trong tháng" Binding="{Binding songaythue}" />
                                                         </DataGrid.Columns>
                                                     </DataGrid>
                                                 </ScrollViewer>
                                             </StackPanel>
                                         </StackPanel>
+                                            <Grid Grid.Column="1">
+                                                <ComboBox x:Name="Cbb_MatDo_year2" SelectionChanged="Cbb_MatDo_year2_SelectionChanged"
+                                                      Background="#F1F1F1"
+                                                      Foreground="#003D69"
+                                                      HorizontalAlignment="Left"
+                                                      VerticalAlignment="Top"
+                                                      BorderThickness="0"
+                                                      Width="100"
+                                                      Height="35"
+                                                      FontSize="14"
+                                                      Padding="10 0"
+                                                      materialDesign:HintAssist.Hint="Năm"
+                                                      Style="{StaticResource MaterialDesignOutlinedComboBox}"/>
+                                                <Grid Margin="0 40 0 0">
+                                                    <lvc:CartesianChart
+                                                    Series="{Binding Chart_MatDoNam}"
+                                                    YAxes="{Binding YAxes}"
+                                                    LegendPosition="Right" >
+                                                    </lvc:CartesianChart>
+                                                </Grid>
+                                            </Grid>
+                                                
+                                        </Grid>
+                                        <!--Mat do -->
                                     </TabItem>
                                 </TabControl>
                             </StackPanel>
@@ -696,7 +663,7 @@
                             </StackPanel>
                         </TabItem.Header>
                         <TabControl>
-                            <!--Bảng hóa đơn-->
+                            <!--Bảng các hóa đơn-->
                             <TabItem Header="Bảng hóa đơn" Visibility="Collapsed">
 
                                 <Grid Background="{DynamicResource PrimaryHueMidForegroundBrush}">
@@ -724,20 +691,20 @@
                                         </Border>
                                     </StackPanel>
 
-                                    <!--Data-->
+                                    <!--List view các hóa đơn-->
                                     <StackPanel Grid.Row="1" Margin="10" HorizontalAlignment="Stretch">
-                                        <ListView Name="lvBill" MaxHeight="580" HorizontalContentAlignment="Stretch" ScrollViewer.HorizontalScrollBarVisibility="Disabled" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                        <ListView x:Name="ListView_HoaDon" MaxHeight="580" HorizontalContentAlignment="Stretch" ScrollViewer.HorizontalScrollBarVisibility="Disabled" HorizontalAlignment="Center" VerticalAlignment="Center">
                                             <ListView.ItemTemplate>
                                                 <DataTemplate/>
                                             </ListView.ItemTemplate>
                                             <ListView.View>
-                                                <GridView AllowsColumnReorder="True" >
+                                                <GridView x:Name="GridView_HoaDon" AllowsColumnReorder="True" >
                                                     <GridView.ColumnHeaderContainerStyle>
                                                         <Style TargetType="{x:Type GridViewColumnHeader}">
-                                                            <Setter Property="Height" Value="30"/>
+                                                            <Setter Property="Height" Value="36"/>
                                                             <Setter Property="Background" Value="Transparent"/>
                                                             <Setter Property="Foreground" Value="Black"/>
-                                                            <Setter Property="FontSize" Value="13"/>
+                                                            <Setter Property="FontSize" Value="15"/>
                                                             <Setter Property="FontWeight" Value="Bold"/>
                                                             <Setter Property="Margin" Value=" 0"/>
                                                             <Setter Property="Width" Value="Auto"/>
@@ -745,59 +712,43 @@
                                                             <Setter Property="BorderThickness" Value="0"/>
                                                         </Style>
                                                     </GridView.ColumnHeaderContainerStyle>
-                                                    <GridViewColumn Header="STT" Width="60" DisplayMemberBinding="{Binding MaHD}"/>
-                                                    <GridViewColumn Header="Mã hóa đơn" Width="200" DisplayMemberBinding="{Binding MaHD}"/>
-                                                    <GridViewColumn Header="Ngày thanh toán" Width="200" DisplayMemberBinding="{Binding NgayTra}"/>
-                                                    <GridViewColumn Header="Số phòng thanh toán" Width="170" DisplayMemberBinding="{Binding SoPhong}"/>
-                                                    <GridViewColumn Header="Khách hàng" Width="200" DisplayMemberBinding="{Binding KhachHang}"/>
-                                                    <GridViewColumn Header="Tổng tiền" Width="130" DisplayMemberBinding="{Binding TongTien}"/>
+                                                    <GridViewColumn Header="STT" Width="60" DisplayMemberBinding="{Binding stt}"/>
+                                                    <GridViewColumn Header="Mã hóa đơn" Width="160" DisplayMemberBinding="{Binding mahoadon}"/>
+                                                    <GridViewColumn Header="Ngày thanh toán" Width="180" DisplayMemberBinding="{Binding ngaythanhtoan}"/>
+                                                    <GridViewColumn Header="Số phòng thanh toán" Width="170" DisplayMemberBinding="{Binding sophongthanhtoan}"/>
+                                                    <GridViewColumn Header="Khách hàng" Width="180" DisplayMemberBinding="{Binding khachhang}"/>
+                                                    <GridViewColumn Header="Tổng tiền" Width="180" DisplayMemberBinding="{Binding tongtien}"/>
                                                 </GridView>
                                             </ListView.View>
                                         </ListView>
                                     </StackPanel>
                                     <!--Chuyển trang-->
-                                    <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Top">
-
-                                        <Button Margin="3" Width="30" Height="30"
+                                    <StackPanel x:Name="Page_HoaDon" Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Top">
+                                        <Button x:Name="Page_HoaDon_Btn_prev"
+                                        Click="Prevpage_HoaDon_Btn_Click"
+                                        Margin="3" Width="30" Height="30"
+                                  Background="{DynamicResource PrimaryMidForegroundBrush}"
+                                  Foreground="{DynamicResource  SecondaryHueMidForegroundBrush}"
+                                  IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
+                                  Style="{StaticResource MaterialDesignIconButton}"
+                                  ToolTip="MaterialDesignIconButton">
+                                            <materialDesign:PackIcon Kind="ChevronLeft" />
+                                        </Button>
+                                            <Button x:Name="Page_HoaDon_Btn_cur" Margin="3" Height="30" Width="30"
                                   Background="{DynamicResource PrimaryCardForegroundBrush}"
-                                  Foreground="{DynamicResource PrimaryMidBrush}"
-                                  IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
+                                        Foreground="{DynamicResource PrimaryMidBrush}"
                                   Style="{StaticResource MaterialDesignIconButton}"
                                   ToolTip="MaterialDesignIconButton">
-                                            <TextBlock>1</TextBlock>
-
-                                        </Button>
-                                        <Button Margin="3" Height="30" Width="30"
-                                  Background="Transparent"
+                                                <TextBlock x:Name="Page_HoaDon_text"></TextBlock>
+                                            </Button>
+                                        <Button x:Name="Page_HoaDon_Btn_next" Margin="3" Height="30" Width="30"
+                                         Click="Nextpage_HoaDon_Btn_Click"
+                                  Background="{DynamicResource PrimaryMidForegroundBrush}"
                                         Foreground="{DynamicResource SecondaryHueMidForegroundBrush}"
                                   IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
                                   Style="{StaticResource MaterialDesignIconButton}"
                                   ToolTip="MaterialDesignIconButton">
-                                            <TextBlock>2</TextBlock>
-                                        </Button>
-                                        <Button Margin="3" Height="30" Width="30"
-                                  Background="Transparent"
-                                        Foreground="{DynamicResource SecondaryHueMidForegroundBrush}"
-                                  IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
-                                  Style="{StaticResource MaterialDesignIconButton}"
-                                  ToolTip="MaterialDesignIconButton">
-                                            <TextBlock>3</TextBlock>
-                                        </Button>
-                                        <Button Margin="3" Height="30" Width="30"
-                                  Background="Transparent"
-                                        Foreground="{DynamicResource SecondaryHueMidForegroundBrush}"
-                                  IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
-                                  Style="{StaticResource MaterialDesignIconButton}"
-                                  ToolTip="MaterialDesignIconButton">
-                                            <TextBlock>...</TextBlock>
-                                        </Button>
-                                        <Button Margin="3" Height="30" Width="30"
-                                  Background="Transparent"
-                                        Foreground="{DynamicResource SecondaryHueMidForegroundBrush}"
-                                  IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
-                                  Style="{StaticResource MaterialDesignIconButton}"
-                                  ToolTip="MaterialDesignIconButton">
-                                            <TextBlock>10</TextBlock>
+                                            <materialDesign:PackIcon Kind="ChevronRight" />
                                         </Button>
                                     </StackPanel>
                                 </Grid>
@@ -852,7 +803,7 @@
                                             <TextBlock Text="Ngày thanh toán: " Foreground="#000" VerticalAlignment="Center" FontSize="13" Margin="50,0,0,5">
                                                 <TextBlock Text="02/04/2023"/>
                                             </TextBlock>
-                                            <TextBlock Text="Khách hàng thanh toán: " Foreground="#000" VerticalAlignment="Center" FontSize="13" Margin="50,15,0,5">
+                                            <TextBlock Text="Khách hàng thanh toán: " Foreground="#000" VerticalAlignment="Center" FontSize="13" Margin="50,10,0,5">
                                                 <TextBlock Text="Kellie"/>
                                             </TextBlock>
                                             <TextBlock Text="Địa chỉ: " Foreground="#000" VerticalAlignment="Center" FontSize="13" Margin="50,0,0,5">
@@ -871,19 +822,19 @@
                                         </StackPanel>
                                     </Grid>
                                     <!--Thông tin phòng thanh toán-->
-                                    <StackPanel Grid.Row="2" HorizontalAlignment="Stretch" Margin="0 12 0 12">
-                                        <ListView MaxHeight="500" HorizontalContentAlignment="Stretch" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                                    <StackPanel Grid.Row="2" HorizontalAlignment="Stretch" Margin="0 18 0 12">
+                                        <ListView x:Name="ListView_ChiTietHoaDon" MaxHeight="500" HorizontalContentAlignment="Stretch" ScrollViewer.HorizontalScrollBarVisibility="Disabled" HorizontalAlignment="Center">
                                             <ListView.ItemTemplate>
                                                 <DataTemplate/>
                                             </ListView.ItemTemplate>
                                             <ListView.View>
-                                                <GridView AllowsColumnReorder="True" >
+                                                <GridView x:Name="GridView_ChiTietHoaDon" AllowsColumnReorder="True" >
                                                     <GridView.ColumnHeaderContainerStyle>
                                                         <Style TargetType="{x:Type GridViewColumnHeader}">
-                                                            <Setter Property="Height" Value="30"/>
+                                                            <Setter Property="Height" Value="36"/>
                                                             <Setter Property="Background" Value="Transparent"/>
                                                             <Setter Property="Foreground" Value="Black"/>
-                                                            <Setter Property="FontSize" Value="13"/>
+                                                            <Setter Property="FontSize" Value="15"/>
                                                             <Setter Property="FontWeight" Value="Bold"/>
                                                             <Setter Property="Margin" Value=" 0"/>
                                                             <Setter Property="Width" Value="Auto"/>
@@ -891,64 +842,49 @@
                                                             <Setter Property="BorderThickness" Value="0"/>
                                                         </Style>
                                                     </GridView.ColumnHeaderContainerStyle>
-                                                    <GridViewColumn Header="STT" Width="55" DisplayMemberBinding="{Binding STT}"/>
-                                                    <GridViewColumn Header="Mã PTP" Width="90" DisplayMemberBinding="{Binding MaPTP}"/>
-                                                    <GridViewColumn Header="Mã phòng" Width="100" DisplayMemberBinding="{Binding MaPhong}"/>
-                                                    <GridViewColumn Header="Số ngày thuê" Width="120" DisplayMemberBinding="{Binding SoNgayThue}"/>
-                                                    <GridViewColumn Header="Số khách" Width="100" DisplayMemberBinding="{Binding SoKhach}"/>
-                                                    <GridViewColumn Header="Đơn giá" Width="120" DisplayMemberBinding="{Binding DonGia}"/>
-                                                    <GridViewColumn Header="Tổng tiền" Width="150" DisplayMemberBinding="{Binding TongTien}"/>
-                                                    <GridViewColumn Header="Ghi chú" Width="120" DisplayMemberBinding="{Binding GhiChu}"/>
+                                                    <GridViewColumn Header="STT" Width="60" DisplayMemberBinding="{Binding STT}"/>
+                                                    <GridViewColumn Header="Mã PTP" Width="100" DisplayMemberBinding="{Binding MaPTP}"/>
+                                                    <GridViewColumn Header="Mã phòng" Width="110" DisplayMemberBinding="{Binding MaPhong}"/>
+                                                    <GridViewColumn Header="Số ngày thuê" Width="130" DisplayMemberBinding="{Binding SoNgayThue}"/>
+                                                    <GridViewColumn Header="Số khách" Width="110" DisplayMemberBinding="{Binding SoKhach}"/>
+                                                    <GridViewColumn Header="Đơn giá" Width="125" DisplayMemberBinding="{Binding DonGia}"/>
+                                                    <GridViewColumn Header="Tổng tiền" Width="155" DisplayMemberBinding="{Binding TongTien}"/>
+                                                    <GridViewColumn Header="Ghi chú" Width="130" DisplayMemberBinding="{Binding GhiChu}"/>
                                                 </GridView>
                                             </ListView.View>
                                         </ListView>
                                     </StackPanel>
 
                                     <!--Chuyển trang-->
-                                    <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Top">
+                                    <!--<StackPanel x:Name="Page_ChiTietHoaDon" Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Top">
+                                        <Button x:Name="Page_ChiTietHoaDon_Btn_prev"
+                                        Click="Prevpage_HoaDon_Btn_Click"
+                                        Margin="3" Width="30" Height="30"
+                                  Background="{DynamicResource PrimaryMidForegroundBrush}"
+                                  Foreground="{DynamicResource  SecondaryHueMidForegroundBrush}"
+                                  IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
+                                  Style="{StaticResource MaterialDesignIconButton}"
+                                  ToolTip="MaterialDesignIconButton">
+                                                <materialDesign:PackIcon Kind="ChevronLeft" />
 
-                                        <Button Margin="3" Width="30" Height="30"
+                                            </Button>
+                                        <Button x:Name="Page_ChiTietHoaDon_Btn_cur" Margin="3" Height="30" Width="30"
                                   Background="{DynamicResource PrimaryCardForegroundBrush}"
-                                  Foreground="{DynamicResource PrimaryMidBrush}"
-                                  IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
+                                        Foreground="{DynamicResource PrimaryMidBrush}"
                                   Style="{StaticResource MaterialDesignIconButton}"
                                   ToolTip="MaterialDesignIconButton">
-                                            <TextBlock>1</TextBlock>
-
-                                        </Button>
-                                        <Button Margin="3" Height="30" Width="30"
-                                  Background="Transparent"
+                                            <TextBlock x:Name="Page_ChiTietHoaDon_text"></TextBlock>
+                                            </Button>
+                                        <Button x:Name="Page_ChiTietHoaDon_Btn_next" Margin="3" Height="30" Width="30"
+                                         Click="Nextpage_ChiTietHoaDon_Btn_Click"
+                                  Background="{DynamicResource PrimaryMidForegroundBrush}"
                                         Foreground="{DynamicResource SecondaryHueMidForegroundBrush}"
                                   IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
                                   Style="{StaticResource MaterialDesignIconButton}"
                                   ToolTip="MaterialDesignIconButton">
-                                            <TextBlock>2</TextBlock>
+                                            <materialDesign:PackIcon Kind="ChevronRight" />
                                         </Button>
-                                        <Button Margin="3" Height="30" Width="30"
-                                  Background="Transparent"
-                                        Foreground="{DynamicResource SecondaryHueMidForegroundBrush}"
-                                  IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
-                                  Style="{StaticResource MaterialDesignIconButton}"
-                                  ToolTip="MaterialDesignIconButton">
-                                            <TextBlock>3</TextBlock>
-                                        </Button>
-                                        <Button Margin="3" Height="30" Width="30"
-                                  Background="Transparent"
-                                        Foreground="{DynamicResource SecondaryHueMidForegroundBrush}"
-                                  IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
-                                  Style="{StaticResource MaterialDesignIconButton}"
-                                  ToolTip="MaterialDesignIconButton">
-                                            <TextBlock>...</TextBlock>
-                                        </Button>
-                                        <Button Margin="3" Height="30" Width="30"
-                                  Background="Transparent"
-                                        Foreground="{DynamicResource SecondaryHueMidForegroundBrush}"
-                                  IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
-                                  Style="{StaticResource MaterialDesignIconButton}"
-                                  ToolTip="MaterialDesignIconButton">
-                                            <TextBlock>10</TextBlock>
-                                        </Button>
-                                    </StackPanel>
+                                    </StackPanel>-->
                                 </Grid>
                             </TabItem>
                         </TabControl>
@@ -957,14 +893,14 @@
                     </TabItem>
 
                     <!--Chi tiết phiếu thuê phòng-->
-                    <TabItem x:Name="ChiTietPhieuThueTabItem" Header="Chi tiết phiếu thuê phòng" Visibility="Collapsed">
-                        <Grid Background="{DynamicResource PrimaryHueMidForegroundBrush}">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="50"></RowDefinition>
-                                <RowDefinition Height="100"></RowDefinition>
-                                <RowDefinition Height="*"></RowDefinition>
-                                <RowDefinition Height="60"></RowDefinition>
-                            </Grid.RowDefinitions>
+                <TabItem x:Name="ChiTietPhieuThueTabItem" Header="Chi tiết phiếu thuê phòng" Visibility="Collapsed">
+                    <Grid Background="{DynamicResource PrimaryHueMidForegroundBrush}">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="50"></RowDefinition>
+                            <RowDefinition Height="100"></RowDefinition>
+                            <RowDefinition Height="*"></RowDefinition>
+                            <RowDefinition Height="60"></RowDefinition>
+                        </Grid.RowDefinitions>
                             <StackPanel Grid.Row="0" Orientation="Horizontal" 
                                             HorizontalAlignment="Left" VerticalAlignment="Bottom"
                                             Margin="10 0 0 0">
@@ -991,7 +927,6 @@
                                 </Button>
                                 <TextBlock Text="Chi tiết phiếu thuê phòng" Foreground="#4A8DB7" VerticalAlignment="Center" FontSize="20" FontWeight="Bold" Margin="8,0,0,0"/>
                             </StackPanel>
-
                             <Grid Grid.Row="1">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="1*"/>
@@ -1025,9 +960,7 @@
                                     <Run x:Name="TienThueTextBlock" Text="$12.67" Foreground="Red"/>
                                     </TextBlock>
                                 </StackPanel>
-
                             </Grid>
-
                             <Grid Grid.Row="2">
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="Auto" />
@@ -1064,7 +997,6 @@
                                         </ListView.View>
                                     </ListView>
                                 </StackPanel>
-
                                 <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0 100 50 0">
                                     <Button Height="45"
                                                 Name="thanhToanBtn"
@@ -1079,19 +1011,17 @@
                                     </Button>
                                 </StackPanel>
                             </Grid>
-
                             <!-- số trang -->
-                            <StackPanel Grid.Row="4" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Top">
-                                <Button Margin="3" Width="30" Height="30"
+                        <StackPanel Grid.Row="4" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Top">
+                            <Button Margin="3" Width="30" Height="30"
                                 Background="{DynamicResource PrimaryCardForegroundBrush}"
                                 Foreground="{DynamicResource PrimaryMidBrush}"
                                 IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
                                 Style="{StaticResource MaterialDesignIconButton}"
                                 ToolTip="MaterialDesignIconButton">
                                     <TextBlock>1</TextBlock>
-
                                 </Button>
-                                <Button Margin="3" Height="30" Width="30"
+                            <Button Margin="3" Height="30" Width="30"
                                 Background="Transparent"
                                     Foreground="{DynamicResource SecondaryHueMidForegroundBrush}"
                                 IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
@@ -1513,43 +1443,39 @@
                                 <Border Grid.Column="2" CornerRadius="20" BorderBrush="#555555" BorderThickness="1" Height="80"  FlowDirection="RightToLeft">
                                     <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
                                         <TextBlock Foreground="Black" FontSize="18" Text="MÃ QUY ĐỊNH"/>
-                                        <TextBlock Foreground="Black" FontSize="40" HorizontalAlignment="Center" FontWeight="Bold" ><Run Text="04"/></TextBlock>
+                                        <TextBlock x:Name="Text_QuyDinh_ma" Foreground="Black" FontSize="40" HorizontalAlignment="Center" FontWeight="Bold" />
                                     </StackPanel>
                                 </Border>
                             </Grid>
+                            
                             <Border Grid.Row="1" Margin="60 0" Height="400" CornerRadius="10" BorderThickness="1" BorderBrush="#666869" Padding="20">
                                 <StackPanel HorizontalAlignment="Center">
                                     <StackPanel Margin="10" Orientation="Horizontal">
                                         <TextBlock FontSize="25" Foreground="Black">Số lượng loại phòng</TextBlock>
                                         <Border CornerRadius="10" Margin="300 0 0 0"  Width="80" Height="40" BorderThickness="1" BorderBrush="Black">
                                             <TextBox x:Name="NumOfTypes" BorderThickness="0" TextAlignment="Center" Padding="0"
-                                              FontSize="25" VerticalAlignment="Center" Foreground="Black"
-                                              IsEnabled="False" 
-                                              Text="3"/>
+                                              FontSize="25" VerticalAlignment="Center" Foreground="Black"/>
                                         </Border>
                                     </StackPanel>
                                     <StackPanel Margin="10" Orientation="Horizontal">
                                         <TextBlock FontSize="25" Foreground="Black">Số lượng khách tối đa</TextBlock>
                                         <Border CornerRadius="10" Margin="280 0 0 0"  Width="80" Height="40" BorderThickness="1" BorderBrush="Black">
-                                            <TextBox x:Name="NumOfCustomers" BorderThickness="0" TextAlignment="Center" Padding="0" IsEnabled="False"
-                                              FontSize="25" VerticalAlignment="Center" Foreground="Black"
-                                              Text="3" />
+                                            <TextBox x:Name="NumOfCustomers" BorderThickness="0" TextAlignment="Center" Padding="0"
+                                              FontSize="25" VerticalAlignment="Center" Foreground="Black" />
                                         </Border>
                                     </StackPanel>
                                     <StackPanel Margin="10" Orientation="Horizontal">
                                         <TextBlock FontSize="25" Foreground="Black">Tỷ lệ phụ thu</TextBlock>
                                         <Border CornerRadius="10" Margin="380 0 0 0"  Width="80" Height="40" BorderThickness="1" BorderBrush="Black">
-                                            <TextBox x:Name="PhuThu" BorderThickness="0" TextAlignment="Center" Padding="0" IsEnabled="False"
-                                              FontSize="25" VerticalAlignment="Center" Foreground="Black"
-                                              Text="3" />
+                                            <TextBox x:Name="PhuThu" BorderThickness="0" TextAlignment="Center" Padding="0"
+                                              FontSize="25" VerticalAlignment="Center" Foreground="Black" />
                                         </Border>
                                     </StackPanel>
                                     <StackPanel Margin="10" Orientation="Horizontal">
                                         <TextBlock FontSize="25" Foreground="Black">Hệ số khách nước ngoài</TextBlock>
                                         <Border CornerRadius="10" Margin="250 0 0 0"  Width="80" Height="40" BorderThickness="1" BorderBrush="Black">
-                                            <TextBox x:Name="HeSoKNN" BorderThickness="0" TextAlignment="Center" Padding="0" IsEnabled="False"
-                                              FontSize="25" VerticalAlignment="Center" Foreground="Black"
-                                              Text="3" />
+                                            <TextBox x:Name="HeSoKNN" BorderThickness="0" TextAlignment="Center" Padding="0"
+                                              FontSize="25" VerticalAlignment="Center" Foreground="Black"/>
                                         </Border>
                                     </StackPanel>
                                     <StackPanel Orientation="Horizontal" Margin="0 30">
