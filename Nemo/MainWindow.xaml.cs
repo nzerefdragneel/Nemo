@@ -180,8 +180,12 @@ namespace Nemo
 
                 DateTime date_ngayThue = DateTime.Parse(selectedData.ngayThue);
                 DateTime currentDate = DateTime.Now;
+
+                var conn_phong = new PhongViewDAO();
+                string ttPhong = conn_phong.checkTinhTrang(Convert.ToInt32(selectedData.maPhongThue));
+
                 bool reserve = false;
-                if (DateTime.Compare(currentDate, date_ngayThue) < 0)
+                if (DateTime.Compare(currentDate, date_ngayThue) < 0 && ttPhong == "Đang đợi")
                     reserve = true;
 
                 TabControl_PhieuThuePhong.SelectedItem = ChiTietPhieuThueTabItem;
@@ -894,7 +898,6 @@ namespace Nemo
             DateTime date_ngayThue = DateTime.ParseExact(ngayThue, "dd/MM/yyyy", CultureInfo.InvariantCulture);
             DateTime currentDate = DateTime.Now;
 
-            System.Windows.MessageBox.Show(ngayThue + "$$$" + currentDate.ToString());
             bool reserve = false;
             if (currentDate < date_ngayThue)
                 reserve = true;
@@ -935,63 +938,6 @@ namespace Nemo
             soKhachDaThem_PTP.Text = "Số khách đã thêm: 0";
             Get_PhieuThuePhong_View();
         }
-        /*private void DisableCheckBoxForZeroTienThue()
-        {
-            // Lặp qua các mục trong ListView của bạn
-            foreach (var item in ListView_PhieuThuePhong.Items)
-            {
-                float tienThue = (float)item.tienThue;
-
-                var checkBox = FindCheckBoxForItem(item);
-
-                if (tienThue == 0)
-                {
-                    if (checkBox != null)
-                    {
-                        checkBox.IsEnabled = false;
-                    }
-                }
-            }
-        }
-        private CheckBox FindCheckBoxForItem(object item)
-        {
-            // Tìm ListViewItem chứa mục
-            ListViewItem listViewItem = ListView_PhieuThuePhong.ItemContainerGenerator.ContainerFromItem(item) as ListViewItem;
-
-            if (listViewItem != null)
-            {
-                // Tìm CheckBox trong ListViewItem
-                CheckBox checkBox = FindVisualChild<CheckBox>(listViewItem);
-
-                return checkBox;
-            }
-
-            return null;
-        }
-
-        private T FindVisualChild<T>(DependencyObject parent) where T : DependencyObject
-        {
-            int childCount = VisualTreeHelper.GetChildrenCount(parent);
-
-            for (int i = 0; i < childCount; i++)
-            {
-                DependencyObject child = VisualTreeHelper.GetChild(parent, i);
-
-                if (child is T result)
-                {
-                    return result;
-                }
-                else
-                {
-                    T descendant = FindVisualChild<T>(child);
-                    if (descendant != null)
-                    {
-                        return descendant;
-                    }
-                }
-            }
-            return null;
-        }*/
         private void ItemCheckBox_PTP_Checked(object sender, RoutedEventArgs e)
         {
             CheckBox checkBox = (CheckBox)sender;

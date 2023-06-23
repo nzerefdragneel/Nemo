@@ -40,20 +40,38 @@ namespace Nemo.DAO
             conn.CloseConnection();
             return result;
         }
-        public string checkTinhTrang(int maphong, int malp)
+        public string checkTinhTrang(int maphong, int malp = 0)
         {
-            var conn = new ConnectDB();
-            conn.OpenConnection();
-            var result = conn.ExecuteQuery($"select tinhtrang from phong where maphong = '{maphong}' and maloaiphong = {malp}");
-            conn.CloseConnection();
-
-            if (result == null)
+            if (malp == 0)
             {
-                return null;
-            }
+                var conn = new ConnectDB();
+                conn.OpenConnection();
+                var result = conn.ExecuteQuery($"select tinhtrang from phong where maphong = '{maphong}'");
+                conn.CloseConnection();
 
-            object value = result.Rows[0]["tinhtrang"];
-            return value.ToString();
+                if (result == null)
+                {
+                    return null;
+                }
+
+                object value = result.Rows[0]["tinhtrang"];
+                return value.ToString();
+            }
+            else
+            {
+                var conn = new ConnectDB();
+                conn.OpenConnection();
+                var result = conn.ExecuteQuery($"select tinhtrang from phong where maphong = '{maphong}' and maloaiphong = {malp}");
+                conn.CloseConnection();
+
+                if (result == null)
+                {
+                    return null;
+                }
+
+                object value = result.Rows[0]["tinhtrang"];
+                return value.ToString();
+            }
         }
         public void updateTinhTrang(int maphong, int maptp, bool done = false, bool reserve = false, bool empty = false)
         {
