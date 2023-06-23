@@ -52,11 +52,7 @@ namespace Nemo.DTO
                 Phong p = phong.FirstOrDefault(p => p.maphong == maphong);
                 p.songaythue += (ngaytra - ngaythue).Days;
             }
-            Debug.WriteLine("hi");
-            foreach (var p in phong)
-            {
-                Debug.WriteLine($"{p.maphong} {p.songaythue}");
-            }
+         
             return phong;
         }
         public ObservableCollection<Phong> setMatDoNam(int year){

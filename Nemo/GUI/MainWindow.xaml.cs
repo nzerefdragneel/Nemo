@@ -28,7 +28,6 @@ using System.Windows;
 using MessageBox = System.Windows.Forms.MessageBox;
 using System.Configuration;
 using Nemo.GUI;
-using MessageBox = System.Windows.MessageBox;
 
 namespace Nemo
 {
@@ -292,16 +291,9 @@ namespace Nemo
             PhongView.UpdatePaging();
             ListView_DanhMucPhong.ItemsSource = PhongView.CurPhong;
             Page_DanhMucPhong_text.Text = PhongView.curpage.ToString();
-                // var sv = (Book)screen.NewBook.Clone();
-                // sv.Img = new BitmapImage(new Uri(_imgList[0], UriKind.Relative));
-                Debug.WriteLine("mở oke");
+           
             }
-            else
-            {
-                Title = "KHONG CO DU LIEU";
-            }
-        }
-
+        
         public void Get_HoaDon_View()
         {
             var con = new HoaDonViewDAO();

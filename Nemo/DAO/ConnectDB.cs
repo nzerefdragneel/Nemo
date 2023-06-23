@@ -17,14 +17,24 @@ namespace Nemo.DAO
     {
         /// <summary>The main entry point for your application.</summary>
         private string connString; // Chuỗi kết nối tới database
-      
+        private NpgsqlConnection conn;
         public ConnectDB()
         {
             // Khởi tạo chuỗi kết nối
             connString = "Server=localhost;Port=5432;Username=postgres;Password=1;Database=nemo";
 
+            conn = new NpgsqlConnection(connString);
+
         }
-        
+        public void OpenConnection()
+        {
+            conn.Open();
+        }
+
+        public void CloseConnection()
+        {
+            conn.Close(); // Đóng kết nối tới database
+        }
         public DataTable ExecuteQuery(string query)
         {
              NpgsqlConnection conn=new NpgsqlConnection(connString);
