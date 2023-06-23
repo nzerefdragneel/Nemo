@@ -58,14 +58,18 @@ namespace Nemo.DAO
 												JOIN loaiphong lp ON lp.maloaiphong = ph.maloaiphong
 												JOIN quydinh qd ON qd.maqd = ptp.maqd
 											WHERE
-												ptp.maHD IS NULL
+												ptp.maHD IS NULL and ptp.tien is NULL
 											GROUP BY
 												ptp.maptp, qd.hesokhachnuocngoai, qd.tilephuthu, lp.gia, ptp.ngaythue, qd.sl_khachtoida
-											order by ptp.ngaythue desc");
+											order by ptp.maptp desc");
 
             conn.CloseConnection();
             ObservableCollection<PhieuThuePhong> list = JArray.FromObject(result)
                                                               .ToObject<ObservableCollection<PhieuThuePhong>>();
+			for (int i = 0; i < list.Count; i++)
+			{
+				if (list[i].tienThue < 0) list[i].tienThue = 0;
+			}
 
             return list;
         }
@@ -118,7 +122,7 @@ namespace Nemo.DAO
 													JOIN loaiphong lp ON lp.maloaiphong = ph.maloaiphong
 													JOIN quydinh qd ON qd.maqd = ptp.maqd
 												WHERE
-													ptp.maptp = 13
+													ptp.maptp = {maptp}
 												GROUP BY
 													ptp.maptp, qd.hesokhachnuocngoai, qd.tilephuthu, lp.gia, ptp.ngaythue, qd.sl_khachtoida
 												order by ptp.ngaythue desc");
@@ -164,12 +168,12 @@ namespace Nemo.DAO
 																LIMIT 1
 															)
 														) THEN CAST('Đã thuê' AS room_status)
-														ELSE CAST('Đang đợi' AS room_status)
+														ELSE CAST('Đang xử lí' AS room_status)
 													END
 												WHERE maphong = {ptp.maPhongThue};
 
-												INSERT INTO phieuthuephong (ngaythue, maphongthue, maqd)
-												VALUES ('{ptp.ngayThue}', {ptp.maPhongThue}, (SELECT maqd FROM quydinh ORDER BY maqd DESC LIMIT 1))
+												INSERT INTO phieuthuephong (ngaythue, ngaytra, maphongthue, maqd)
+												VALUES ('{ptp.ngayThue}', '{ptp.ngayTra}', {ptp.maPhongThue}, (SELECT maqd FROM quydinh ORDER BY maqd DESC LIMIT 1))
 												RETURNING maptp;");
 				conn2.CloseConnection();
                 return Convert.ToInt32(res.Rows[0]["maptp"]);
@@ -179,6 +183,16 @@ namespace Nemo.DAO
                 conn.CloseConnection();
                 return Convert.ToInt32(check.Rows[0]["maptp"]);
             }
+        }
+		public void huyPTP(int maptp)
+		{
+            var conn = new ConnectDB();
+            conn.OpenConnection();
+
+            var result = conn.ExecuteQuery(@$"update phieuthuephong
+											set tien = -1 
+											where maptp = {maptp}");
+            conn.CloseConnection();
         }
 		public int countSoKhachInPTP(int maptp)
 		{
@@ -215,6 +229,25 @@ namespace Nemo.DAO
             conn.CloseConnection();
             return Convert.ToInt32(result.Rows[0]["maptp"]);
 		}
+		public string getNgayTra(int maphong)
+		{
+            var conn = new ConnectDB();
+            conn.OpenConnection();
+
+            var result = conn.ExecuteQuery(@$"SELECT ptp.ngaytra	
+												FROM
+													phieuthuephong ptp	
+												WHERE
+													ptp.maHD IS NULL and ptp.maphongthue = {maphong}");
+            conn.CloseConnection();
+            ObservableCollection<PhieuThuePhong> list = JArray.FromObject(result)
+                                                              .ToObject<ObservableCollection<PhieuThuePhong>>();
+            if (list.Count > 1)
+			{
+				return null; // trả về nhiều hơn 1 dòng --> phòng đã được đặt trước
+			}
+            return result.Rows[0]["ngaytra"].ToString();
+        }
         public ObservableCollection<PhieuThuePhong> getListSelected(List<int> selectedList)
         {
             var conn = new ConnectDB();
@@ -285,6 +318,21 @@ namespace Nemo.DAO
             }
 
             return list;
+        }
+		public void updateTinhTrangSauThanhToan(int maptp)
+		{
+            var conn = new ConnectDB();
+            conn.OpenConnection();
+
+            conn.ExecuteQuery(@$"UPDATE phong
+								SET tinhtrang = 'Còn trống'
+								WHERE tinhtrang = 'Đã thuê'
+								AND maphong IN (
+									SELECT maphongthue
+									FROM phieuthuephong
+									WHERE maptp = {maptp}
+								)");
+            conn.CloseConnection();
         }
     }
 }

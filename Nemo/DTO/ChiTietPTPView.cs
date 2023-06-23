@@ -12,6 +12,7 @@ namespace Nemo.DTO
         public ObservableCollection<ChiTietPhieuThuePhong> curChiTietPTP { get; set; }
         public int maPTP { get; set; }
         public string ngayThue { get; set; }
+        public string ngayTra { get; set; }
         public int maPhongThue { get; set; }
         public float tienThue { get; set; }
         public int prevpage { get; set; } = 0;

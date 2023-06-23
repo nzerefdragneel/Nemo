@@ -25,8 +25,6 @@
         <modelChart:ViewModelChart/>
     </Window.DataContext>
     <Window.Resources>
-
-
     </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
@@ -282,7 +280,7 @@
                                         <RowDefinition Height="70"></RowDefinition>
                                         <RowDefinition Height="50"></RowDefinition>
                                         <RowDefinition Height="*"></RowDefinition>
-                                        <RowDefinition Height="*"></RowDefinition>
+                                        <RowDefinition Height="45"></RowDefinition>
                                         <RowDefinition Height="60"></RowDefinition>
                                     </Grid.RowDefinitions>
                                     <StackPanel Margin="100 20 100 0"  >
@@ -378,16 +376,21 @@
                                                     <GridViewColumn Width="50">
                                                         <GridViewColumn.CellTemplate>
                                                             <DataTemplate>
-                                                                <CheckBox
+                                                                <CheckBox x:Name="checkBox"
                                                                           Checked="ItemCheckBox_PTP_Checked" 
                                                                           Unchecked="ItemCheckBox_PTP_UnChecked"
-                                                                          CommandParameter="{Binding maPTP}"/>  
+                                                                          CommandParameter="{Binding maPTP}"/>
+                                                                <DataTemplate.Triggers>
+                                                                    <DataTrigger Binding="{Binding tienThue}" Value="0">
+                                                                        <Setter TargetName="checkBox" Property="IsEnabled" Value="False"/>
+                                                                    </DataTrigger>
+                                                                </DataTemplate.Triggers>
                                                             </DataTemplate>
                                                         </GridViewColumn.CellTemplate>
                                                     </GridViewColumn>
 
                                                     <GridViewColumn Header="Mã phiếu thuê" Width="170" DisplayMemberBinding="{Binding maPTP}"/>
-                                                    <GridViewColumn Header="Ngày tạo" Width="200" DisplayMemberBinding="{Binding ngayThue}"/>
+                                                    <GridViewColumn Header="Ngày thuê" Width="200" DisplayMemberBinding="{Binding ngayThue}"/>
                                                     <GridViewColumn Header="Phòng" Width="170" DisplayMemberBinding="{Binding maPhongThue}"/>
                                                     <GridViewColumn Header="Số khách" Width="150" DisplayMemberBinding="{Binding soKhach}"/>
                                                     <GridViewColumn Header="Tiền thuê" Width="210">
@@ -499,17 +502,26 @@
                                             </TextBlock>
 
                                             <TextBlock Foreground="#000" VerticalAlignment="Center" FontSize="13" Margin="50,0,0,5">
+                                    <Run Text="Ngày trả phòng dự kiến: "/>
+                                    <Run x:Name="NgayTraTextBlock" Text=""/>
+                                            </TextBlock>
+
+                                            <TextBlock Foreground="#000" VerticalAlignment="Center" FontSize="13" Margin="50,0,0,5">
                                     <Run Text="Phòng: "/>
                                     <Run x:Name="MaPhongTextBlock" Text=""/>
                                             </TextBlock>
 
                                         </StackPanel>
                                         <StackPanel Grid.Column="1"
-                                HorizontalAlignment="Left" VerticalAlignment="Top"
-                                Margin="10 5 0 0">
-                                            <TextBlock Foreground="#000" VerticalAlignment="Center" FontSize="13" Margin="220,0,0,5">
-                                    <Run Text="Số tiền cho đến nay: " Foreground="#000"/>
-                                    <Run x:Name="TienThueTextBlock" Text="$12.67" Foreground="Red"/>
+                                            HorizontalAlignment="Left" VerticalAlignment="Top"
+                                            Margin="10 5 0 0">
+                                            <TextBlock x:Name="NdungTienTextBlock" Foreground="#000" VerticalAlignment="Center" FontSize="13" Margin="220,0,0,5">
+                                                <Run Text="Số tiền cho đến nay: " Foreground="#000"/>
+                                                <Run x:Name="TienThueTextBlock" Text="$12.67" Foreground="Red"/>    
+                                            </TextBlock>
+
+                                            <TextBlock x:Name="DatTruocTextBlock" Foreground="#000" Visibility="Collapsed" FontWeight="Bold" VerticalAlignment="Center" FontSize="18" Margin="220,0,0,5">
+                                                <Run Text="PHIẾU ĐẶT TRƯỚC" Foreground="red"/>
                                             </TextBlock>
                                         </StackPanel>
 
@@ -562,17 +574,45 @@
                                             <Button Height="45"
                                                 Name="thanhToanBtn"
                                                 Click="ThanhToanBtn_PTP_Click"
-                                    materialDesign:ButtonAssist.CornerRadius="10"
-                                    IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
-                                    Style="{StaticResource MaterialDesignRaisedButton}"
-                                    Background="{DynamicResource PrimaryDarkForegroundBrush}" Foreground="{DynamicResource SecondaryHueMidForegroundBrush}"
-                                    ToolTip="MaterialDesignRaisedButton with Round Corners">
+                                                materialDesign:ButtonAssist.CornerRadius="10"
+                                                IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
+                                                Style="{StaticResource MaterialDesignRaisedButton}"
+                                                Background="{DynamicResource PrimaryDarkForegroundBrush}" Foreground="{DynamicResource SecondaryHueMidForegroundBrush}"
+                                                ToolTip="MaterialDesignRaisedButton with Round Corners">
                                                 <TextBlock TextWrapping="Wrap" Foreground="{DynamicResource PrimaryMidBrush}"
                                             Text="Thanh toán" />
                                             </Button>
                                         </StackPanel>
-                                    </Grid>
 
+                                        <StackPanel Grid.Row="1"  Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0 100 200 0">
+                                            <Button Height="45"
+                                                Name="NhanPhong_PTP"
+                                                Click="NhanPhong_PTP_Click"
+                                                materialDesign:ButtonAssist.CornerRadius="10"
+                                                IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
+                                                Style="{StaticResource MaterialDesignRaisedButton}"
+                                                Background="{DynamicResource PrimaryDarkForegroundBrush}" Foreground="{DynamicResource SecondaryHueMidForegroundBrush}"
+                                                ToolTip="MaterialDesignRaisedButton with Round Corners">
+                                                <TextBlock TextWrapping="Wrap" Foreground="{DynamicResource PrimaryMidBrush}"
+                                            Text="Nhận phòng" />
+                                            </Button>
+                                        </StackPanel>
+
+                                        <StackPanel Grid.Row="1"  Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0 100 50 0">
+                                            <Button Height="45"
+                                                Name="HuyDatTruocPhong_PTP"
+                                                Click="HuyDatTruocPhong_PTP_Click"
+                                                materialDesign:ButtonAssist.CornerRadius="10"
+                                                IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
+                                                Style="{StaticResource MaterialDesignRaisedButton}"
+                                                Background="#FF6B61" Foreground="#8A130B"
+                                                ToolTip="MaterialDesignRaisedButton with Round Corners">
+                                                <TextBlock TextWrapping="Wrap" Foreground="{DynamicResource PrimaryMidBrush}"
+                                            Text="Hủy phiếu" />
+                                            </Button>
+                                        </StackPanel>
+
+                                    </Grid>
                                 </Grid>
                             </TabItem>
 
@@ -931,14 +971,14 @@
                                         <Run Text="Loại phòng "/>
                                             </TextBlock>
                                             <Border Grid.Column="1"  BorderBrush="Black" BorderThickness="1" CornerRadius="5" Margin="20,0,0,5">
-                                                <ComboBox x:Name="inputLoaiPhong_PTP" Width="150" VerticalAlignment="Center" >
+                                                <ComboBox x:Name="inputLoaiPhong_PTP" Width="100" VerticalAlignment="Center" >
                                                     <ComboBoxItem Content="Loại A" IsSelected ="True"/>
                                                     <ComboBoxItem Content="Loại B"/>
                                                     <ComboBoxItem Content="Loại C"/>
                                                 </ComboBox>
                                             </Border>
 
-                                            <TextBlock Grid.Column="2" Foreground="#000" VerticalAlignment="Center" FontSize="13" Margin="250,0,0,5">
+                                            <TextBlock Grid.Column="2" Foreground="#000" VerticalAlignment="Center" FontSize="13" Margin="300,0,0,5">
                                                 <Run Text="Số phòng"/>
                                             </TextBlock>
 
@@ -951,8 +991,12 @@
                                             </TextBlock>
                                         </Grid>
 
-                                        <Grid Margin="489 0 0 5">
+                                        <Grid Margin="0 0 0 5">
                                             <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="Auto" />
+                                                <ColumnDefinition Width="Auto" />
+                                                <ColumnDefinition Width="Auto" />
+                                                <ColumnDefinition Width="Auto" />
                                                 <ColumnDefinition Width="Auto" />
                                                 <ColumnDefinition Width="Auto" />
                                             </Grid.ColumnDefinitions>
@@ -961,9 +1005,25 @@
                                                 <Run Text="Ngày thuê"/>
                                             </TextBlock>
 
-                                            <Border BorderBrush="Black" BorderThickness="1" CornerRadius="5" Margin="125,0,0,5">
+                                            <TextBlock Grid.Column="2" Visibility="Collapsed" x:Name="errorNgayThue_PTP" Foreground="red" VerticalAlignment="Center" FontStyle="Italic" FontSize="13" Margin="10,0,0,5">
+                                                <Run Text="*Ngày thuê không hợp lệ"/>
+                                            </TextBlock>
+
+                                            <Border Grid.Column="1" BorderBrush="Black" BorderThickness="1" CornerRadius="5" Margin="29,0,0,5">
                                                 <TextBox x:Name="inputNgayThue_PTP" Width="100" />
                                             </Border>
+
+                                            <TextBlock Grid.Column="2" Foreground="#000" VerticalAlignment="Center" FontSize="13" Margin="300,0,0,5">
+                                                <Run Text="Ngày trả"/>
+                                            </TextBlock>
+
+                                            <Border Grid.Column="3" BorderBrush="Black" BorderThickness="1" CornerRadius="5" Margin="27,0,0,5">
+                                                <TextBox x:Name="inputNgayTra_PTP" Width="100" />
+                                            </Border>
+
+                                            <TextBlock Grid.Column="4" Visibility="Collapsed" x:Name="errorNgayTra_PTP" Foreground="red" VerticalAlignment="Center" FontStyle="Italic" FontSize="13" Margin="10,0,0,5">
+                                                <Run Text="*Ngày trả không hợp lệ"/>
+                                            </TextBlock>
 
                                         </Grid>
                                     </StackPanel>

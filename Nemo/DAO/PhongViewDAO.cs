@@ -40,11 +40,11 @@ namespace Nemo.DAO
             conn.CloseConnection();
             return result;
         }
-        public string checkTinhTrang(int maphong, int loaiphong)
+        public string checkTinhTrang(int maphong, int malp)
         {
             var conn = new ConnectDB();
             conn.OpenConnection();
-            var result = conn.ExecuteQuery($"select tinhtrang from phong where maphong = '{maphong}' and maloaiphong = '{loaiphong}'\r\n");
+            var result = conn.ExecuteQuery($"select tinhtrang from phong where maphong = '{maphong}' and maloaiphong = {malp}");
             conn.CloseConnection();
 
             if (result == null)
@@ -55,20 +55,39 @@ namespace Nemo.DAO
             object value = result.Rows[0]["tinhtrang"];
             return value.ToString();
         }
-        public void updateTinhTrang(int maphong, int maptp, bool done = false)
+        public void updateTinhTrang(int maphong, int maptp, bool done = false, bool reserve = false, bool empty = false)
         {
             var conn = new ConnectDB();
             conn.OpenConnection();
 
-            if (done == true)
+            if (empty == true)
             {
                 conn.ExecuteQuery(@$"update phong
-									set tinhtrang = 'Đã thuê'
+									set tinhtrang = 'Còn trống'
 									where maphong = {maphong}");
                 return;
             }
+            else
+            {
+                if (done == true)
+                {
+                    if (reserve == false)
+                    {
+                        conn.ExecuteQuery(@$"update phong
+									set tinhtrang = 'Đã thuê'
+									where maphong = {maphong}");
+                        return;
+                    }
+                    else
+                    {
+                        conn.ExecuteQuery(@$"update phong
+									set tinhtrang = 'Đang đợi'
+									where maphong = {maphong}");
+                        return;
+                    }
+                }
 
-            conn.ExecuteQuery(@$"UPDATE phong
+                conn.ExecuteQuery(@$"UPDATE phong
 								SET tinhtrang = 
 									CASE
 										WHEN (
@@ -86,9 +105,10 @@ namespace Nemo.DAO
 												LIMIT 1
 											)
 										) THEN CAST('Đã thuê' AS room_status)
-										ELSE CAST('Đang đợi' AS room_status)
+										ELSE CAST('Đang xử lí' AS room_status)
 									END
 								WHERE maphong = {maphong};");
+            }
             conn.CloseConnection();
         }
         public bool checkFull(int maphong)

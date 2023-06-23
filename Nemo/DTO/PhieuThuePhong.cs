@@ -11,6 +11,7 @@ namespace Nemo.DTO
         public string ghiChu { get; set; }
         public int maPTP { get; set; }
         public string ngayThue { get; set; }
+        public string ngayTra { get; set; }
         public int maPhongThue { get; set; }
         public int soKhach { get; set; }
         public float tienThue { get; set; }

@@ -9,6 +9,7 @@ namespace Nemo.DTO
     internal class ChiTietPhieuThuePhong
     {
         public int STT { get; set; }
+        public bool reserve { get; set; }
         public string tenKH { get; set; }
         public int heSo { get; set; }
         public string loaiKhach { get; set; }
