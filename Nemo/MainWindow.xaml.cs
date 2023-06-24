@@ -303,6 +303,7 @@ namespace Nemo
                 DinhDanhTextBox.Text = string.Empty;
                 TabControl_PhieuThuePhong.SelectedIndex = 0;
             }
+            // thông báo thành toán thành công
         }
 
         private void ThemKHBtn_PTP_Click(object sender, RoutedEventArgs e)
@@ -1091,12 +1092,18 @@ namespace Nemo
         private void NhanPhong_PTP_Click(object sender, RoutedEventArgs e)
         {
             string maphong = MaPhongTextBlock.Text;
+            string ngayThueBanDau = NgayTaoTextBlock.Text;
+            DateTime ngayThueBanDau_date = DateTime.Parse(ngayThueBanDau).Date;
             DateTime currentDate = DateTime.Now.Date;
 
             var conn_ptp = new PhieuThuePhongViewDAO();
             bool checkConflict = conn_ptp.isConflict(Convert.ToInt32(maphong), currentDate.ToString("dd'/'MM'/'yyyy"), null);
+            var conn_phong = new PhongViewDAO();
+            string dayPrevious = conn_phong.isReservePrevious(Convert.ToInt32(maphong));
+            DateTime date_ngayThueTruoc = DateTime.Parse(dayPrevious).Date;
 
-            if (checkConflict)
+            // check xem ngày nhận có ở trong khoảng với ptp đang ở + check xem có ptp nào đặt trước nữa không
+            if (checkConflict || date_ngayThueTruoc < ngayThueBanDau_date)
             {
                 System.Windows.Forms.MessageBox.Show("Phòng vẫn còn được cho thuê", "Không thể nhận phòng", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
@@ -1107,25 +1114,49 @@ namespace Nemo
                 thanhToanBtn.Visibility = Visibility;
                 NhanPhong_PTP.Visibility = Visibility.Collapsed;
                 HuyDatTruocPhong_PTP.Visibility = Visibility.Collapsed;
-                // sửa lại update tình trạng khi vẫn có phòng phía sau
 
-                /*var conn_phong = new PhongViewDAO();
-                conn_phong.updateTinhTrang(Convert.ToInt32(maphong), 0, true);*/
+                // sửa lại update tình trạng khi vẫn có phòng phía sau
+                string soPhong = MaPhongTextBlock.Text;
+                int soPhongInt;
+                int.TryParse(soPhong, out soPhongInt);
+                string maptp = MaPTPTextBlock_HD.Text;
+
+                string dayAfter = conn_phong.isReserveAfterward(soPhongInt);
+                DateTime date_ngayThueSau = DateTime.Parse(dayAfter).Date;
+
+                if (date_ngayThueSau == currentDate)
+                {
+                    conn_phong.updateTinhTrang(soPhongInt, 0, true);
+                }
+                else
+                {
+                    conn_phong.updateTinhTrang(soPhongInt, 0, true, true);
+                }
+                conn_ptp.changeNgayThue(Convert.ToInt32(maptp), currentDate.ToString("dd'/'MM'/'yyyy"));
             }
         }
 
         private void HuyDatTruocPhong_PTP_Click(object sender, RoutedEventArgs e)
         {
-            var conn = new PhieuThuePhongViewDAO();
-            string maptp = MaPTPTextBlock.Text;
-            conn.huyPTP(Convert.ToInt32(maptp));
+            var result = System.Windows.Forms.MessageBox.Show("Bạn có chắc chắn muốn xóa phiếu không?", "Xác nhận xóa", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
-            //cập nhật tình trạng
-            var conn_phong = new PhongViewDAO();
-            string maphong = MaPhongTextBlock.Text;
-            conn_phong.updateTinhTrang(Convert.ToInt32(maphong), 0, false, false, true);
-            Get_PhieuThuePhong_View();
-            TabControl_PhieuThuePhong.SelectedIndex = 0;
+            if (result == System.Windows.Forms.DialogResult.OK)
+            {
+                var conn = new PhieuThuePhongViewDAO();
+                string maptp = MaPTPTextBlock.Text;
+                conn.huyPTP(Convert.ToInt32(maptp));
+
+                //cập nhật tình trạng
+                var conn_phong = new PhongViewDAO();
+                string maphong = MaPhongTextBlock.Text;
+                conn_phong.updateTinhTrang(Convert.ToInt32(maphong), 0, false, false, true);
+                Get_PhieuThuePhong_View();
+                TabControl_PhieuThuePhong.SelectedIndex = 0;
+            }
+            else
+            {
+                
+            }
         }
     }
 }

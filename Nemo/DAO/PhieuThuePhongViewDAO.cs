@@ -346,7 +346,7 @@ namespace Nemo.DAO
 												FROM phieuthuephong ptp
 												WHERE mahd IS NULL
 													AND tien IS NULL
-													AND maphongthue = 306
+													AND maphongthue = {maphong}
 													AND TO_DATE('{queryDate}', 'DD/MM/YYYY') BETWEEN ngaythue AND ngaytra;");
 				if (result != null)
 					return true;
