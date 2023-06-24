@@ -238,7 +238,7 @@ namespace Nemo.DAO
 												FROM
 													phieuthuephong ptp	
 												WHERE
-													ptp.maHD IS NULL and ptp.maphongthue = {maphong}");
+													ptp.maHD IS NULL and ptp.maphongthue = {maphong} and tien is null");
             conn.CloseConnection();
             ObservableCollection<PhieuThuePhong> list = JArray.FromObject(result)
                                                               .ToObject<ObservableCollection<PhieuThuePhong>>();
@@ -332,6 +332,59 @@ namespace Nemo.DAO
 									FROM phieuthuephong
 									WHERE maptp = {maptp}
 								)");
+            conn.CloseConnection();
+        }
+		public bool isConflict(int maphong, string ngayThue, string ngayTra)
+		{
+			var conn = new ConnectDB();
+			conn.OpenConnection();
+
+			if (ngayTra == null || ngayThue == null) // check cho nhận phòng đặt trước, gia hạn thời gian trả phòng
+			{
+                var queryDate = ngayThue != null ? ngayThue : ngayTra;
+                var result = conn.ExecuteQuery(@$"SELECT ptp.*
+												FROM phieuthuephong ptp
+												WHERE mahd IS NULL
+													AND tien IS NULL
+													AND maphongthue = 306
+													AND TO_DATE('{queryDate}', 'DD/MM/YYYY') BETWEEN ngaythue AND ngaytra;");
+				if (result != null)
+					return true;
+				return false;
+			}
+			else // check cho thuê phòng
+			{
+				var result = conn.ExecuteQuery(@$"SELECT ptp.*
+											FROM phieuthuephong ptp
+											WHERE mahd IS NULL
+												AND tien IS NULL
+												AND maphongthue = {maphong}
+												AND (ngaythue, ngaytra) OVERLAPS (TO_DATE('{ngayThue}', 'DD/MM/YYYY'), TO_DATE('{ngayTra}', 'DD/MM/YYYY'));");
+				conn.CloseConnection();
+
+				if (result != null)
+					return true;
+				return false;
+			}
+		}
+		public void changeNgayThue(int maptp, string date)
+		{
+            var conn = new ConnectDB();
+            conn.OpenConnection();
+
+            conn.ExecuteQuery(@$"UPDATE phieuthuephong
+								SET ngaythue = TO_DATE('{date}', 'DD/MM/YYYY')
+								WHERE maptp = {maptp};");
+            conn.CloseConnection();
+        }
+		public void changeNgayTra(int maptp, string date)
+		{
+            var conn = new ConnectDB();
+            conn.OpenConnection();
+
+            conn.ExecuteQuery(@$"UPDATE phieuthuephong
+								SET ngaytra = TO_DATE('{date}', 'DD/MM/YYYY')
+								WHERE maptp = {maptp};");
             conn.CloseConnection();
         }
     }

@@ -581,7 +581,8 @@ namespace Nemo
 
             // check input ngày thuê và ngày trả hợp lệ
             if (string.IsNullOrEmpty(ngayThue) ||
-                        DateTime.TryParseExact(ngayThue, dateFormat, CultureInfo.InvariantCulture, DateTimeStyles.None, out date) == false)
+                DateTime.TryParseExact(ngayThue, dateFormat, CultureInfo.InvariantCulture, DateTimeStyles.None, out date) == false ||
+                DateTime.Now > DateTime.ParseExact(ngayThue, "dd/MM/yyyy", CultureInfo.InvariantCulture))
             {
                 errorNgayThue_PTP.Visibility = Visibility;
             }
@@ -784,12 +785,11 @@ namespace Nemo
                                 }
                                 else
                                 {
-                                    if (tinhtrang == "Đã thuê")
+                                    if (tinhtrang == "Đã thuê" || tinhtrang == "Đang đợi")
                                     {
-                                        string ngayTraDuKien = conn_ptp.getNgayTra(soPhongInt);
-                                        DateTime ngayTraDuKienDate = DateTime.Parse(ngayTraDuKien);
+                                        bool checkConflict = conn_ptp.isConflict(Convert.ToInt32(soPhong), ngayThue, ngayTra);
 
-                                        if (ngayThueDate > ngayTraDuKienDate) // được đặt trước
+                                        if (checkConflict == false) // được đặt trước
                                         {
                                             if (string.IsNullOrEmpty(tenKH) ||
                                                 string.IsNullOrEmpty(loaiKH) ||
@@ -813,7 +813,14 @@ namespace Nemo
                                                 int maptp_new = conn_ptp.addPTP(ptp);
 
                                                 conn_ptp.addLichSu(maptp_new, makh_moiThem);
-                                                conn_phong.updateTinhTrang(soPhongInt, maptp_new);
+                                                if (tinhtrang == "Đã thuê")
+                                                {
+                                                    conn_phong.updateTinhTrang(soPhongInt, maptp_new);
+                                                }
+                                                else
+                                                {
+                                                    conn_phong.updateTinhTrang(soPhongInt, maptp_new, false, true);
+                                                }
                                                 int soKhach = conn_ptp.countSoKhachInPTP(maptp_new);
 
                                                 errorSoPhong_PTP.Visibility = Visibility.Collapsed;
@@ -905,20 +912,7 @@ namespace Nemo
             var conn_phong = new PhongViewDAO();
             if (reserve == true)// đặt phòng trước
             {
-                ComboBoxItem selectedComboBoxItem = (ComboBoxItem)inputLoaiPhong_PTP.SelectedItem;
-                selectedComboBoxItem = (ComboBoxItem)inputLoaiKhach_PTP.SelectedItem;
-                string loaiPhong = selectedComboBoxItem.Content.ToString();
-                int loaiPhongInt;
-                if (loaiPhong == "Loại A")
-                    loaiPhongInt = 1;
-                else
-                {
-                    if (loaiPhong == "Loại B")
-                        loaiPhongInt = 2;
-                    else loaiPhongInt = 3;
-                }
-
-                string tinhTrangPhong = conn_phong.checkTinhTrang(soPhongInt, loaiPhongInt);
+                string tinhTrangPhong = conn_phong.checkTinhTrang(soPhongInt);
                 if (tinhTrangPhong == "Đang xử lí")
                 {
                     conn_phong.updateTinhTrang(soPhongInt, 0, true, true);
@@ -1056,15 +1050,28 @@ namespace Nemo
 
         private void NhanPhong_PTP_Click(object sender, RoutedEventArgs e)
         {
-            DatTruocTextBlock.Visibility = Visibility.Collapsed;
-            NdungTienTextBlock.Visibility = Visibility;
-            thanhToanBtn.Visibility = Visibility;
-            NhanPhong_PTP.Visibility = Visibility.Collapsed;
-            HuyDatTruocPhong_PTP.Visibility = Visibility.Collapsed;
-
-            var conn_phong = new PhongViewDAO();
             string maphong = MaPhongTextBlock.Text;
-            conn_phong.updateTinhTrang(Convert.ToInt32(maphong), 0, true);
+            DateTime currentDate = DateTime.Now.Date;
+
+            var conn_ptp = new PhieuThuePhongViewDAO();
+            bool checkConflict = conn_ptp.isConflict(Convert.ToInt32(maphong), currentDate.ToString("dd'/'MM'/'yyyy"), null);
+
+            if (checkConflict)
+            {
+                System.Windows.Forms.MessageBox.Show("Phòng vẫn còn được cho thuê", "Không thể nhận phòng", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            else
+            {
+                DatTruocTextBlock.Visibility = Visibility.Collapsed;
+                NdungTienTextBlock.Visibility = Visibility;
+                thanhToanBtn.Visibility = Visibility;
+                NhanPhong_PTP.Visibility = Visibility.Collapsed;
+                HuyDatTruocPhong_PTP.Visibility = Visibility.Collapsed;
+                // sửa lại update tình trạng khi vẫn có phòng phía sau
+
+                /*var conn_phong = new PhongViewDAO();
+                conn_phong.updateTinhTrang(Convert.ToInt32(maphong), 0, true);*/
+            }
         }
 
         private void HuyDatTruocPhong_PTP_Click(object sender, RoutedEventArgs e)

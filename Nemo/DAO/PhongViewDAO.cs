@@ -104,8 +104,11 @@ namespace Nemo.DAO
                         return;
                     }
                 }
-
-                conn.ExecuteQuery(@$"UPDATE phong
+                else
+                {
+                    if (reserve == false)
+                    {
+                        conn.ExecuteQuery(@$"UPDATE phong
 								SET tinhtrang = 
 									CASE
 										WHEN (
@@ -126,6 +129,33 @@ namespace Nemo.DAO
 										ELSE CAST('Đang xử lí' AS room_status)
 									END
 								WHERE maphong = {maphong};");
+                    }
+                    else
+                    {
+                        conn.ExecuteQuery(@$"UPDATE phong
+								SET tinhtrang = 
+									CASE
+										WHEN (
+											SELECT COUNT(*)
+											FROM lichsuthuephong lsp
+											JOIN phieuthuephong ptp ON lsp.maptp = ptp.maptp
+											WHERE ptp.maptp = {maptp}
+										) = (
+											SELECT sl_khachtoida
+											FROM quydinh
+											WHERE maqd = (
+												SELECT maqd
+												FROM phieuthuephong
+												WHERE maptp = {maptp}
+												LIMIT 1
+											)
+										) THEN CAST('Đang đợi' AS room_status)
+										ELSE CAST('Đang xử lí' AS room_status)
+									END
+								WHERE maphong = {maphong};");
+
+                    }
+                }
             }
             conn.CloseConnection();
         }
