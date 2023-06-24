@@ -582,7 +582,7 @@ namespace Nemo
             // check input ngày thuê và ngày trả hợp lệ
             if (string.IsNullOrEmpty(ngayThue) ||
                 DateTime.TryParseExact(ngayThue, dateFormat, CultureInfo.InvariantCulture, DateTimeStyles.None, out date) == false ||
-                DateTime.Now > DateTime.ParseExact(ngayThue, "dd/MM/yyyy", CultureInfo.InvariantCulture))
+                DateTime.Now.Date > DateTime.ParseExact(ngayThue, "dd/MM/yyyy", CultureInfo.InvariantCulture).Date)
             {
                 errorNgayThue_PTP.Visibility = Visibility;
             }
@@ -662,39 +662,61 @@ namespace Nemo
                             if (int.TryParse(soPhong, out soPhongInt))
                             {
                                 string tinhtrang = conn_phong.checkTinhTrang(soPhongInt, loaiPhongInt);
-                                if (tinhtrang == "Còn trống")
+                                bool reserve = false;
+                                if (tinhtrang == "Đang đợi")
+                                    reserve = true;
+                                if (tinhtrang == "Còn trống" || tinhtrang == "Đang đợi")
                                 {
-                                    if (string.IsNullOrEmpty(tenKH) ||
-                                        string.IsNullOrEmpty(loaiKH) ||
-                                        string.IsNullOrEmpty(diaChi) ||
-                                        string.IsNullOrEmpty(loaiDD) ||
-                                        string.IsNullOrEmpty(soDD))
+                                    bool checkConflict = conn_ptp.isConflict(Convert.ToInt32(soPhong), ngayThue, ngayTra);
+                                    if (checkConflict == false &&
+                                        DateTime.Now.Date == DateTime.ParseExact(ngayThue, "dd/MM/yyyy", CultureInfo.InvariantCulture).Date)
                                     {
-                                        errorThieuThongTin_PTP.Visibility = Visibility;
-                                        errorSoPhong_PTP.Visibility = Visibility.Collapsed;
+                                        if (string.IsNullOrEmpty(tenKH) ||
+                                            string.IsNullOrEmpty(loaiKH) ||
+                                            string.IsNullOrEmpty(diaChi) ||
+                                            string.IsNullOrEmpty(loaiDD) ||
+                                            string.IsNullOrEmpty(soDD))
+                                        {
+                                            errorThieuThongTin_PTP.Visibility = Visibility;
+                                            errorSoPhong_PTP.Visibility = Visibility.Collapsed;
+                                        }
+                                        else
+                                        {
+                                            int makh_moiThem = conn_kh.addKhachHang(kh);
+                                            var ptp = new PhieuThuePhong()
+                                            {
+                                                ngayThue = ngayThueFormatted,
+                                                ngayTra = ngayTraFormatted,
+                                                maPhongThue = Convert.ToInt32(soPhong)
+                                            };
+
+                                            int maptp_new = conn_ptp.addPTP(ptp);
+
+                                            conn_ptp.addLichSu(maptp_new, makh_moiThem);
+                                            if (tinhtrang == "Còn trống")
+                                            {
+                                                conn_phong.updateTinhTrang(soPhongInt, maptp_new);
+                                            }
+                                            else
+                                            {
+                                                conn_phong.updateTinhTrang(soPhongInt, maptp_new, false, true);
+                                            }
+                                            conn_phong.updateTinhTrang(soPhongInt, maptp_new);
+                                            int soKhach = conn_ptp.countSoKhachInPTP(maptp_new);
+
+                                            errorSoPhong_PTP.Visibility = Visibility.Collapsed;
+                                            errorThieuThongTin_PTP.Visibility = Visibility.Collapsed;
+                                            inputTenKhach_PTP.Text = string.Empty;
+                                            inputDiaChi_PTP.Text = string.Empty;
+                                            inputSoDinhDanh_PTP.Text = string.Empty;
+                                            soKhachDaThem_PTP.Text = $"Số khách đã thêm: {soKhach}";
+                                        }
                                     }
                                     else
                                     {
-                                        int makh_moiThem = conn_kh.addKhachHang(kh);
-                                        var ptp = new PhieuThuePhong()
-                                        {
-                                            ngayThue = ngayThueFormatted,
-                                            ngayTra = ngayTraFormatted,
-                                            maPhongThue = Convert.ToInt32(soPhong)
-                                        };
-
-                                        int maptp_new = conn_ptp.addPTP(ptp);
-
-                                        conn_ptp.addLichSu(maptp_new, makh_moiThem);
-                                        conn_phong.updateTinhTrang(soPhongInt, maptp_new);
-                                        int soKhach = conn_ptp.countSoKhachInPTP(maptp_new);
-
-                                        errorSoPhong_PTP.Visibility = Visibility.Collapsed;
+                                        errorSoPhong_PTP.Text = "*Phòng đã bận";
+                                        errorSoPhong_PTP.Visibility = Visibility;
                                         errorThieuThongTin_PTP.Visibility = Visibility.Collapsed;
-                                        inputTenKhach_PTP.Text = string.Empty;
-                                        inputDiaChi_PTP.Text = string.Empty;
-                                        inputSoDinhDanh_PTP.Text = string.Empty;
-                                        soKhachDaThem_PTP.Text = $"Số khách đã thêm: {soKhach}";
                                     }
                                 }
                                 else
@@ -712,7 +734,14 @@ namespace Nemo
                                             int makh_moiThem = conn_kh.addKhachHang(kh);
 
                                             conn_ptp.addLichSu(maptp, makh_moiThem);
-                                            conn_phong.updateTinhTrang(soPhongInt, maptp);
+                                            if (reserve == false)
+                                            {
+                                                conn_phong.updateTinhTrang(soPhongInt, maptp);
+                                            }
+                                            else
+                                            {
+                                                conn_phong.updateTinhTrang(soPhongInt, maptp, false, true);
+                                            }
                                             bool checkFull = conn_phong.checkFull(soPhongInt);
                                             if (checkFull == true)
                                             {
@@ -833,7 +862,7 @@ namespace Nemo
                                         }
                                         else
                                         {
-                                            errorSoPhong_PTP.Text = "*Phòng đã đầy";
+                                            errorSoPhong_PTP.Text = "*Phòng đã bận";
                                             errorSoPhong_PTP.Visibility = Visibility;
                                             errorThieuThongTin_PTP.Visibility = Visibility.Collapsed;
                                         }
@@ -920,7 +949,18 @@ namespace Nemo
             }
             else // đặt phòng trực tiếp
             {
-                conn_phong.updateTinhTrang(soPhongInt, 0, true);
+                // sửa lại tình trạng khi có 1 phòng đặt trước ở phía sau
+                string dayAfter = conn_phong.isReserveAfterward(soPhongInt);
+                DateTime date_ngayThueSau = DateTime.Parse(dayAfter).Date;
+
+                if (date_ngayThueSau == date_ngayThue)
+                {
+                    conn_phong.updateTinhTrang(soPhongInt, 0, true);
+                }
+                else
+                {
+                    conn_phong.updateTinhTrang(soPhongInt, 0, true, true);
+                }
             }
 
             TabControl_PhieuThuePhong.SelectedIndex = 0;

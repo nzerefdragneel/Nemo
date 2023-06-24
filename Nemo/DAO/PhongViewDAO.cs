@@ -172,5 +172,25 @@ namespace Nemo.DAO
                 return true;
             return false;
         }
+        public string isReserveAfterward(int maphong)
+        {
+            var conn = new ConnectDB();
+            conn.OpenConnection();
+
+            var result = conn.ExecuteQuery(@$"SELECT ptp.*
+                                            FROM phieuthuephong ptp
+                                            WHERE mahd IS NULL
+                                                AND tien IS NULL
+                                                AND maphongthue = {maphong}
+                                                AND ngaythue = (
+                                                SELECT MAX(ngaythue)
+                                                FROM phieuthuephong
+                                                WHERE mahd IS NULL
+                                                    AND tien IS NULL
+                                                    AND maphongthue = {maphong});");
+            conn.CloseConnection();
+
+            return result.Rows[0]["ngaythue"].ToString();
+        }
     }
 }
