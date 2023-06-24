@@ -460,6 +460,7 @@
                                             HorizontalAlignment="Left" VerticalAlignment="Bottom"
                                             Margin="10 0 0 0">
                                         <Button
+                                            Name="BackBtn_PTP"
                                         Width="40"
                                         Height="40"
                                         Padding="0"
@@ -501,9 +502,19 @@
                                     <Run x:Name="NgayTaoTextBlock" Text=""/>
                                             </TextBlock>
 
-                                            <TextBlock Foreground="#000" VerticalAlignment="Center" FontSize="13" Margin="50,0,0,5">
-                                    <Run Text="Ngày trả phòng dự kiến: "/>
-                                    <Run x:Name="NgayTraTextBlock" Text=""/>
+                                            <TextBlock x:Name="ngayTraInfo" Foreground="#000" VerticalAlignment="Center" FontSize="13" Margin="50,0,0,5">
+                                                <Run Text="Ngày trả phòng dự kiến: "/>
+                                                <Run x:Name="NgayTraTextBlock" Text=""/>
+                                            </TextBlock>
+
+                                            <TextBlock Visibility="Collapsed" x:Name="ngayTraInfo2" Foreground="#000" VerticalAlignment="Center" FontSize="13" Margin="50,0,0,5">
+                                                <Run Text="Ngày trả phòng dự kiến: "/>
+                                                <Border BorderBrush="Black" BorderThickness="1" CornerRadius="5" Margin="00 0 0 -10">
+                                                    <TextBox x:Name="inputNgayTra_GiaHan_PTP" Width="100" />
+                                                </Border>
+                                                <TextBlock Visibility="Collapsed" x:Name="errorGiaHanNgayTra_PTP">
+                                                    <Run FontStyle="Italic" Text="  *Ngày trả không hợp lệ" Foreground="Red"/>
+                                                </TextBlock>
                                             </TextBlock>
 
                                             <TextBlock Foreground="#000" VerticalAlignment="Center" FontSize="13" Margin="50,0,0,5">
@@ -581,6 +592,34 @@
                                                 ToolTip="MaterialDesignRaisedButton with Round Corners">
                                                 <TextBlock TextWrapping="Wrap" Foreground="{DynamicResource PrimaryMidBrush}"
                                             Text="Thanh toán" />
+                                            </Button>
+                                        </StackPanel>
+
+                                        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0 100 50 0">
+                                            <Button Height="45"
+                                                Name="hoanThanhGiaHan_PTP"
+                                                Click="hoanThanhGiaHan_PTP_Click"
+                                                materialDesign:ButtonAssist.CornerRadius="10"
+                                                IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
+                                                Style="{StaticResource MaterialDesignRaisedButton}"
+                                                Background="{DynamicResource PrimaryDarkForegroundBrush}" Foreground="{DynamicResource SecondaryHueMidForegroundBrush}"
+                                                ToolTip="MaterialDesignRaisedButton with Round Corners">
+                                                <TextBlock TextWrapping="Wrap" Foreground="{DynamicResource PrimaryMidBrush}"
+                                            Text="Hoàn tất" />
+                                            </Button>
+                                        </StackPanel>
+
+                                        <StackPanel Grid.Row="1"  Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0 100 200 0">
+                                            <Button Height="45" Width="100"
+                                                Name="GiaHan_PTP"
+                                                Click="GiaHan_PTP_Click"
+                                                materialDesign:ButtonAssist.CornerRadius="10"
+                                                IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
+                                                Style="{StaticResource MaterialDesignRaisedButton}"
+                                                Background="{DynamicResource PrimaryDarkForegroundBrush}" Foreground="{DynamicResource SecondaryHueMidForegroundBrush}"
+                                                ToolTip="MaterialDesignRaisedButton with Round Corners">
+                                                <TextBlock TextWrapping="Wrap" Foreground="{DynamicResource PrimaryMidBrush}"
+                                            Text="Gia hạn" />
                                             </Button>
                                         </StackPanel>
 

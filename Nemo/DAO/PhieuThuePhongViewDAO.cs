@@ -334,7 +334,7 @@ namespace Nemo.DAO
 								)");
             conn.CloseConnection();
         }
-		public bool isConflict(int maphong, string ngayThue, string ngayTra)
+		public bool isConflict(int maphong, string ngayThue, string ngayTra, int maptp = 0)
 		{
 			var conn = new ConnectDB();
 			conn.OpenConnection();
@@ -354,17 +354,35 @@ namespace Nemo.DAO
 			}
 			else // check cho thuê phòng
 			{
-				var result = conn.ExecuteQuery(@$"SELECT ptp.*
+				if (maptp == 0)
+				{
+					var result = conn.ExecuteQuery(@$"SELECT ptp.*
 											FROM phieuthuephong ptp
 											WHERE mahd IS NULL
 												AND tien IS NULL
 												AND maphongthue = {maphong}
 												AND (ngaythue, ngaytra) OVERLAPS (TO_DATE('{ngayThue}', 'DD/MM/YYYY'), TO_DATE('{ngayTra}', 'DD/MM/YYYY'));");
-				conn.CloseConnection();
+					conn.CloseConnection();
 
-				if (result != null)
-					return true;
-				return false;
+					if (result != null)
+						return true;
+					return false;
+				}
+				else
+				{
+                    var result = conn.ExecuteQuery(@$"SELECT ptp.*
+											FROM phieuthuephong ptp
+											WHERE mahd IS NULL
+												AND tien IS NULL
+												AND maptp != {maptp}
+												AND maphongthue = {maphong}
+												AND (ngaythue, ngaytra) OVERLAPS (TO_DATE('{ngayThue}', 'DD/MM/YYYY'), TO_DATE('{ngayTra}', 'DD/MM/YYYY'));");
+                    conn.CloseConnection();
+
+                    if (result != null)
+                        return true;
+                    return false;
+                }
 			}
 		}
 		public void changeNgayThue(int maptp, string date)
