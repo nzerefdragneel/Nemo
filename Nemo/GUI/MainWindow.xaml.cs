@@ -212,6 +212,147 @@ namespace Nemo
             }
         }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         public void Get_HoaDon_View()
         {
             var con = new HoaDonViewDAO();
@@ -269,9 +410,9 @@ namespace Nemo
             var con = new ChiTietHoaDonViewDAO();
 
             TextBlock_MaHoaDon_ChiTietHoaDon.Text = ChiTietHoaDonView.mahoadon.ToString();
-            TextBlock_NgayThanhToan_ChiTietHoaDon.Text = ChiTietHoaDonView.ngaythanhtoan.ToString("dd'/'MM'/'yyyy");
+            TextBlock_NgayThanhToan_ChiTietHoaDon.Text = ChiTietHoaDonView.ngaythanhtoan?.ToString("dd'/'MM'/'yyyy");
             TextBlock_KhachHang_ChiTietHoaDon.Text = ChiTietHoaDonView.khachhang;
-            TextBlock_TongTien_ChiTietHoaDon.Text = ChiTietHoaDonView.tongtien.ToString("N0");
+            TextBlock_TongTien_ChiTietHoaDon.Text = ChiTietHoaDonView.tongtien?.ToString("N0");
             TextBlock_SoPhongThanhToan_ChiTietHoaDon.Text = ChiTietHoaDonView.sophongthanhtoan.ToString();
 
             ChiTietHoaDonView.ListChiTietHoaDon = con.GetListChiTietHoaDon(mahd, sokhachquydinh);
@@ -286,7 +427,7 @@ namespace Nemo
             foreach (var hd in HoaDonView.ListHoaDon)
             {
                 var mahd = hd.mahoadon.ToString();
-                var ngaythanhtoan = hd.ngaythanhtoan.ToString("dd'/'MM'/'yyyy");
+                var ngaythanhtoan = hd.ngaythanhtoan?.ToString("dd'/'MM'/'yyyy");
                 var khachhang = hd.khachhang;
 
                 if (mahd.Contains(keyword))

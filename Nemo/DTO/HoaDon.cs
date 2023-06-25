@@ -10,9 +10,9 @@ namespace Nemo.DTO
     {
         public int stt { get; set; }
         public int mahoadon { get; set; }
-        public DateTime ngaythanhtoan { get; set; }
+        public DateTime? ngaythanhtoan { get; set; }
         public int sophongthanhtoan { get; set; }
         public string khachhang { get; set; }
-        public float tongtien { get; set; }
+        public float? tongtien { get; set; }
     }
 }

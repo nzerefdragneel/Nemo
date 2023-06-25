@@ -13,8 +13,8 @@ namespace Nemo.DTO
         public ObservableCollection<ChiTietHoaDon> ListChiTietHoaDon { get; set; }
         public ObservableCollection<ChiTietHoaDon> CurChiTietHoaDon { get; set; }
         public int mahoadon { get; set; }
-        public DateTime ngaythanhtoan { get; set; }
-        public float tongtien { get; set; }
+        public DateTime? ngaythanhtoan { get; set; }
+        public float? tongtien { get; set; }
         public string khachhang { get; set; }
         public int sophongthanhtoan { get; set; }
         public int prevpage { get; set; } = 0;
@@ -36,6 +36,7 @@ namespace Nemo.DTO
         }
         public void UpdatePaging()
         {
+            if (ListChiTietHoaDon == null) return;
             totalItems = ListChiTietHoaDon.Count;
             totalpage = (totalItems / perpage) +
                 (totalItems % perpage == 0 ? 0 : 1);

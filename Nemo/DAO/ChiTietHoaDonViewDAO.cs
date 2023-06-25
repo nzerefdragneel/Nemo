@@ -55,6 +55,7 @@ namespace Nemo.DAO
 											where ptp.mahd = {mahd}
 											order by maptp asc");
             conn.CloseConnection();
+			if (result == null) return null;
             ObservableCollection<ChiTietHoaDon> list = JArray.FromObject(result).ToObject<ObservableCollection<ChiTietHoaDon>>();
             for (int i = 0; i < list.Count(); i++)
             {
