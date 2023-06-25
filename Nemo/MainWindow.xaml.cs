@@ -136,7 +136,10 @@ namespace Nemo
             PTPView.listPTP = con.GetListPTP();
             PTPView.PhongDaThue = con.getCountPhong()[0];
             PTPView.PhongTrong = con.getCountPhong()[1];
-            PTPView.UpdatePaging();
+            if (PTPView.listPTP != null)
+            {
+                PTPView.UpdatePaging();
+            }
             ListView_PhieuThuePhong.ItemsSource = PTPView.curPTP;
             Page_PhieuThuePhong_text.Text = PTPView.curpage.ToString();
 
@@ -730,7 +733,6 @@ namespace Nemo
             {
                 TaoPTPDoneMsg.Visibility = Visibility.Collapsed;
                 OverlayGridTaoPTP.Visibility = Visibility.Collapsed;
-                // ...
                 inputSoPhong_PTP.Text = string.Empty;
                 inputTenKhach_PTP.Text = string.Empty;
                 inputDiaChi_PTP.Text = string.Empty;
@@ -934,7 +936,7 @@ namespace Nemo
         {
             var result = System.Windows.Forms.MessageBox.Show("Bạn có chắc chắn muốn xóa phiếu không?", "Xác nhận xóa", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
-            if (result == System.Windows.Forms.DialogResult.OK)
+            if (result == System.Windows.Forms.DialogResult.Yes)
             {
                 var conn = new PhieuThuePhongViewDAO();
                 string maptp = MaPTPTextBlock.Text;

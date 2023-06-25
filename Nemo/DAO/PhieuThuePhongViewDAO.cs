@@ -64,6 +64,10 @@ namespace Nemo.DAO
 											order by ptp.maptp desc");
 
             conn.CloseConnection();
+			if (result == null)
+			{
+				return null;
+			}
             ObservableCollection<PhieuThuePhong> list = JArray.FromObject(result)
                                                               .ToObject<ObservableCollection<PhieuThuePhong>>();
 			for (int i = 0; i < list.Count; i++)
