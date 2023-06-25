@@ -38,6 +38,9 @@ namespace Nemo
     {
         PhongView PhongView = new PhongView();
         HoaDonView HoaDonView = new HoaDonView();
+        ChiTietHoaDonView ChiTietHoaDonView = new ChiTietHoaDonView();
+        ChiTietPTPHDView ChiTietPTPHDView = new ChiTietPTPHDView();
+
         DoanhThuView DoanhThuView = new DoanhThuView();
         MatDoView MatDoView = new MatDoView();
         QuyDinhView QuyDinhView = new QuyDinhView();
@@ -90,6 +93,25 @@ namespace Nemo
             PopupMenu.IsOpen = !PopupMenu.IsOpen;
         }
 
+        
+        private void ChangeButton_QD(object sender, RoutedEventArgs e)
+        {
+            NumOfTypes.IsEnabled = true;
+            NumOfTypes.Focus();
+            NumOfCustomers.IsEnabled = true;
+            PhuThu.IsEnabled = true;
+            HeSoKNN.IsEnabled = true;
+
+        }
+
+        private void SetQD(object sender, RoutedEventArgs e)
+        {
+            NumOfTypes.IsEnabled = false;
+            NumOfCustomers.IsEnabled = false;
+            PhuThu.IsEnabled = false;
+            HeSoKNN.IsEnabled = false;
+        }
+
         private void TuyChon_Btn_Click(object sender, RoutedEventArgs e)
         {
             //get index of sender button
@@ -110,7 +132,7 @@ namespace Nemo
                 Get_DanhMucPhong_View();
             }
 
-        }
+            }
         public void Get_DanhMucPhong_View()
         {
             PhongViewDAO con = new PhongViewDAO();
@@ -120,7 +142,6 @@ namespace Nemo
             PhongView.UpdatePaging();
             ListView_DanhMucPhong.ItemsSource = PhongView.CurPhong;
             Page_DanhMucPhong_text.Text = PhongView.curpage.ToString();
-            //get số lượng tình trạng phòng
 
         }
         private void Nextpage_DanhMucPhong_Btn_Click(object sender, RoutedEventArgs e)
@@ -138,7 +159,6 @@ namespace Nemo
             PhongView.UpdatePaging();
             ListView_DanhMucPhong.ItemsSource = PhongView.CurPhong;
         }
-   
 
         private void phieuThueBtn_Click(object sender, RoutedEventArgs e)
         {
@@ -215,17 +235,17 @@ namespace Nemo
         }
 
         private void Dangxuat_Btn_click(object sender, RoutedEventArgs e)
-        {
+            {
             var screen = new DangNhap();
             screen.Show();
             this.Close();
-        }
+            }
 
         private void Doimatkhau_btn_CLick(object sender, RoutedEventArgs e)
         {
             var screen = new Doimatkhau();
             screen.ShowDialog();
-            
+
         }
 
         private void Timkiem_DanhMucPhong_TextChange(object sender, TextChangedEventArgs e)
@@ -254,7 +274,7 @@ namespace Nemo
             Page_DanhMucPhong_text.Text = PhongView.curpage.ToString();
             PhongView.UpdatePaging();
             ListView_DanhMucPhong.ItemsSource = PhongView.CurPhong;
-          
+
         }
 
         private void PhongThue_DanhMucPhong_Btn_Click(object sender, RoutedEventArgs e)
@@ -291,13 +311,14 @@ namespace Nemo
             PhongView.UpdatePaging();
             ListView_DanhMucPhong.ItemsSource = PhongView.CurPhong;
             Page_DanhMucPhong_text.Text = PhongView.curpage.ToString();
-           
+
             }
-        
+
         public void Get_HoaDon_View()
         {
             var con = new HoaDonViewDAO();
             HoaDonView.ListHoaDon = con.GetListHoaDon();
+            HoaDonView.ResetCurlist();
             HoaDonView.UpdatePaging();
             ListView_HoaDon.ItemsSource = HoaDonView.CurHoaDon;
             Page_HoaDon_text.Text = HoaDonView.curpage.ToString();
@@ -313,6 +334,11 @@ namespace Nemo
 
         private void Prevpage_HoaDon_Btn_Click(object sender, RoutedEventArgs e)
         {
+            if (HoaDonView.curpage > 1) { HoaDonView.curpage = HoaDonView.curpage - 1; }
+            Page_HoaDon_text.Text = HoaDonView.curpage.ToString();
+            HoaDonView.UpdatePaging();
+            ListView_HoaDon.ItemsSource = HoaDonView.CurHoaDon;
+        }
 
         }
         //Quy Dinh
@@ -330,7 +356,7 @@ namespace Nemo
             QuyDinhView.addQuyDinh(PhuThu.Text, HeSoKNN.Text, NumOfTypes.Text, NumOfCustomers.Text);
             MessageBox.Show("Thay đổi thành công");
             Get_QuyDinh_View();
-        }
+            }
 
         private void SetQD(object sender, RoutedEventArgs e)
         {
@@ -349,7 +375,7 @@ namespace Nemo
         }
 
         private void Cbb_DoanhThu_year1_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
+                {
             var year = Cbb_DoanhThu_year1.SelectedItem;
             if (year == null) return;
             DoanhThuView.year1 = Convert.ToInt16(year);
@@ -378,7 +404,7 @@ namespace Nemo
         }
 
         private void Cbb_MatDo_Year1_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
+            {
             var year = Cbb_MatDo_Year1.SelectedItem;
             if (year == null) return;
             MatDoView.year = Convert.ToInt16(year);
@@ -402,6 +428,6 @@ namespace Nemo
             var x = Chart.Chart_MatDoNam;
         }
 
-       
+
     }
 }

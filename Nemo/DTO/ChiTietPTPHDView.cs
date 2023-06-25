@@ -6,27 +6,27 @@ using System.Windows;
 
 namespace Nemo.DTO
 {
-    class ChiTietHoaDonView : INotifyPropertyChanged
+    class ChiTietPTPHDView : INotifyPropertyChanged
     {
 
         public event PropertyChangedEventHandler? PropertyChanged;
-        public ObservableCollection<ChiTietHoaDon> ListChiTietHoaDon { get; set; }
-        public ObservableCollection<ChiTietHoaDon> CurChiTietHoaDon { get; set; }
-        public int mahoadon { get; set; }
-        public DateTime? ngaythanhtoan { get; set; }
-        public float? tongtien { get; set; }
-        public string khachhang { get; set; }
-        public int sophongthanhtoan { get; set; }
+        public ObservableCollection<ChiTietPTPHD> ListChiTietPTPHD { get; set; }
+        public ObservableCollection<ChiTietPTPHD> CurChiTietPTPHD { get; set; }
+        public int maptp { get; set; }
+        public int maphong { get; set; }
+        public DateTime ngaythue { get; set; }
+        public DateTime ngaytra { get; set; }
+        public string ghichu { get; set; }
         public int prevpage { get; set; } = 0;
         public int curpage { get; set; } = 0;
         public int nextpage { get; set; } = 0;
         public int perpage { get; set; }
         public int totalpage { get; set; } = 0;
         public int totalItems { get; set; } = 0;
-        public ChiTietHoaDonView()
+        public ChiTietPTPHDView()
         {
-            ListChiTietHoaDon = new ObservableCollection<ChiTietHoaDon>();
-            CurChiTietHoaDon = new ObservableCollection<ChiTietHoaDon>();
+            ListChiTietPTPHD = new ObservableCollection<ChiTietPTPHD>();
+            CurChiTietPTPHD = new ObservableCollection<ChiTietPTPHD>();
             curpage = 1;
             perpage = 13;
             totalpage = 0;
@@ -36,11 +36,10 @@ namespace Nemo.DTO
         }
         public void UpdatePaging()
         {
-            if (ListChiTietHoaDon == null) return;
-            totalItems = ListChiTietHoaDon.Count;
+            totalItems = ListChiTietPTPHD.Count;
             totalpage = (totalItems / perpage) +
                 (totalItems % perpage == 0 ? 0 : 1);
-            CurChiTietHoaDon = new ObservableCollection<ChiTietHoaDon>(ListChiTietHoaDon
+            CurChiTietPTPHD = new ObservableCollection<ChiTietPTPHD>(ListChiTietPTPHD
                  .Skip((curpage - 1) * perpage)
                  .Take(perpage).ToList());
         }

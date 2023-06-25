@@ -6,13 +6,12 @@ using System.Threading.Tasks;
 
 namespace Nemo.DTO
 {
-    public class HoaDon
+    public class ChiTietPTPHD
     {
         public int stt { get; set; }
-        public int mahoadon { get; set; }
-        public DateTime? ngaythanhtoan { get; set; }
-        public int sophongthanhtoan { get; set; }
         public string khachhang { get; set; }
-        public float? tongtien { get; set; }
+        public string loaikhach { get; set; }
+        public string dinhdanh { get; set; }
+        public string diachi { get; set; }
     }
 }
