@@ -449,13 +449,18 @@
 
                             <!--Chi tiết phiếu thuê phòng-->
                             <TabItem x:Name="ChiTietPhieuThueTabItem" Header="Chi tiết phiếu thuê phòng" Visibility="Collapsed">
-                                <Grid Background="{DynamicResource PrimaryHueMidForegroundBrush}">
+                                <Grid x:Name="ChiTietPTPGrid" Background="{DynamicResource PrimaryHueMidForegroundBrush}">
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="50"></RowDefinition>
                                         <RowDefinition Height="100"></RowDefinition>
                                         <RowDefinition Height="*"></RowDefinition>
                                         <RowDefinition Height="60"></RowDefinition>
                                     </Grid.RowDefinitions>
+                                    <Grid x:Name="GiaHanDoneMsg" Visibility="Collapsed" Grid.RowSpan="4" Panel.ZIndex="11">
+                                        <local:CustomModalDialog Visibility="Visible" />
+                                    </Grid>
+                                    <Grid x:Name="OverlayGridGiaHan" Visibility="Collapsed" Grid.RowSpan="5" Background="#99000000" IsHitTestVisible="True" Panel.ZIndex="10">
+                                    </Grid>
                                     <StackPanel Grid.Row="0" Orientation="Horizontal" 
                                             HorizontalAlignment="Left" VerticalAlignment="Bottom"
                                             Margin="10 0 0 0">
@@ -657,7 +662,7 @@
 
                             <!--Thanh toán-->
                             <TabItem x:Name="ThanhToanTabItem" Header="Thanh toán" Visibility="Collapsed">
-                                <Grid Background="{DynamicResource PrimaryHueMidForegroundBrush}">
+                                <Grid x:Name="ThanhToanPTPGrid" Background="{DynamicResource PrimaryHueMidForegroundBrush}">
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="50"></RowDefinition>
                                         <RowDefinition Height="50"></RowDefinition>
@@ -665,6 +670,11 @@
                                         <RowDefinition Height="80"></RowDefinition>
                                         <RowDefinition Height="*"></RowDefinition>
                                     </Grid.RowDefinitions>
+                                    <Grid x:Name="ThanhToanDoneMsg" Visibility="Collapsed" Grid.RowSpan="5" Panel.ZIndex="11">
+                                        <local:CustomModalDialog Visibility="Visible" />
+                                    </Grid>
+                                    <Grid x:Name="OverlayGridThanhToan" Visibility="Collapsed" Grid.RowSpan="5" Background="#99000000" IsHitTestVisible="True" Panel.ZIndex="10">
+                                    </Grid>
                                     <StackPanel Grid.Row="0" Orientation="Horizontal" 
                                             HorizontalAlignment="Left" VerticalAlignment="Bottom"
                                             Margin="10 0 0 0">
@@ -812,7 +822,7 @@
                             
                             <!--thanh toán nhiều ptp-->
                             <TabItem x:Name="ThanhToanNhieuTabItem"  Header="Thanh toán" Visibility="Collapsed">
-                                <Grid Background="{DynamicResource PrimaryHueMidForegroundBrush}">
+                                <Grid x:Name="ThanhToanGrid" Background="{DynamicResource PrimaryHueMidForegroundBrush}">
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="50"></RowDefinition>
                                         <RowDefinition Height="50"></RowDefinition>
@@ -820,6 +830,11 @@
                                         <RowDefinition Height="80"></RowDefinition>
                                         <RowDefinition Height="*"></RowDefinition>
                                     </Grid.RowDefinitions>
+                                    <Grid x:Name="ThanhToanNhieuDoneMsg" Visibility="Collapsed" Grid.RowSpan="5" Panel.ZIndex="11">
+                                        <local:CustomModalDialog Visibility="Visible" />
+                                    </Grid>
+                                    <Grid x:Name="OverlayGridThanhToanNhieu" Visibility="Collapsed" Grid.RowSpan="5" Background="#99000000" IsHitTestVisible="True" Panel.ZIndex="10">
+                                    </Grid>
                                     <StackPanel Grid.Row="0" Orientation="Horizontal" 
                                             HorizontalAlignment="Left" VerticalAlignment="Bottom"
                                             Margin="10 0 0 0">
@@ -962,13 +977,18 @@
 
                             <!--tạo phiếu thuê phòng-->
                             <TabItem x:Name="TaoPTPTabItem" Header="Tạo phiếu thuê phòng" Visibility="Collapsed">
-                                <Grid Background="{DynamicResource PrimaryHueMidForegroundBrush}">
+                                <Grid x:Name="TaoPTPGrid" Background="{DynamicResource PrimaryHueMidForegroundBrush}">
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="50"></RowDefinition>
                                         <RowDefinition Height="100"></RowDefinition>
                                         <RowDefinition Height="auto"></RowDefinition>
-                                        <RowDefinition Height="auto"></RowDefinition>
+                                        <RowDefinition Height="*"></RowDefinition>
                                     </Grid.RowDefinitions>
+                                    <Grid x:Name="TaoPTPDoneMsg" Visibility="Collapsed" Grid.RowSpan="4" Panel.ZIndex="11">
+                                        <local:CustomModalDialog Visibility="Visible" />
+                                    </Grid>
+                                    <Grid x:Name="OverlayGridTaoPTP" Visibility="Collapsed" Grid.RowSpan="4" Background="#99000000" IsHitTestVisible="True" Panel.ZIndex="10">
+                                    </Grid>
                                     <StackPanel Grid.Row="0" Orientation="Horizontal" 
                                             HorizontalAlignment="Left" VerticalAlignment="Bottom"
                                             Margin="10 0 0 0">

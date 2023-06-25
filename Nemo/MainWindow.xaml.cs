@@ -27,6 +27,9 @@ using ListViewItem = System.Windows.Controls.ListViewItem;
 using System.Globalization;
 using static System.Net.WebRequestMethods;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+using MaterialDesignThemes.Wpf;
+using System.Threading.Tasks;
+using System.Windows.Threading;
 
 namespace Nemo
 {
@@ -305,11 +308,23 @@ namespace Nemo
                 conn_ptp.thanhToanPTP(int.Parse(maptp), mahd);
                 conn_ptp.updateTinhTrangSauThanhToan(int.Parse(maptp));
 
-                Get_PhieuThuePhong_View();
-                DinhDanhTextBox.Text = string.Empty;
-                TabControl_PhieuThuePhong.SelectedIndex = 0;
+                OverlayGridThanhToan.Visibility = Visibility.Visible;
+                ThanhToanDoneMsg.Visibility = Visibility.Visible;
+                ThanhToanDoneMsg.Opacity = 1;
+
+                DispatcherTimer timer = new DispatcherTimer();
+                timer.Interval = TimeSpan.FromSeconds(1);
+                timer.Tick += (sender, e) =>
+                {
+                    ThanhToanDoneMsg.Visibility = Visibility.Collapsed;
+                    OverlayGridThanhToan.Visibility = Visibility.Collapsed;
+                    Get_PhieuThuePhong_View();
+                    DinhDanhTextBox.Text = string.Empty;
+                    TabControl_PhieuThuePhong.SelectedIndex = 0;
+                    timer.Stop();
+                };
+                timer.Start(); 
             }
-            // thông báo thành toán thành công
         }
 
         private void ThemKHBtn_PTP_Click(object sender, RoutedEventArgs e)
@@ -704,14 +719,32 @@ namespace Nemo
                 }
             }
 
-            TabControl_PhieuThuePhong.SelectedIndex = 0;
-            inputSoPhong_PTP.Text = string.Empty;
-            inputTenKhach_PTP.Text = string.Empty;
-            inputDiaChi_PTP.Text = string.Empty;
-            inputSoDinhDanh_PTP.Text = string.Empty;
-            inputNgayTra_PTP.Text = string.Empty;
-            soKhachDaThem_PTP.Text = "Số khách đã thêm: 0";
-            Get_PhieuThuePhong_View();
+
+            OverlayGridTaoPTP.Visibility = Visibility.Visible;
+            TaoPTPDoneMsg.Visibility = Visibility.Visible;
+            TaoPTPDoneMsg.Opacity = 1;
+
+            DispatcherTimer timer = new DispatcherTimer();
+            timer.Interval = TimeSpan.FromSeconds(1);
+            timer.Tick += (sender, e) =>
+            {
+                TaoPTPDoneMsg.Visibility = Visibility.Collapsed;
+                OverlayGridTaoPTP.Visibility = Visibility.Collapsed;
+                // ...
+                inputSoPhong_PTP.Text = string.Empty;
+                inputTenKhach_PTP.Text = string.Empty;
+                inputDiaChi_PTP.Text = string.Empty;
+                inputSoDinhDanh_PTP.Text = string.Empty;
+                inputNgayTra_PTP.Text = string.Empty;
+
+
+                TabControl_PhieuThuePhong.SelectedIndex = 0;
+                soKhachDaThem_PTP.Text = "Số khách đã thêm: 0";
+                Get_PhieuThuePhong_View();
+                timer.Stop();
+            };
+            timer.Start();
+
         }
         private void ItemCheckBox_PTP_Checked(object sender, RoutedEventArgs e)
         {
@@ -780,17 +813,37 @@ namespace Nemo
             }
             else
             {
-                errorDinhDanh_ThanhToanNhieu.Visibility = Visibility.Collapsed;
-                var conn_hd = new HoaDonViewDAO();
-                int mahd = conn_hd.createHoaDon(int.Parse(kh.MaKH));
+                OverlayGridThanhToanNhieu.Visibility = Visibility.Visible;
+                ThanhToanNhieuDoneMsg.Visibility = Visibility.Visible;
+                ThanhToanNhieuDoneMsg.Opacity = 1;
 
-                var conn_ptp = new PhieuThuePhongViewDAO();
-                for (int i = 0; i < selectedMaPTPList.Count; i++)
+                DispatcherTimer timer = new DispatcherTimer();
+                timer.Interval = TimeSpan.FromSeconds(1);
+                timer.Tick += (sender, e) =>
                 {
-                    conn_ptp.thanhToanPTP(selectedMaPTPList[i], mahd);
-                }
-                Get_PhieuThuePhong_View();
-                TabControl_PhieuThuePhong.SelectedIndex = 0;
+                    ThanhToanNhieuDoneMsg.Visibility = Visibility.Collapsed;
+                    OverlayGridThanhToanNhieu.Visibility = Visibility.Collapsed;
+                    foreach (UIElement element in ChiTietPTPGrid.Children)
+                    {
+                        if (element != ThanhToanNhieuDoneMsg)
+                        {
+                            element.Opacity = 1;
+                        }
+                    }
+                    errorDinhDanh_ThanhToanNhieu.Visibility = Visibility.Collapsed;
+                    var conn_hd = new HoaDonViewDAO();
+                    int mahd = conn_hd.createHoaDon(int.Parse(kh.MaKH));
+
+                    var conn_ptp = new PhieuThuePhongViewDAO();
+                    for (int i = 0; i < selectedMaPTPList.Count; i++)
+                    {
+                        conn_ptp.thanhToanPTP(selectedMaPTPList[i], mahd);
+                    }
+                    Get_PhieuThuePhong_View();
+                    TabControl_PhieuThuePhong.SelectedIndex = 0;
+                    timer.Stop();
+                };
+                timer.Start(); 
             }
         }
 
@@ -934,17 +987,35 @@ namespace Nemo
                 }
                 else
                 {
-                    errorGiaHanNgayTra_PTP.Visibility = Visibility.Collapsed;
-                    conn_ptp.changeNgayTra(Convert.ToInt32(MaPTPTextBlock.Text), ngayTra);
-                    ngayTraInfo.Visibility = Visibility;
-                    ngayTraInfo2.Visibility = Visibility.Collapsed;
-                    thanhToanBtn.Visibility = Visibility;
-                    hoanThanhGiaHan_PTP.Visibility = Visibility.Collapsed;
-                    GiaHan_PTP.Visibility = Visibility;
-                    // thông báo gia hạn thành công
-                    // ...
-                    Get_PhieuThuePhong_View();
-                    TabControl_PhieuThuePhong.SelectedIndex = 0;
+                    OverlayGridGiaHan.Visibility = Visibility.Visible;
+                    GiaHanDoneMsg.Visibility = Visibility.Visible;
+                    GiaHanDoneMsg.Opacity = 1;
+
+                    DispatcherTimer timer = new DispatcherTimer();
+                    timer.Interval = TimeSpan.FromSeconds(1);
+                    timer.Tick += (sender, e) =>
+                    {
+                        OverlayGridGiaHan.Visibility = Visibility.Collapsed;
+                        GiaHanDoneMsg.Visibility = Visibility.Collapsed;
+                        foreach (UIElement element in ChiTietPTPGrid.Children)
+                        {
+                            if (element != GiaHanDoneMsg)
+                            {
+                                element.Opacity = 1;
+                            }
+                        }
+                        errorGiaHanNgayTra_PTP.Visibility = Visibility.Collapsed;
+                        conn_ptp.changeNgayTra(Convert.ToInt32(MaPTPTextBlock.Text), ngayTra);
+                        ngayTraInfo.Visibility = Visibility;
+                        ngayTraInfo2.Visibility = Visibility.Collapsed;
+                        thanhToanBtn.Visibility = Visibility;
+                        hoanThanhGiaHan_PTP.Visibility = Visibility.Collapsed;
+                        GiaHan_PTP.Visibility = Visibility;
+                        Get_PhieuThuePhong_View();
+                        NgayTraTextBlock.Text = ngayTra;
+                        timer.Stop();
+                    };
+                    timer.Start();
                 }
             }
         }
