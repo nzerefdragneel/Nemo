@@ -65,7 +65,7 @@ namespace Nemo
             new PhieuThue() { MaPT = 1, NgayTao = new DateTime(2023, 6, 9), Phong = "Phòng A", SoKhach = 2, TienThue = 100 },
             new PhieuThue() { MaPT = 2, NgayTao = new DateTime(2023, 6, 10), Phong = "Phòng B", SoKhach = 3, TienThue = 150 },
         };
-        
+
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
 
@@ -80,7 +80,7 @@ namespace Nemo
             Get_HoaDon_View();
             Get_DoanhThu_View();
             Get_QuyDinh_View();
-            
+
         }
 
         private void Window_Closed(object sender, EventArgs e)
@@ -93,24 +93,24 @@ namespace Nemo
             PopupMenu.IsOpen = !PopupMenu.IsOpen;
         }
 
-        
-        private void ChangeButton_QD(object sender, RoutedEventArgs e)
-        {
-            NumOfTypes.IsEnabled = true;
-            NumOfTypes.Focus();
-            NumOfCustomers.IsEnabled = true;
-            PhuThu.IsEnabled = true;
-            HeSoKNN.IsEnabled = true;
 
-        }
+        //private void ChangeButton_QD(object sender, RoutedEventArgs e)
+        //{
+        //    NumOfTypes.IsEnabled = true;
+        //    NumOfTypes.Focus();
+        //    NumOfCustomers.IsEnabled = true;
+        //    PhuThu.IsEnabled = true;
+        //    HeSoKNN.IsEnabled = true;
 
-        private void SetQD(object sender, RoutedEventArgs e)
-        {
-            NumOfTypes.IsEnabled = false;
-            NumOfCustomers.IsEnabled = false;
-            PhuThu.IsEnabled = false;
-            HeSoKNN.IsEnabled = false;
-        }
+        //}
+
+        //private void SetQD(object sender, RoutedEventArgs e)
+        //{
+        //    NumOfTypes.IsEnabled = false;
+        //    NumOfCustomers.IsEnabled = false;
+        //    PhuThu.IsEnabled = false;
+        //    HeSoKNN.IsEnabled = false;
+        //}
 
         private void TuyChon_Btn_Click(object sender, RoutedEventArgs e)
         {
@@ -132,7 +132,7 @@ namespace Nemo
                 Get_DanhMucPhong_View();
             }
 
-            }
+        }
         public void Get_DanhMucPhong_View()
         {
             PhongViewDAO con = new PhongViewDAO();
@@ -146,7 +146,7 @@ namespace Nemo
         }
         private void Nextpage_DanhMucPhong_Btn_Click(object sender, RoutedEventArgs e)
         {
-            if  (PhongView.curpage < PhongView.totalpage) { PhongView.curpage = PhongView.curpage + 1; }
+            if (PhongView.curpage < PhongView.totalpage) { PhongView.curpage = PhongView.curpage + 1; }
             Page_DanhMucPhong_text.Text = PhongView.curpage.ToString();
             PhongView.UpdatePaging();
             ListView_DanhMucPhong.ItemsSource = PhongView.CurPhong;
@@ -154,7 +154,7 @@ namespace Nemo
 
         private void Prevpage_DanhMucPhong_Btn_Click(object sender, RoutedEventArgs e)
         {
-            if (PhongView.curpage >0) { PhongView.curpage = PhongView.curpage - 1; }
+            if (PhongView.curpage > 0) { PhongView.curpage = PhongView.curpage - 1; }
             Page_DanhMucPhong_text.Text = PhongView.curpage.ToString();
             PhongView.UpdatePaging();
             ListView_DanhMucPhong.ItemsSource = PhongView.CurPhong;
@@ -182,13 +182,13 @@ namespace Nemo
                 float tienThue = selectedData.TienThue;
                 int soKhach = selectedData.SoKhach;
 
-               // MyTabControl.SelectedItem = ChiTietPhieuThueTabItem;
+                // MyTabControl.SelectedItem = ChiTietPhieuThueTabItem;
                 UpdateChiTietPhieuThueData(maPTP, maPhong, soKhach, ngaytao, tienThue);
             }
         }
         private void UpdateChiTietPhieuThueData(int maPTP, string maPhong, int soKhach, DateTime ngayTao, float tienThue)
         {
-            MaPTPTextBlock.Text = MaPTPTextBlock_HD.Text =  maPTP.ToString();
+            MaPTPTextBlock.Text = MaPTPTextBlock_HD.Text = maPTP.ToString();
             MaPhongTextBlock.Text = MaPhongTextBlock_HD.Text = maPhong;
             /*SoKhachTextBlock.Text = soKhach.ToString();*/
             NgayTaoTextBlock.Text = NgayTaoTextBlock_HD.Text = ngayTao.ToString();
@@ -202,8 +202,8 @@ namespace Nemo
 
         private void BackButton_Click(object sender, RoutedEventArgs e)
         {
-           MyTabControl.SelectedIndex =1;
-            ChiTietPhieuThueTabItem.Visibility = Visibility.Collapsed ;
+            MyTabControl.SelectedIndex = 1;
+            ChiTietPhieuThueTabItem.Visibility = Visibility.Collapsed;
         }
 
         private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -218,7 +218,7 @@ namespace Nemo
 
         private void TaoPTPBtn_Click(object sender, RoutedEventArgs e)
         {
-           MyTabControl.SelectedItem = TaoPTPTabItem;
+            MyTabControl.SelectedItem = TaoPTPTabItem;
         }
 
         private void Themhong_Btn_click(object sender, RoutedEventArgs e)
@@ -231,15 +231,15 @@ namespace Nemo
                 conn.ThemPhongMoi(phongmoi);
                 Get_DanhMucPhong_View();
             }
-            
+
         }
 
         private void Dangxuat_Btn_click(object sender, RoutedEventArgs e)
-            {
+        {
             var screen = new DangNhap();
             screen.Show();
             this.Close();
-            }
+        }
 
         private void Doimatkhau_btn_CLick(object sender, RoutedEventArgs e)
         {
@@ -254,16 +254,16 @@ namespace Nemo
             var sub = new ObservableCollection<Phong>();
             foreach (var p in PhongView.ListPhong)
             {
-                var maphong=p.maphong.ToString();
+                var maphong = p.maphong.ToString();
                 var maloaiphong = p.maloaiphong.ToString();
                 if (maphong.Contains(keyword))
                 {
                     sub.Add(p);
-                }else
+                } else
                 if (maloaiphong.Contains(keyword))
                 {
                     sub.Add(p);
-                }else
+                } else
                 if (p.tinhtrang.Contains(keyword))
                 {
                     sub.Add(p);
@@ -312,7 +312,7 @@ namespace Nemo
             ListView_DanhMucPhong.ItemsSource = PhongView.CurPhong;
             Page_DanhMucPhong_text.Text = PhongView.curpage.ToString();
 
-            }
+        }
 
         public void Get_HoaDon_View()
         {
@@ -322,6 +322,106 @@ namespace Nemo
             HoaDonView.UpdatePaging();
             ListView_HoaDon.ItemsSource = HoaDonView.CurHoaDon;
             Page_HoaDon_text.Text = HoaDonView.curpage.ToString();
+        }
+        private void HoaDon_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var row = (HoaDon)ListView_HoaDon.SelectedItem;
+            if (row != null)
+            {
+                ChiTietHoaDonView.mahoadon = row.mahoadon;
+                ChiTietHoaDonView.ngaythanhtoan = row.ngaythanhtoan;
+                ChiTietHoaDonView.khachhang = row.khachhang;
+                ChiTietHoaDonView.tongtien = row.tongtien;
+                ChiTietHoaDonView.sophongthanhtoan = row.sophongthanhtoan;
+                Get_ChiTietHoaDon_View(ChiTietHoaDonView.mahoadon, 3, (float)1.25, (float)1.5);
+                TabControl_HoaDon.SelectedIndex = 1;
+            }
+            ListView_HoaDon.SelectedItem = null;
+        }
+        private void BackBtn_ChiTietHoaDon_Click(object sender, RoutedEventArgs e)
+        {
+            TabControl_HoaDon.SelectedIndex = 0;
+        }
+
+        public void Get_ChiTietHoaDon_View(int mahd, int sokhachquydinh, float phuthusokhach, float tilekhachnuocngoai)
+        {
+            var con = new ChiTietHoaDonViewDAO();
+
+            TextBlock_MaHoaDon_ChiTietHoaDon.Text = ChiTietHoaDonView.mahoadon.ToString();
+            TextBlock_NgayThanhToan_ChiTietHoaDon.Text = ChiTietHoaDonView.ngaythanhtoan?.ToString("dd'/'MM'/'yyyy");
+            TextBlock_KhachHang_ChiTietHoaDon.Text = ChiTietHoaDonView.khachhang;
+            TextBlock_TongTien_ChiTietHoaDon.Text = ChiTietHoaDonView.tongtien?.ToString("N0");
+            TextBlock_SoPhongThanhToan_ChiTietHoaDon.Text = ChiTietHoaDonView.sophongthanhtoan.ToString();
+
+            ChiTietHoaDonView.ListChiTietHoaDon = con.GetListChiTietHoaDon(mahd, sokhachquydinh);
+            ChiTietHoaDonView.UpdatePaging();
+            ListView_ChiTietHoaDon.ItemsSource = ChiTietHoaDonView.CurChiTietHoaDon;
+            Page_ChiTietHoaDon_text.Text = ChiTietHoaDonView.curpage.ToString();
+        }
+        private void Timkiem_HoaDon_TextChange(object sender, TextChangedEventArgs e)
+        {
+            var keyword = Timkiem_HoaDon_Textbox.Text;
+            var sub = new ObservableCollection<HoaDon>();
+            foreach (var hd in HoaDonView.ListHoaDon)
+            {
+                var mahd = hd.mahoadon.ToString();
+                var ngaythanhtoan = hd.ngaythanhtoan?.ToString("dd'/'MM'/'yyyy");
+                var khachhang = hd.khachhang;
+
+                if (mahd.Contains(keyword))
+                {
+                    sub.Add(hd);
+                }
+                else
+                if (khachhang.Contains(keyword))
+                {
+                    sub.Add(hd);
+                }
+                else
+                if (ngaythanhtoan.Contains(keyword) && keyword.Contains('/'))
+                {
+                    sub.Add(hd);
+                }
+            }
+            HoaDonView.CurListHoaDon = sub;
+            HoaDonView.curpage = 1;
+            Page_HoaDon_text.Text = HoaDonView.curpage.ToString();
+            HoaDonView.UpdatePaging();
+            ListView_HoaDon.ItemsSource = HoaDonView.CurHoaDon;
+
+        }
+        private void Nextpage_ChiTietHoaDon_Btn_Click(object sender, RoutedEventArgs e)
+        {
+            if (ChiTietHoaDonView.curpage < ChiTietHoaDonView.totalpage) { ChiTietHoaDonView.curpage = ChiTietHoaDonView.curpage + 1; }
+            Page_ChiTietHoaDon_text.Text = ChiTietHoaDonView.curpage.ToString();
+            ChiTietHoaDonView.UpdatePaging();
+            ListView_ChiTietHoaDon.ItemsSource = ChiTietHoaDonView.CurChiTietHoaDon;
+        }
+
+        private void Prevpage_ChiTietHoaDon_Btn_Click(object sender, RoutedEventArgs e)
+        {
+            if (ChiTietHoaDonView.curpage > 1) { ChiTietHoaDonView.curpage = ChiTietHoaDonView.curpage - 1; }
+            Page_ChiTietHoaDon_text.Text = ChiTietHoaDonView.curpage.ToString();
+            ChiTietHoaDonView.UpdatePaging();
+            ListView_ChiTietHoaDon.ItemsSource = ChiTietHoaDonView.CurChiTietHoaDon;
+        }
+
+        private void ChiTietHoaDon_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
+        {
+            ScrollViewer_ChiTietHoaDon.ScrollToVerticalOffset(ScrollViewer_ChiTietHoaDon.VerticalOffset - e.Delta / 3);
+        }
+        private void ChiTietHoaDon_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var row = (ChiTietHoaDon)ListView_ChiTietHoaDon.SelectedItem;
+            if (row != null)
+            {
+                ChiTietPTPHDView.maptp = row.maptp;
+                ChiTietPTPHDView.maphong = row.maphong;
+                ChiTietPTPHDView.ghichu = row.ghichu;
+                Get_ChiTietPTP_HD_View(ChiTietPTPHDView.maptp);
+                TabControl_HoaDon.SelectedIndex = 2;
+            }
+            ListView_ChiTietHoaDon.SelectedItem = null;
         }
 
         private void Nextpage_HoaDon_Btn_Click(object sender, RoutedEventArgs e)
@@ -339,25 +439,73 @@ namespace Nemo
             HoaDonView.UpdatePaging();
             ListView_HoaDon.ItemsSource = HoaDonView.CurHoaDon;
         }
-
+        private void HoaDon_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
+        {
+            ScrollViewer_HoaDon.ScrollToVerticalOffset(ScrollViewer_HoaDon.VerticalOffset - e.Delta / 3);
         }
+
+
+
         //Quy Dinh
         private void Get_QuyDinh_View()
+    {
+        QuyDinhView.getQuyDinh();
+        Text_QuyDinh_ma.Text = QuyDinhView.quyDinh.maQD.ToString();
+        NumOfTypes.Text = QuyDinhView.quyDinh.soLoaiPhong.ToString();
+        NumOfCustomers.Text = QuyDinhView.quyDinh.soLuongKhachToiDa.ToString();
+        PhuThu.Text = QuyDinhView.quyDinh.tiLePhuThu.ToString();
+        HeSoKNN.Text = QuyDinhView.quyDinh.heSoKhachNN.ToString();
+    }
+    private void ChangeButton_QD(object sender, RoutedEventArgs e)
+    {
+        QuyDinhView.addQuyDinh(PhuThu.Text, HeSoKNN.Text, NumOfTypes.Text, NumOfCustomers.Text);
+        MessageBox.Show("Thay đổi thành công");
+        Get_QuyDinh_View();
+    }
+        private void BackBtn_ChiTietPTP_HD_Click(object sender, RoutedEventArgs e)
         {
-            QuyDinhView.getQuyDinh();
-            Text_QuyDinh_ma.Text = QuyDinhView.quyDinh.maQD.ToString();
-            NumOfTypes.Text = QuyDinhView.quyDinh.soLoaiPhong.ToString();
-            NumOfCustomers.Text = QuyDinhView.quyDinh.soLuongKhachToiDa.ToString();
-            PhuThu.Text = QuyDinhView.quyDinh.tiLePhuThu.ToString();
-            HeSoKNN.Text = QuyDinhView.quyDinh.heSoKhachNN.ToString();
+            TabControl_HoaDon.SelectedIndex = 1;
         }
-        private void ChangeButton_QD(object sender, RoutedEventArgs e)
-        {
-            QuyDinhView.addQuyDinh(PhuThu.Text, HeSoKNN.Text, NumOfTypes.Text, NumOfCustomers.Text);
-            MessageBox.Show("Thay đổi thành công");
-            Get_QuyDinh_View();
-            }
 
+        public void Get_ChiTietPTP_HD_View(int maptp)
+        {
+            var con = new ChiTietPTPHDViewDAO();
+            var dt_NgayThueNgayTra = con.GetNgayThueNgayTra(maptp);
+
+            ChiTietPTPHDView.ngaythue = (DateTime)dt_NgayThueNgayTra.Rows[0]["ngaythue"];
+            ChiTietPTPHDView.ngaytra = (DateTime)dt_NgayThueNgayTra.Rows[0]["ngaytra"];
+
+            TextBlock_MaPTP_ChiTietPTP_HD.Text = ChiTietPTPHDView.maptp.ToString();
+            TextBlock_MaPhong_ChiTietPTP_HD.Text = ChiTietPTPHDView.maphong.ToString();
+            TextBlock_NgayThue_ChiTietPTP_HD.Text = ChiTietPTPHDView.ngaythue.ToString("dd'/'MM'/'yyyy");
+            TextBlock_NgayTra_ChiTietPTP_HD.Text = ChiTietPTPHDView.ngaytra.ToString("dd'/'MM'/'yyyy");
+            TextBlock_GhiChu_ChiTietPTP_HD.Text = ChiTietPTPHDView.ghichu;
+
+            ChiTietPTPHDView.ListChiTietPTPHD = con.GetListChiTietPTPHD(maptp);
+            ChiTietPTPHDView.UpdatePaging();
+            ListView_ChiTietPTP_HD.ItemsSource = ChiTietPTPHDView.CurChiTietPTPHD;
+            Page_ChiTietPTP_HD_text.Text = ChiTietPTPHDView.curpage.ToString();
+        }
+        private void Nextpage_ChiTietPTP_HD_Btn_Click(object sender, RoutedEventArgs e)
+        {
+            if (ChiTietPTPHDView.curpage < ChiTietPTPHDView.totalpage) { ChiTietPTPHDView.curpage = ChiTietPTPHDView.curpage + 1; }
+            Page_ChiTietPTP_HD_text.Text = ChiTietPTPHDView.curpage.ToString();
+            ChiTietPTPHDView.UpdatePaging();
+            ListView_ChiTietPTP_HD.ItemsSource = ChiTietPTPHDView.CurChiTietPTPHD;
+        }
+
+        private void Prevpage_ChiTietPTP_HD_Btn_Click(object sender, RoutedEventArgs e)
+        {
+            if (ChiTietPTPHDView.curpage > 1) { ChiTietPTPHDView.curpage = ChiTietPTPHDView.curpage - 1; }
+            Page_ChiTietPTP_HD_text.Text = ChiTietPTPHDView.curpage.ToString();
+            ChiTietPTPHDView.UpdatePaging();
+            ListView_ChiTietPTP_HD.ItemsSource = ChiTietPTPHDView.CurChiTietPTPHD;
+        }
+
+        private void ChiTietPTP_HD_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
+        {
+            ScrollViewer_ChiTietPTP_HD.ScrollToVerticalOffset(ScrollViewer_ChiTietPTP_HD.VerticalOffset - e.Delta / 3);
+        }
         private void SetQD(object sender, RoutedEventArgs e)
         {
             Get_QuyDinh_View();
