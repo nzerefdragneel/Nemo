@@ -73,6 +73,34 @@ namespace Nemo.DAO
                 return value.ToString();
             }
         }
+      
+     
+        public bool Kiemtramaphong(int maphong)
+        {
+            var result = conn.ExecuteQuery(@$"select * from Phong where maphong={maphong}");
+            if (result == null) return true;
+            return false;
+        }
+        public ObservableCollection<Tinhtrangphong> GetListTinhTrang()
+        {
+            var result = conn.ExecuteQuery("select p.tinhtrang, count(*) from Phong p group by p.tinhtrang");
+            if (result == null) return null;
+            ObservableCollection<Tinhtrangphong> list = JArray.FromObject(result).ToObject<ObservableCollection<Tinhtrangphong>>();
+            return list;
+        }
+        public void ThemPhongMoi(Phong phongmoi)
+        {
+            var query = @$"INSERT INTO phong VALUES ({phongmoi.maphong},'Còn trống',{phongmoi.maloaiphong})";
+            conn.UpdateQuery(query);
+
+        }
+        public void Suaphong(Phong phongmoi)
+        {
+            var query = @$"UPDATE phong SET tinhtrang='{phongmoi.tinhtrang}',maloaiphong={phongmoi.maloaiphong}
+                            where maphong={phongmoi.maphong}";
+            conn.UpdateQuery(query);
+
+        }
         public void updateTinhTrang(int maphong, int maptp, bool done = false, bool reserve = false, bool empty = false)
         {
             var conn = new ConnectDB();
