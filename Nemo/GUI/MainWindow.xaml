@@ -19,7 +19,8 @@
          Background="{DynamicResource PrimaryHueMidForegroundBrush}"
          Foreground="{DynamicResource PrimaryMidBrush}"
          FontFamily="{DynamicResource MaterialDesignFont}"
-         Title="Media Player" Height="650" Width="1200"
+         Title="Nemo Hotel" Height="650" Width="1200"
+        Icon="../image/pinkhotel.png"
           WindowStartupLocation="CenterScreen"
         Loaded="Window_Loaded" Closed="Window_Closed">
     <Window.DataContext>

@@ -1450,7 +1450,39 @@ namespace Nemo
 
         private void Timkiem_Quanly_TextChange(object sender, TextChangedEventArgs e)
         {
+            var keyword = Timkiem_Quanly_Textbox.Text;
+            if (keyword == "") return;
+            var sub = new ObservableCollection<TaiKhoan>();
+            foreach (var p in QuanlyView.ListNhanVien)
+            {
+                var tennv = p.hoten;
+                var tentk = p.tentk;
+                if (tentk.Contains(keyword))
+                {
+                    sub.Add(p);
+                }
+                else
+                if ( tennv.Contains(keyword))
+                {
+                    sub.Add(p);
+                }
+                else
+                if (p.tinhtrang.Contains(keyword))
+                {
+                    sub.Add(p);
+                }
+                else
+                if (p.ngayvaolam.Contains(keyword))
+                {
+                    sub.Add(p);
+                }
 
+            }
+            QuanlyView.CurListNhanVien = sub;
+            QuanlyView.curpage = 1;
+            Page_Quanly_text.Text = QuanlyView.curpage.ToString();
+            QuanlyView.UpdatePaging();
+            ListView_Quanly.ItemsSource = QuanlyView.CurNhanVien;
         }
 
         private void ThemNhanVien_Btn_click(object sender, RoutedEventArgs e)
