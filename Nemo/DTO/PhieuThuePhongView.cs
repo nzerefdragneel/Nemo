@@ -31,6 +31,7 @@ namespace Nemo.DTO
         }
         public void UpdatePaging()
         {
+            if (listPTP == null) return;
             totalItems = listPTP.Count;
             totalpage = (totalItems / perpage) +
                 (totalItems % perpage == 0 ? 0 : 1);
