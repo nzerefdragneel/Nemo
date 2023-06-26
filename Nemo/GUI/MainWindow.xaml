@@ -187,8 +187,7 @@
                                 </Grid>
                             </DockPanel>
                             <StackPanel Grid.Row="2" Margin="10">
-                                <ScrollViewer  HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" VerticalContentAlignment="Stretch">
-                                    <ListView x:Name="ListView_DanhMucPhong" Height="372" >
+                                <ScrollViewer x:Name="ScrollViewer_DanhMucPhong" Grid.Row="1" Margin="16" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" VerticalContentAlignment="Stretch">    <ListView x:Name="ListView_DanhMucPhong" Height="372" >
                                         <ListView.View>
                                             <GridView x:Name="GridView_DanhMucPhong" >
                                                 <GridView.ColumnHeaderContainerStyle>
@@ -1884,6 +1883,111 @@
                                     </StackPanel>
                                 </StackPanel>
                             </Border>
+                        </Grid>
+                    </TabItem>
+                    <TabItem  Foreground="{DynamicResource PrimaryLightBrush}" Style="{StaticResource NavigationItemStyle}" Height="65"
+                        >
+                        <TabItem.Header >
+                            <StackPanel Orientation="Horizontal" Width="160" >
+                                <materialDesign:PackIcon Kind="AlertCircleOutline" Width="28" Height="30" Margin="0 0 10 0" VerticalAlignment="Center" />
+                                <TextBlock Text="Quản lý" FontSize="16" VerticalAlignment="Center"  />
+                            </StackPanel>
+                        </TabItem.Header>
+                        <Grid  Background="{DynamicResource PrimaryHueMidForegroundBrush}">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="70"></RowDefinition>
+                                <RowDefinition Height="50"></RowDefinition>
+                                <RowDefinition Height="*"></RowDefinition>
+                                <RowDefinition Height="60"></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <StackPanel Margin="100 20 100 0"  >
+                                <Border BorderThickness="1" BorderBrush="Gray">
+                                    <Border.CornerRadius >
+                                        <CornerRadius BottomLeft="15" BottomRight="15" TopLeft="15" TopRight="15"/>
+                                    </Border.CornerRadius>
+                                    <DockPanel>
+                                        <materialDesign:PackIcon Kind="Magnify" DockPanel.Dock="Left"
+                                                   Background="Transparent"
+                                                   Foreground="{DynamicResource PrimaryHueLightForegroundBrush}"
+                                                   Height="29" Width="29" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                        <TextBox x:Name="Timkiem_Quanly_Textbox" TextChanged="Timkiem_Quanly_TextChange" Height="40"  Foreground="Black" Width="Auto" Margin="0 0 20 0"
+                                            VerticalAlignment="Bottom" FontSize="20" 
+                                              materialDesign:HintAssist.Hint="Tìm kiếm">
+                                        </TextBox>
+                                    </DockPanel>
+                                </Border>
+                            </StackPanel>
+                            <StackPanel Grid.Row="1">
+                                <Grid Margin="10 0"  >
+                                    <Button Height="45" Click="Themhong_Btn_click" HorizontalAlignment="Right"
+                                    materialDesign:ButtonAssist.CornerRadius="10"
+                                    IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
+                                    Style="{StaticResource MaterialDesignRaisedButton}"
+                                    Background="{DynamicResource PrimaryDarkForegroundBrush}" Foreground="{DynamicResource SecondaryHueMidForegroundBrush}"
+                                   >
+                                        <TextBlock TextWrapping="Wrap" Foreground="{DynamicResource PrimaryMidBrush}"
+                                            Text="Thêm nhân viên" />
+                                    </Button>
+                                </Grid>
+                            </StackPanel>
+                            <StackPanel Grid.Row="2" Margin="10">
+                                <ScrollViewer x:Name="ScrollViewer_QuanLy" Grid.Row="1" Margin="16" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" VerticalContentAlignment="Stretch">
+                                    <ListView x:Name="ListView_Quanly">
+                                        <ListView.View>
+                                            <GridView x:Name="GridView_Quanly" >
+                                                <GridView.ColumnHeaderContainerStyle>
+                                                    <Style TargetType="{x:Type GridViewColumnHeader}">
+                                                        <Setter Property="Height" Value="40"></Setter>
+                                                        <Setter Property="Background" Value="Transparent"/>
+                                                        <Setter Property="Foreground" Value="Black"/>
+                                                        <Setter Property="FontSize" Value="15"></Setter>
+                                                        <Setter Property="FontWeight" Value="Bold"></Setter>
+                                                        <Setter Property="Margin" Value=" 0"></Setter>
+                                                        <Setter Property="Width" Value="Auto"/>
+                                                        <Setter Property="Padding" Value="0"/>
+                                                        <Setter Property="BorderThickness" Value="0"/>
+                                                    </Style>
+                                                </GridView.ColumnHeaderContainerStyle>
+
+                                                <GridViewColumn Header="Tên Nhân viên" Width="150"  DisplayMemberBinding="{Binding maloaiphong}"/>
+                                                <GridViewColumn Header="Tùy chọn" Width="150"  DisplayMemberBinding="{Binding maloaiphong}"/>
+                                                <GridViewColumn Header="Tên tài khoản" Width="200" DisplayMemberBinding="{Binding gia}"/>
+                                                <GridViewColumn Header="Ngày vào làm" Width="200" DisplayMemberBinding="{Binding gia}"/>
+                                            </GridView>
+                                        </ListView.View>
+                                    </ListView>
+                                </ScrollViewer>
+                            </StackPanel>
+                            <StackPanel x:Name="Page_QuanLy" Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Top">
+
+                                <Button x:Name="Page_Quanly_Btn_prev"
+                                        Click="Prevpage_QuanLy_Btn_Click"
+                                        Margin="3" Width="30" Height="30"
+                                  Background="{DynamicResource PrimaryMidForegroundBrush}"
+                                  Foreground="{DynamicResource  SecondaryHueMidForegroundBrush}"
+                                  IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
+                                  Style="{StaticResource MaterialDesignIconButton}"
+                                  ToolTip="MaterialDesignIconButton">
+                                    <materialDesign:PackIcon Kind="ChevronLeft" />
+
+                                </Button>
+                                <Button x:Name="Page_Quanly_Btn_cur" Margin="3" Height="30" Width="30"
+                                  Background="{DynamicResource PrimaryCardForegroundBrush}"
+                                        Foreground="{DynamicResource PrimaryMidBrush}"
+                                  Style="{StaticResource MaterialDesignIconButton}"
+                                  ToolTip="MaterialDesignIconButton">
+                                    <TextBlock x:Name="Page_Quanly_text"></TextBlock>
+                                </Button>
+                                <Button x:Name="Page_Quanly_Btn_next" Margin="3" Height="30" Width="30"
+                                         Click="Nextpage_Quanly_Btn_Click"
+                                  Background="{DynamicResource PrimaryMidForegroundBrush}"
+                                        Foreground="{DynamicResource SecondaryHueMidForegroundBrush}"
+                                  IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
+                                  Style="{StaticResource MaterialDesignIconButton}"
+                                  ToolTip="MaterialDesignIconButton">
+                                    <materialDesign:PackIcon Kind="ChevronRight" />
+                                </Button>
+                            </StackPanel>
                         </Grid>
                     </TabItem>
                 </TabControl>
