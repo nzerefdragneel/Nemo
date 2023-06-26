@@ -7,6 +7,7 @@
         xmlns:local="clr-namespace:Nemo.GUI"
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
+Icon="../image/pinkhotel.png"
         Title="Doimatkhau" Height="500" Width="400"
        >
     <Grid Margin="15">

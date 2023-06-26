@@ -6,6 +6,7 @@
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" 
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
+        Icon="../image/pinkhotel.png"
         Title="Them nhan vien" Height="500" Width="400"
         >
     <Grid Margin="15">
