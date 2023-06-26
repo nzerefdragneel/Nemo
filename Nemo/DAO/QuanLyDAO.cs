@@ -24,5 +24,14 @@ namespace Nemo.DAO
             ObservableCollection<TaiKhoan> list = JArray.FromObject(result).ToObject<ObservableCollection<TaiKhoan>>();
             return list;
         }
+        public bool checkquyen(string username)
+        {
+            var result = conn.ExecuteQuery(@$"select * from taikhoan where tentk='{username}'");
+            if (result == null) return false;
+            ObservableCollection<TaiKhoan> list = JArray.FromObject(result).ToObject<ObservableCollection<TaiKhoan>>();
+            if (list[0].quyen =="Admin") return true;
+            return false;
+
+        }
     }
 }

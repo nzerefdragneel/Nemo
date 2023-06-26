@@ -94,7 +94,7 @@ namespace Nemo.GUI
                 PhongMoi.tinhtrang = ChonTinhTrang_Cbb.SelectedValue.ToString();
                 var phong = new PhongViewDAO();
                 phong.Xoaphong(PhongMoi);
-                DialogResult = false;
+                DialogResult = true;
                 this.Close();
             }
         }

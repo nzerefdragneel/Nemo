@@ -86,7 +86,20 @@ namespace Nemo
             var username = ConfigurationManager.AppSettings["LastUsername"];
             Admin_textblock.Text = username;
             //if get quyèn
-            DAtBtn.Visibility = Visibility.Collapsed;
+            var conn = new QuanLyDAO();
+            if (conn.checkquyen(username) == true)
+            {
+                DAtBtn.Visibility = Visibility.Visible;
+                Quanly_tabitem.Visibility = Visibility.Visible;
+                ChangeQD_BTN.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                DAtBtn.Visibility = Visibility.Collapsed;
+                Quanly_tabitem.Visibility = Visibility.Collapsed;
+                ChangeQD_BTN.Visibility = Visibility.Collapsed;
+
+            }
             //update
             Get_HoaDon_View();
             Get_DoanhThu_View();
@@ -1012,7 +1025,6 @@ namespace Nemo
             var screen = new Suaphong(PhongView.CurPhong[index]);
             if (screen.ShowDialog() == true)
             {
-                
                 Get_DanhMucPhong_View();
             }
 
@@ -1083,6 +1095,17 @@ namespace Nemo
 
         private void Dangxuat_Btn_click(object sender, RoutedEventArgs e)
         {
+            var username = ConfigurationManager.AppSettings["LastUsername"]; 
+            var password = ConfigurationManager.AppSettings["LastPassword"];
+            var entropy = ConfigurationManager.AppSettings["Entropy"];
+            var config = ConfigurationManager.OpenExeConfiguration(
+                           ConfigurationUserLevel.None);
+            config.AppSettings.Settings["LastUsername"].Value = username;
+            config.AppSettings.Settings["LastPassword"].Value = password;
+            config.AppSettings.Settings["Entropy"].Value = entropy;
+            config.AppSettings.Settings["Session"].Value = "";
+            config.Save(ConfigurationSaveMode.Modified);
+            ConfigurationManager.RefreshSection("appSettings");
             var screen = new DangNhap();
             screen.Show();
             this.Close();
@@ -1437,9 +1460,25 @@ namespace Nemo
             {
                 Get_Quanly_View();
             }
-
         }
 
-       
+        private void Suanhanvien_Btn_Click(object sender, RoutedEventArgs e)
+        {
+            //get index of sender button
+            Button button = sender as Button;
+            DependencyObject parent = VisualTreeHelper.GetParent(button);
+            while (!(parent is ListViewItem))
+            {
+                parent = VisualTreeHelper.GetParent(parent);
+            }
+            ListViewItem item = parent as ListViewItem;
+            int index = ListView_Quanly.Items.IndexOf(item.DataContext);
+            var screen = new SuaNhanVien(QuanlyView.CurNhanVien[index]);
+            if (screen.ShowDialog() == true)
+            {
+                Get_Quanly_View();
+            }
+        }
     }
 }
+

@@ -39,6 +39,7 @@ namespace Nemo.GUI
             var username = ConfigurationManager.AppSettings["LastUsername"];
             var password64 = ConfigurationManager.AppSettings["LastPassword"];
             var entropy64 = ConfigurationManager.AppSettings["Entropy"];
+            var session= ConfigurationManager.AppSettings["Session"];
             var password = "";
             if (username != "" && password64 != "")
             {
@@ -49,6 +50,10 @@ namespace Nemo.GUI
             }
             TenTk_textbox.Text = username;
             Password_Box.Password = password;
+            if (session == "true")
+            {
+                KiemTraDangNhap(username, password);
+            }
         }
         private void KiemTraDangNhap(string username, string pwd)
         {
@@ -66,18 +71,19 @@ namespace Nemo.GUI
                 var password = Base64Decode(base64String);
                 if (password == pwd)
                 {
-                    if (rememberMeCheckBox.IsChecked == true)
-                    {
-
                         var config = ConfigurationManager.OpenExeConfiguration(
                             ConfigurationUserLevel.None);
                         config.AppSettings.Settings["LastUsername"].Value = username;
                         config.AppSettings.Settings["LastPassword"].Value = tk.matkhau;
                         config.AppSettings.Settings["Entropy"].Value = tk.muoi;
-                        config.Save(ConfigurationSaveMode.Modified);
+                    if (rememberMeCheckBox.IsChecked == true)
+                    {
+                        config.AppSettings.Settings["Session"].Value = "true";
+                    }
+                    config.Save(ConfigurationSaveMode.Modified);
                         ConfigurationManager.RefreshSection("appSettings");
 
-                    }
+                    
                     var screen = new MainWindow();
                     screen.Show();
                     this.Close();

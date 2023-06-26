@@ -67,14 +67,6 @@ namespace Nemo.GUI
                 var cypherPass64 = Convert.ToBase64String(cypherPass);
                 var entropy64 = Convert.ToBase64String(entropy);
 
-                var config = ConfigurationManager.OpenExeConfiguration(
-                    ConfigurationUserLevel.None);
-                config.AppSettings.Settings["LastUsername"].Value = username;
-                config.AppSettings.Settings["LastPassword"].Value = cypherPass64;
-                config.AppSettings.Settings["Entropy"].Value = entropy64;
-                config.Save(ConfigurationSaveMode.Modified);
-                ConfigurationManager.RefreshSection("appSettings");
-
                 var tk = new DTO.TaiKhoan(username, cypherPass64, entropy64,hoten,ngayvaolam);
                 dangky.ThemNhanVien(tk);
                 MessageBox.Show("Thêm thành công!");

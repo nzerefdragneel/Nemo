@@ -6,7 +6,7 @@
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" 
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
-        Title="DangNhap" Height="500" Width="400"
+        Title="DangNhap" Height="400" Width="400"
         >
     <Grid Margin="15">
         <Grid.RowDefinitions>
@@ -33,11 +33,11 @@
             <PasswordBox
                 Margin="0 10"
   x:Name="Password_Box"
-  materialDesign:HintAssist.HelperText="Mật khẩu ít nhất 8 ký tự"
+ 
   materialDesign:HintAssist.Hint="Nhập mật khẩu"
   materialDesign:TextFieldAssist.HasClearButton="True" />
             <TextBlock x:Name="Warning_textblock" Margin="10" Text="" Foreground="Red"></TextBlock>
-            <CheckBox Margin="10" Name="rememberMeCheckBox" Content="Lưu tên đăng nhập và mật khẩu" Canvas.Left="139" Canvas.Top="174"/>
+            <CheckBox Margin="10" Name="rememberMeCheckBox" Content="Lưu tài khoản" Canvas.Left="139" Canvas.Top="174"/>
 
         </StackPanel>
 
@@ -51,7 +51,7 @@
                       Text="Đăng Nhập" />
                 
             </Button>
-            <StackPanel Orientation="Horizontal" Margin="10">
+            <StackPanel Orientation="Horizontal" Margin="10" Visibility="Collapsed">
                 <TextBlock  FontSize="12" Foreground="Black" VerticalAlignment="Center"
                FontWeight="SemiBold"
               Text="Bạn chưa có tài khoản?" />

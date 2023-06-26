@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Nemo.DTO
 {
-    public class TaiKhoan
+    public class TaiKhoan:ICloneable
     {
         public TaiKhoan()
         {  }
@@ -18,9 +18,13 @@ namespace Nemo.DTO
         public string hoten { get; set; }
         public string matkhau { get; set;}
         public string muoi { get; set;}
-        public string quyen { get; set;}
+        public string ? quyen { get; set;}
         public string ngayvaolam { get; set; }
         public string tinhtrang { get; set; }
-       
+        public object Clone()
+        {
+            return MemberwiseClone();
+        }
+
     }
 }
