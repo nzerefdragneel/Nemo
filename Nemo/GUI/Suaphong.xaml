@@ -68,6 +68,15 @@
                 <TextBlock Foreground="{DynamicResource PrimaryCardBrush}"
                       Text="Hủy" />
             </Button>
+            <Button Click="Xoa_Btn_Click"
+                    materialDesign:ButtonAssist.CornerRadius="10"
+                    IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
+                    Style="{StaticResource MaterialDesignRaisedButton}"
+                    Background="Red"
+                    >
+                <TextBlock
+                      Text="Xóa phòng" />
+            </Button>
             <Button Click="ThemPhong_Btn_Click"
                     materialDesign:ButtonAssist.CornerRadius="10"
                     IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"

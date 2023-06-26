@@ -40,6 +40,7 @@ namespace Nemo.DAO
             var result = conn.ExecuteQuery("Select maloaiphong from loaiphong");
             return result;
         }
+
         public string checkTinhTrang(int maphong, int malp = 0)
         {
             if (malp == 0)
@@ -98,6 +99,12 @@ namespace Nemo.DAO
         {
             var query = @$"UPDATE phong SET tinhtrang='{phongmoi.tinhtrang}',maloaiphong={phongmoi.maloaiphong}
                             where maphong={phongmoi.maphong}";
+            conn.UpdateQuery(query);
+
+        }
+        public void Xoaphong(Phong phongmoi)
+        {
+            var query = @$"DELETE FROM phong where maphong={phongmoi.maphong}";
             conn.UpdateQuery(query);
 
         }

@@ -1919,7 +1919,7 @@
                             </StackPanel>
                             <StackPanel Grid.Row="1">
                                 <Grid Margin="10 0"  >
-                                    <Button Height="45" Click="Themhong_Btn_click" HorizontalAlignment="Right"
+                                    <Button Height="45" Click="ThemNhanVien_Btn_click" HorizontalAlignment="Right"
                                     materialDesign:ButtonAssist.CornerRadius="10"
                                     IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
                                     Style="{StaticResource MaterialDesignRaisedButton}"
@@ -1937,22 +1937,31 @@
                                             <GridView x:Name="GridView_Quanly" >
                                                 <GridView.ColumnHeaderContainerStyle>
                                                     <Style TargetType="{x:Type GridViewColumnHeader}">
-                                                        <Setter Property="Height" Value="40"></Setter>
+                                                        <Setter Property="Height" Value="30"></Setter>
                                                         <Setter Property="Background" Value="Transparent"/>
                                                         <Setter Property="Foreground" Value="Black"/>
                                                         <Setter Property="FontSize" Value="15"></Setter>
                                                         <Setter Property="FontWeight" Value="Bold"></Setter>
-                                                        <Setter Property="Margin" Value=" 0"></Setter>
                                                         <Setter Property="Width" Value="Auto"/>
-                                                        <Setter Property="Padding" Value="0"/>
                                                         <Setter Property="BorderThickness" Value="0"/>
                                                     </Style>
                                                 </GridView.ColumnHeaderContainerStyle>
-
-                                                <GridViewColumn Header="Tên Nhân viên" Width="150"  DisplayMemberBinding="{Binding maloaiphong}"/>
-                                                <GridViewColumn Header="Tùy chọn" Width="150"  DisplayMemberBinding="{Binding maloaiphong}"/>
-                                                <GridViewColumn Header="Tên tài khoản" Width="200" DisplayMemberBinding="{Binding gia}"/>
-                                                <GridViewColumn Header="Ngày vào làm" Width="200" DisplayMemberBinding="{Binding gia}"/>
+                                                <GridViewColumn  Header="Tùy chọn" Width="150">
+                                                    <GridViewColumn.CellTemplate>
+                                                        <DataTemplate>
+                                                            <Button Background="blue"
+                                                    materialDesign:ButtonAssist.CornerRadius="5" HorizontalAlignment="Center" VerticalAlignment="Center"
+                                                    Style="{StaticResource MaterialDesignRaisedLightButton}"
+                                                    ToolTip="MaterialDesignRaisedLightButton with Round Corners" Click="TuyChon_Btn_Click">
+                                                                <TextBlock Text="Sửa nhân viên" />
+                                                            </Button>
+                                                        </DataTemplate>
+                                                    </GridViewColumn.CellTemplate>
+                                                </GridViewColumn>
+                                                <GridViewColumn Header="Tên Nhân viên" Width="150"  DisplayMemberBinding="{Binding hoten}"/>
+                                                <GridViewColumn Header="Tên tài khoản" Width="200" DisplayMemberBinding="{Binding TenTK}"/>
+                                                <GridViewColumn Header="Ngày vào làm" Width="200" DisplayMemberBinding="{Binding ngayvaolam}"/>
+                                                <GridViewColumn Header="Tình trạng" Width="200" DisplayMemberBinding="{Binding tinhtrang}"/>
                                             </GridView>
                                         </ListView.View>
                                     </ListView>

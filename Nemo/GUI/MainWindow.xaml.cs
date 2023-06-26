@@ -40,6 +40,7 @@ namespace Nemo
     public partial class MainWindow : Window
     {
         PhongView PhongView = new PhongView();
+        QuanLyView QuanlyView = new QuanLyView();
         HoaDonView HoaDonView = new HoaDonView();
         ChiTietHoaDonView ChiTietHoaDonView = new ChiTietHoaDonView();
         ChiTietPTPHDView ChiTietPTPHDView = new ChiTietPTPHDView();
@@ -81,6 +82,7 @@ namespace Nemo
             //load phòng
             Get_PhieuThuePhong_View();
             Get_DanhMucPhong_View();
+            Get_Quanly_View();
             var username = ConfigurationManager.AppSettings["LastUsername"];
             Admin_textblock.Text = username;
             //if get quyèn
@@ -1010,9 +1012,7 @@ namespace Nemo
             var screen = new Suaphong(PhongView.CurPhong[index]);
             if (screen.ShowDialog() == true)
             {
-                var phongmoi = (Phong)screen.PhongMoi.Clone();
-                var conn = new PhongViewDAO();
-                conn.Suaphong(phongmoi);
+                
                 Get_DanhMucPhong_View();
             }
 
@@ -1026,7 +1026,6 @@ namespace Nemo
             PhongView.UpdatePaging();
             ListView_DanhMucPhong.ItemsSource = PhongView.CurPhong;
             Page_DanhMucPhong_text.Text = PhongView.curpage.ToString();
-
         }
         private void Nextpage_DanhMucPhong_Btn_Click(object sender, RoutedEventArgs e)
         {
@@ -1042,6 +1041,30 @@ namespace Nemo
             Page_DanhMucPhong_text.Text = PhongView.curpage.ToString();
             PhongView.UpdatePaging();
             ListView_DanhMucPhong.ItemsSource = PhongView.CurPhong;
+        }
+        public void Get_Quanly_View()
+        {
+            QuanLyDAO con = new QuanLyDAO();
+            QuanlyView.ListNhanVien = con.GetListNhanVien();
+            QuanlyView.ResetCurlist();
+            QuanlyView.UpdatePaging();
+            ListView_Quanly.ItemsSource = QuanlyView.CurNhanVien;
+            Page_Quanly_text.Text = QuanlyView.curpage.ToString();
+        }
+        private void Nextpage_Quanly_Btn_Click(object sender, RoutedEventArgs e)
+        {
+            if (QuanlyView.curpage < QuanlyView.totalpage) { QuanlyView.curpage = QuanlyView.curpage + 1; }
+            Page_Quanly_text.Text = QuanlyView.curpage.ToString();
+            QuanlyView.UpdatePaging();
+            ListView_Quanly.ItemsSource = QuanlyView.CurNhanVien;
+        }
+
+        private void Prevpage_QuanLy_Btn_Click(object sender, RoutedEventArgs e)
+        {
+            if (QuanlyView.curpage > 0) { QuanlyView.curpage = QuanlyView.curpage - 1; }
+            Page_Quanly_text.Text = QuanlyView.curpage.ToString();
+            QuanlyView.UpdatePaging();
+            ListView_Quanly.ItemsSource = QuanlyView.CurNhanVien;
         }
 
 
@@ -1402,6 +1425,21 @@ namespace Nemo
             var x = Chart.Chart_MatDoNam;
         }
 
+        private void Timkiem_Quanly_TextChange(object sender, TextChangedEventArgs e)
+        {
 
+        }
+
+        private void ThemNhanVien_Btn_click(object sender, RoutedEventArgs e)
+        {
+            var screen = new ThemNhanVien();
+            if (screen.ShowDialog() == true)
+            {
+                Get_Quanly_View();
+            }
+
+        }
+
+       
     }
 }

@@ -4,6 +4,7 @@ using System.Configuration;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -19,18 +20,19 @@ namespace Nemo.GUI
     /// <summary>
     /// Interaction logic for Dangky.xaml
     /// </summary>
-    public partial class Dangky : Window
+    public partial class ThemNhanVien : Window
     {
-        public Dangky()
+        public ThemNhanVien()
         {
             InitializeComponent();
         }
 
-        private void DangKy_Btn_Click(object sender, RoutedEventArgs e)
+        private void Themnhanvien_Btn_Click(object sender, RoutedEventArgs e)
         {
             string username = TenTk_textbox.Text;
             string password = Password_Box.Password;
-            string confirmpwd = ConfirmPassword_Box.Password;
+            string hoten = Hoten_textbox.Text;
+            string ngayvaolam = Ngayvaolam_textbox.Text;
             var dangky = new DangkyDAO();
             if (username == "")
             {
@@ -40,13 +42,13 @@ namespace Nemo.GUI
             {
                 Warning_textblock.Text = "Bạn chưa nhập mật khẩu!";
             }
-            else if (confirmpwd == "")
+            else if (hoten == "")
             {
-                Warning_textblock.Text = "Bạn chưa xác nhận mật khẩu!";
+                Warning_textblock.Text = "Bạn chưa nhập họ tên nhân viên!";
             }
-            else if (confirmpwd != password)
+            else if (ngayvaolam == "")
             {
-                Warning_textblock.Text = "Mật khẩu không khớp!";
+                Warning_textblock.Text = "Bạn chưa nhập ngày vào làm!";
             }
             else if (!dangky.CheckUserName(username))
             {
@@ -73,20 +75,17 @@ namespace Nemo.GUI
                 config.Save(ConfigurationSaveMode.Modified);
                 ConfigurationManager.RefreshSection("appSettings");
 
-                var tk = new DTO.TaiKhoan(username, cypherPass64, entropy64);
-                dangky.Themtk(tk);
-                var screen = new DangNhap();
-                screen.Show();
+                var tk = new DTO.TaiKhoan(username, cypherPass64, entropy64,hoten,ngayvaolam);
+                dangky.ThemNhanVien(tk);
+                MessageBox.Show("Thêm thành công!");
+                DialogResult = true;
                 this.Close();
             }
-
-
         }
 
-        private void DangNhap_Btn_Click(object sender, RoutedEventArgs e)
+        private void QuayLai_Btn_click(object sender, RoutedEventArgs e)
         {
-            var screen = new DangNhap();
-            screen.Show();
+            DialogResult = false;
             this.Close();
         }
     }

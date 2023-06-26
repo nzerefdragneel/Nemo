@@ -27,13 +27,19 @@ namespace Nemo.DAO
         }
         public void Themtk(TaiKhoan tk)
         {
-            var query = "INSERT INTO TaiKhoan (TenTK, MatKhau, Muoi) VALUES (\'"+tk.TenTK+"\',\'"+ tk.MatKhau+"\',\'"+ tk.Muoi+"\')";
+            var query = @$"INSERT INTO TaiKhoan (TenTK, MatKhau, Muoi) VALUES ('{tk.tentk}','{tk.matkhau}','{tk.muoi}')";
+            conn.UpdateQuery(query);
+
+        }
+        public void ThemNhanVien(TaiKhoan tk)
+        {
+            var query =@$"INSERT INTO TaiKhoan (TenTK, MatKhau, Muoi,hoten,tinhtrang,ngayvaolam) VALUES ('{tk.tentk}','{tk.matkhau}','{tk.muoi}','{tk.hoten}','Đang làm việc','{tk.ngayvaolam}')";
             conn.UpdateQuery(query);
 
         }
         public void DoiMatKhau(TaiKhoan tk)
         {
-            var query = "UPDATE TaiKhoan SET MatKhau =\'" + tk.MatKhau + "\',Muoi=\'" + tk.Muoi + "\' where TenTK=\'" + tk.TenTK+"\'";
+            var query = @$"UPDATE TaiKhoan SET MatKhau ='{tk.matkhau}',Muoi='{tk.muoi}' where TenTK='{tk.tentk}'";
             conn.UpdateQuery(query);
 
         }

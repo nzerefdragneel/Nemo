@@ -70,7 +70,31 @@ namespace Nemo.GUI
                 PhongMoi.maphong = maphong;
                 PhongMoi.maloaiphong = loaiphongvalue;
                 PhongMoi.tinhtrang = ChonTinhTrang_Cbb.SelectedValue.ToString();
+                var conn = new PhongViewDAO();
+                conn.Suaphong(PhongMoi);
                 DialogResult = true;
+                this.Close();
+            }
+        }
+
+        private void Xoa_Btn_Click(object sender, RoutedEventArgs e)
+        {
+            var loaiphong = ChonLoaiPhong_Cbb.SelectedValue.ToString();
+            int loaiphongvalue = int.Parse(loaiphong);
+            var number = Maphong_textbox.Text;
+            int maphong;
+            if (!int.TryParse(number, out maphong))
+            {
+                MessageBox.Show("Mã phòng là số nguyên", "Warning", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            else
+            {
+                PhongMoi.maphong = maphong;
+                PhongMoi.maloaiphong = loaiphongvalue;
+                PhongMoi.tinhtrang = ChonTinhTrang_Cbb.SelectedValue.ToString();
+                var phong = new PhongViewDAO();
+                phong.Xoaphong(PhongMoi);
+                DialogResult = false;
                 this.Close();
             }
         }

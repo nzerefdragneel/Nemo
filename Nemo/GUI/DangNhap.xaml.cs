@@ -60,8 +60,8 @@ namespace Nemo.GUI
             }
             else
             {
-                var entropy = Convert.FromBase64String(tk.Muoi) ;
-                var unprotectedBytes = ProtectedData.Unprotect(Convert.FromBase64String(tk.MatKhau), entropy, DataProtectionScope.CurrentUser);
+                var entropy = Convert.FromBase64String(tk.muoi) ;
+                var unprotectedBytes = ProtectedData.Unprotect(Convert.FromBase64String(tk.matkhau), entropy, DataProtectionScope.CurrentUser);
                 var base64String = Convert.ToBase64String(unprotectedBytes);
                 var password = Base64Decode(base64String);
                 if (password == pwd)
@@ -72,8 +72,8 @@ namespace Nemo.GUI
                         var config = ConfigurationManager.OpenExeConfiguration(
                             ConfigurationUserLevel.None);
                         config.AppSettings.Settings["LastUsername"].Value = username;
-                        config.AppSettings.Settings["LastPassword"].Value = tk.MatKhau;
-                        config.AppSettings.Settings["Entropy"].Value = tk.Muoi;
+                        config.AppSettings.Settings["LastPassword"].Value = tk.matkhau;
+                        config.AppSettings.Settings["Entropy"].Value = tk.muoi;
                         config.Save(ConfigurationSaveMode.Modified);
                         ConfigurationManager.RefreshSection("appSettings");
 

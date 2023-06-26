@@ -9,24 +9,20 @@ using System.Threading.Tasks;
 
 namespace Nemo.DAO
 {
-    public class DangNhapDAO
+    class QuanLyDAO
     {
         public ConnectDB conn;
-        public DangNhapDAO()
+        public QuanLyDAO()
         {
             conn = new ConnectDB();
         }
-        public TaiKhoan GetUserName(string username)
+
+        public ObservableCollection<TaiKhoan> GetListNhanVien()
         {
-            if (username == "") return null;
-            var query = @$"select tentk, matkhau,muoi from taikhoan where tentk='{username}'";
-            var result = conn.ExecuteQuery(query);
+            var result = conn.ExecuteQuery("select * from taikhoan ");
             if (result == null) return null;
             ObservableCollection<TaiKhoan> list = JArray.FromObject(result).ToObject<ObservableCollection<TaiKhoan>>();
-            if (result != null) return list[0];
-            return null;
+            return list;
         }
-
-      
     }
 }

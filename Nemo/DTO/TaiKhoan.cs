@@ -8,10 +8,19 @@ namespace Nemo.DTO
 {
     public class TaiKhoan
     {
-        public TaiKhoan(string us, string pw, string s) { TenTK = us;MatKhau = pw;Muoi = s; }  
-        public string TenTK { get; set; }
-        public string MatKhau { get; set;}
-        public string Muoi { get; set;}
-        public string Quyen { get; set;}
+        public TaiKhoan()
+        {  }
+        public TaiKhoan(string us, string pw, string s)
+        { tentk = us; matkhau = pw; muoi = s; }
+        public TaiKhoan(string us, string pw, string s, string ht, string ngay)
+        { tentk = us; matkhau = pw; muoi = s; hoten = ht; ngayvaolam = ngay; }
+        public string tentk { get; set; }
+        public string hoten { get; set; }
+        public string matkhau { get; set;}
+        public string muoi { get; set;}
+        public string quyen { get; set;}
+        public string ngayvaolam { get; set; }
+        public string tinhtrang { get; set; }
+       
     }
 }
