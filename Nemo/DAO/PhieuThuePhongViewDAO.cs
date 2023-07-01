@@ -100,36 +100,38 @@ namespace Nemo.DAO
             conn.OpenConnection();
 
 			var result = conn.ExecuteQuery($@"SELECT
-													CASE
-														WHEN COUNT(DISTINCT CASE
-															WHEN kn.makh IS NOT NULL THEN kn.passport
-															ELSE NULL
-															END) = 0 AND COUNT(ls.maPTP) < qd.sl_khachtoida THEN (CURRENT_DATE - ptp.ngaythue) * lp.gia
-														WHEN COUNT(DISTINCT CASE
-																WHEN kn.makh IS NOT NULL THEN kn.makh
-																ELSE NULL
-															END) > 0 AND COUNT(ls.maPTP) < qd.sl_khachtoida THEN 
-																(CURRENT_DATE - ptp.ngaythue) * lp.gia * qd.hesokhachnuocngoai
-														WHEN COUNT(DISTINCT CASE
-															WHEN kn.makh IS NOT NULL THEN kn.passport
-															ELSE NULL
-															END) = 0 AND COUNT(ls.maPTP) = qd.sl_khachtoida THEN (CURRENT_DATE - ptp.ngaythue) * lp.gia * (1 + qd.tilephuthu)
-														ELSE (CURRENT_DATE - ptp.ngaythue) * lp.gia * qd.hesokhachnuocngoai * (1 + qd.tilephuthu)
-													END AS tienthue
-												FROM
-													phieuthuephong ptp
-													LEFT JOIN lichsuthuephong ls ON ptp.maptp = ls.maptp
-													LEFT JOIN khachhang kh ON ls.makh = kh.makh
-													LEFT JOIN kh_trongnuoc tn ON kh.makh = tn.makh
-													LEFT JOIN kh_nuocngoai kn ON kh.makh = kn.makh
-													JOIN phong ph ON ph.maphong = ptp.maphongthue
-													JOIN loaiphong lp ON lp.maloaiphong = ph.maloaiphong
-													JOIN quydinh qd ON qd.maqd = ptp.maqd
-												WHERE
-													ptp.maptp = {maptp}
-												GROUP BY
-													ptp.maptp, qd.hesokhachnuocngoai, qd.tilephuthu, lp.gia, ptp.ngaythue, qd.sl_khachtoida
-												order by ptp.ngaythue desc");
+											CASE
+												WHEN COUNT(DISTINCT CASE
+													WHEN kn.makh IS NOT NULL THEN kn.passport
+													ELSE NULL
+													END) = 0 AND COUNT(ls.maPTP) < qd.sl_khachtoida THEN 
+													(CURRENT_DATE - ptp.ngaythue + CASE WHEN CURRENT_DATE = ptp.ngaythue THEN 1 ELSE 0 END) * lp.gia
+												WHEN COUNT(DISTINCT CASE
+													WHEN kn.makh IS NOT NULL THEN kn.makh
+													ELSE NULL
+													END) > 0 AND COUNT(ls.maPTP) < qd.sl_khachtoida THEN 
+													(CURRENT_DATE - ptp.ngaythue + CASE WHEN CURRENT_DATE = ptp.ngaythue THEN 1 ELSE 0 END) * lp.gia * qd.hesokhachnuocngoai
+												WHEN COUNT(DISTINCT CASE
+													WHEN kn.makh IS NOT NULL THEN kn.passport
+													ELSE NULL
+													END) = 0 AND COUNT(ls.maPTP) = qd.sl_khachtoida THEN 
+													(CURRENT_DATE - ptp.ngaythue + CASE WHEN CURRENT_DATE = ptp.ngaythue THEN 1 ELSE 0 END) * lp.gia * (1 + qd.tilephuthu)
+												ELSE (CURRENT_DATE - ptp.ngaythue + CASE WHEN CURRENT_DATE = ptp.ngaythue THEN 1 ELSE 0 END) * lp.gia * qd.hesokhachnuocngoai * (1 + qd.tilephuthu)
+											END AS tienthue
+										FROM
+											phieuthuephong ptp
+											LEFT JOIN lichsuthuephong ls ON ptp.maptp = ls.maptp
+											LEFT JOIN khachhang kh ON ls.makh = kh.makh
+											LEFT JOIN kh_trongnuoc tn ON kh.makh = tn.makh
+											LEFT JOIN kh_nuocngoai kn ON kh.makh = kn.makh
+											JOIN phong ph ON ph.maphong = ptp.maphongthue
+											JOIN loaiphong lp ON lp.maloaiphong = ph.maloaiphong
+											JOIN quydinh qd ON qd.maqd = ptp.maqd
+										WHERE
+											ptp.maptp = {maptp}
+										GROUP BY
+											ptp.maptp, qd.hesokhachnuocngoai, qd.tilephuthu, lp.gia, ptp.ngaythue, qd.sl_khachtoida
+										ORDER BY ptp.ngaythue DESC");
             float tienthue = 0;
 
             object value = result.Rows[0]["tienthue"];
@@ -140,6 +142,52 @@ namespace Nemo.DAO
 								WHERE maptp = {maptp};");
 
             conn.CloseConnection();
+        }
+		public float getTienThue(int maptp)
+		{
+            var conn = new ConnectDB();
+            conn.OpenConnection();
+
+            var result = conn.ExecuteQuery($@"SELECT
+											CASE
+												WHEN COUNT(DISTINCT CASE
+													WHEN kn.makh IS NOT NULL THEN kn.passport
+													ELSE NULL
+													END) = 0 AND COUNT(ls.maPTP) < qd.sl_khachtoida THEN 
+													(CURRENT_DATE - ptp.ngaythue + CASE WHEN CURRENT_DATE = ptp.ngaythue THEN 1 ELSE 0 END) * lp.gia
+												WHEN COUNT(DISTINCT CASE
+													WHEN kn.makh IS NOT NULL THEN kn.makh
+													ELSE NULL
+													END) > 0 AND COUNT(ls.maPTP) < qd.sl_khachtoida THEN 
+													(CURRENT_DATE - ptp.ngaythue + CASE WHEN CURRENT_DATE = ptp.ngaythue THEN 1 ELSE 0 END) * lp.gia * qd.hesokhachnuocngoai
+												WHEN COUNT(DISTINCT CASE
+													WHEN kn.makh IS NOT NULL THEN kn.passport
+													ELSE NULL
+													END) = 0 AND COUNT(ls.maPTP) = qd.sl_khachtoida THEN 
+													(CURRENT_DATE - ptp.ngaythue + CASE WHEN CURRENT_DATE = ptp.ngaythue THEN 1 ELSE 0 END) * lp.gia * (1 + qd.tilephuthu)
+												ELSE (CURRENT_DATE - ptp.ngaythue + CASE WHEN CURRENT_DATE = ptp.ngaythue THEN 1 ELSE 0 END) * lp.gia * qd.hesokhachnuocngoai * (1 + qd.tilephuthu)
+											END AS tienthue
+										FROM
+											phieuthuephong ptp
+											LEFT JOIN lichsuthuephong ls ON ptp.maptp = ls.maptp
+											LEFT JOIN khachhang kh ON ls.makh = kh.makh
+											LEFT JOIN kh_trongnuoc tn ON kh.makh = tn.makh
+											LEFT JOIN kh_nuocngoai kn ON kh.makh = kn.makh
+											JOIN phong ph ON ph.maphong = ptp.maphongthue
+											JOIN loaiphong lp ON lp.maloaiphong = ph.maloaiphong
+											JOIN quydinh qd ON qd.maqd = ptp.maqd
+										WHERE
+											ptp.maptp = {maptp}
+										GROUP BY
+											ptp.maptp, qd.hesokhachnuocngoai, qd.tilephuthu, lp.gia, ptp.ngaythue, qd.sl_khachtoida
+										ORDER BY ptp.ngaythue DESC");
+            float tienthue = 0;
+
+            object value = result.Rows[0]["tienthue"];
+            tienthue = value != DBNull.Value ? Convert.ToSingle(value) : 0;
+
+            conn.CloseConnection();
+			return tienthue;
         }
 		public int addPTP(PhieuThuePhong ptp)
 		{

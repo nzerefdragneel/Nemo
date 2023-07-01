@@ -21,7 +21,7 @@ namespace Nemo.DAO
         public ConnectDB()
         {
             // Khởi tạo chuỗi kết nối
-            connString = "Server=localhost;Port=5432;Username=postgres;Password=1;Database=DB";
+            connString = "Server=localhost;Port=5432;Username=postgres;Password='hjhj';Database=postgres";
 
             conn = new NpgsqlConnection(connString);
 
