@@ -84,8 +84,7 @@ namespace Nemo
             Get_DanhMucPhong_View();
             Get_Quanly_View();
             var username = ConfigurationManager.AppSettings["LastUsername"];
-            var username_ = "Admin";
-            Admin_textblock.Text = username_;
+            Admin_textblock.Text = username;
             //if get quyèn
             var conn = new QuanLyDAO();
             if (conn.checkquyen(username) == true)
