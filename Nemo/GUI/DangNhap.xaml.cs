@@ -9,6 +9,7 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Security;
 using System.Security.Cryptography;
+using System.Security.Cryptography.Xml;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -44,7 +45,7 @@ namespace Nemo.GUI
             if (username != "" && password64 != "")
             {
                 var entropy = Convert.FromBase64String(entropy64);
-                var unprotectedBytes = ProtectedData.Unprotect(Convert.FromBase64String(password64), entropy, DataProtectionScope.CurrentUser);
+                var unprotectedBytes = ProtectedData.Unprotect(Convert.FromBase64String(password64), entropy, DataProtectionScope.LocalMachine);
                 var base64String = Convert.ToBase64String(unprotectedBytes);
                 password= Base64Decode(base64String);
             }
@@ -65,8 +66,8 @@ namespace Nemo.GUI
             }
             else
             {
-                var entropy = Convert.FromBase64String(tk.muoi) ;
-                var unprotectedBytes = ProtectedData.Unprotect(Convert.FromBase64String(tk.matkhau), entropy, DataProtectionScope.CurrentUser);
+                var entropy = Convert.FromBase64String(tk.muoi);
+                var unprotectedBytes = ProtectedData.Unprotect(Convert.FromBase64String(tk.matkhau), entropy, DataProtectionScope.LocalMachine);
                 var base64String = Convert.ToBase64String(unprotectedBytes);
                 var password = Base64Decode(base64String);
                 if (password == pwd)
@@ -82,7 +83,6 @@ namespace Nemo.GUI
                     }
                     config.Save(ConfigurationSaveMode.Modified);
                         ConfigurationManager.RefreshSection("appSettings");
-
                     
                     var screen = new MainWindow();
                     screen.Show();

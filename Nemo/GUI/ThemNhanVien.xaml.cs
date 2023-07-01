@@ -63,7 +63,7 @@ namespace Nemo.GUI
                     rng.GetBytes(entropy);
                 }
 
-                var cypherPass = ProtectedData.Protect(passwordInBytes, entropy, DataProtectionScope.CurrentUser);
+                var cypherPass = ProtectedData.Protect(passwordInBytes, entropy, DataProtectionScope.LocalMachine);
                 var cypherPass64 = Convert.ToBase64String(cypherPass);
                 var entropy64 = Convert.ToBase64String(entropy);
 
