@@ -55,26 +55,14 @@ namespace Nemo
 
         PhieuThuePhongView PTPView_ThanhToan = new PhieuThuePhongView();
         List<int> selectedMaPTPList = new List<int>();
+        public List<string> AutoCompleteOptions { get; set; }
         public MainWindow()
         {
             InitializeComponent();
             DataContext = Chart;
-        }
 
-        class PhieuThue
-        {
-            public int MaPT { get; set; }
-            public DateTime NgayTao { get; set; }
-            public string Phong { get; set; }
-            public int SoKhach { get; set; }
-            public float TienThue { get; set; }
+            AutoCompleteOptions = new List<string>();
         }
-
-        List<PhieuThue> danhSachPhieuThue = new List<PhieuThue>()
-        {
-            new PhieuThue() { MaPT = 1, NgayTao = new DateTime(2023, 6, 9), Phong = "Phòng A", SoKhach = 2, TienThue = 100 },
-            new PhieuThue() { MaPT = 2, NgayTao = new DateTime(2023, 6, 10), Phong = "Phòng B", SoKhach = 3, TienThue = 150 },
-        };
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
@@ -291,6 +279,8 @@ namespace Nemo
 
         private void ThemKHBtn_PTP_Click(object sender, RoutedEventArgs e)
         {
+
+
             string ngayThue = inputNgayThue_PTP.Text;
             string ngayTra = inputNgayTra_PTP.Text;
 
@@ -428,6 +418,7 @@ namespace Nemo
                                             inputDiaChi_PTP.Text = string.Empty;
                                             inputSoDinhDanh_PTP.Text = string.Empty;
                                             soKhachDaThem_PTP.Text = $"Số khách đã thêm: {soKhach}";
+                                            DoneBtn_PTP.IsEnabled = true;
                                         }
                                     }
                                     else
@@ -474,6 +465,7 @@ namespace Nemo
                                             inputDiaChi_PTP.Text = string.Empty;
                                             inputSoDinhDanh_PTP.Text = string.Empty;
                                             soKhachDaThem_PTP.Text = $"Số khách đã thêm: {soKhach}";
+                                            DoneBtn_PTP.IsEnabled = true;
                                         }
                                         else
                                         {
@@ -528,6 +520,7 @@ namespace Nemo
                                         inputDiaChi_PTP.Text = string.Empty;
                                         inputSoDinhDanh_PTP.Text = string.Empty;
                                         soKhachDaThem_PTP.Text = $"Số khách đã thêm: {soKhach}";
+                                        DoneBtn_PTP.IsEnabled = true;
                                     }
                                 }
                                 else
@@ -576,6 +569,7 @@ namespace Nemo
                                                 inputDiaChi_PTP.Text = string.Empty;
                                                 inputSoDinhDanh_PTP.Text = string.Empty;
                                                 soKhachDaThem_PTP.Text = $"Số khách đã thêm: {soKhach}";
+                                                DoneBtn_PTP.IsEnabled = true;
                                             }
                                         }
                                         else
@@ -615,6 +609,7 @@ namespace Nemo
                                                 inputDiaChi_PTP.Text = string.Empty;
                                                 inputSoDinhDanh_PTP.Text = string.Empty;
                                                 soKhachDaThem_PTP.Text = $"Số khách đã thêm: {soKhach}";
+                                                DoneBtn_PTP.IsEnabled = true;
                                             }
                                             else
                                             {
@@ -1511,6 +1506,124 @@ namespace Nemo
                 Get_Quanly_View();
             }
         }
+        private void txtAutoComplete_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            string searchText = inputSoPhong_PTP.Text;
+
+            if (!string.IsNullOrEmpty(searchText))
+            {
+                List<string> filteredOptions = new List<string>();
+
+                foreach (string option in AutoCompleteOptions)
+                {
+                    if (option.StartsWith(searchText))
+                    {
+                        filteredOptions.Add(option);
+                    }
+                }
+
+                if (filteredOptions.Count > 0)
+                {
+                    listAutoComplete.ItemsSource = filteredOptions;
+                    popupAutoComplete.IsOpen = true;
+                }
+                else
+                {
+                    popupAutoComplete.IsOpen = false;
+                }
+            }
+            else
+            {
+                popupAutoComplete.IsOpen = false;
+            }
+        }
+        private void txtAutoComplete_LostFocus(object sender, RoutedEventArgs e)
+        {
+            ClosePopup();
+        }
+        private void txtAutoComplete_PreviewMouseUp(object sender, MouseButtonEventArgs e)
+        {
+            string searchText = inputSoPhong_PTP.Text;
+            if (string.IsNullOrEmpty(inputSoPhong_PTP.Text))
+            {
+                List<string> filteredOptions = new List<string>();
+
+                foreach (string option in AutoCompleteOptions)
+                {
+                    if (option.StartsWith(searchText))
+                    {
+                        filteredOptions.Add(option);
+                    }
+                }
+
+                if (filteredOptions.Count > 0)
+                {
+                    listAutoComplete.ItemsSource = filteredOptions;
+                    popupAutoComplete.IsOpen = true;
+                }
+                else
+                {
+                    popupAutoComplete.IsOpen = false;
+                }
+            }
+        }
+        private void OpenPopup()
+        {
+            if (!popupAutoComplete.IsOpen)
+            {
+                popupAutoComplete.IsOpen = true;
+            }
+        }
+
+        private void ClosePopup()
+        {
+            if (popupAutoComplete.IsOpen)
+            {
+                popupAutoComplete.IsOpen = false;
+            }
+        }
+        private void listAutoComplete_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (sender is System.Windows.Controls.ListBox listBox && listBox.SelectedItem != null)
+            {
+                inputSoPhong_PTP.Text = listBox.SelectedItem.ToString();
+                popupAutoComplete.IsOpen = false;
+            }
+        }
+        private void inputLoaiPhong_PTP_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (inputLoaiPhong_PTP.SelectedItem is ComboBoxItem selectedItem)
+            {
+                /*string selectedValue = selectedItem.Content.ToString();
+
+                // Truy xuất dữ liệu từ cơ sở dữ liệu PostgreSQL dựa trên selectedValue
+                // Ví dụ:
+                // var dataFromDatabase = GetAutoCompleteDataFromDatabase(selectedValue);
+
+                // Cập nhật danh sách AutoCompleteOptions với dữ liệu từ cơ sở dữ liệu PostgreSQL
+                // AutoCompleteOptions = dataFromDatabase;
+
+                // Ví dụ: Cập nhật danh sách AutoCompleteOptions với dữ liệu tĩnh
+                AutoCompleteOptions = GetAutoCompleteOptions(selectedValue);
+
+                // Mở Popup để hiển thị danh sách mới
+                popupAutoComplete.IsOpen = true;*/
+                string loaiPhong = selectedItem.Content.ToString();
+                int loaiPhongInt = 0;
+                if (loaiPhong == "Loại A")
+                    loaiPhongInt = 1;
+                else
+                {
+                    if (loaiPhong == "Loại B")
+                        loaiPhongInt = 2;
+                    else loaiPhongInt = 3;
+                }
+
+                var conn_phong = new PhongViewDAO();
+                AutoCompleteOptions = conn_phong.GetListPhongByMaPhong(loaiPhongInt);
+            }
+        }
+
     }
 }
 
