@@ -92,6 +92,7 @@ namespace Nemo
             Get_HoaDon_View();
             Get_DoanhThu_View();
             Get_QuyDinh_View();
+            changeLoaiphong();
 
         }
         // ptp
@@ -1590,24 +1591,10 @@ namespace Nemo
                 popupAutoComplete.IsOpen = false;
             }
         }
-        private void inputLoaiPhong_PTP_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void changeLoaiphong()
         {
             if (inputLoaiPhong_PTP.SelectedItem is ComboBoxItem selectedItem)
             {
-                /*string selectedValue = selectedItem.Content.ToString();
-
-                // Truy xuất dữ liệu từ cơ sở dữ liệu PostgreSQL dựa trên selectedValue
-                // Ví dụ:
-                // var dataFromDatabase = GetAutoCompleteDataFromDatabase(selectedValue);
-
-                // Cập nhật danh sách AutoCompleteOptions với dữ liệu từ cơ sở dữ liệu PostgreSQL
-                // AutoCompleteOptions = dataFromDatabase;
-
-                // Ví dụ: Cập nhật danh sách AutoCompleteOptions với dữ liệu tĩnh
-                AutoCompleteOptions = GetAutoCompleteOptions(selectedValue);
-
-                // Mở Popup để hiển thị danh sách mới
-                popupAutoComplete.IsOpen = true;*/
                 string loaiPhong = selectedItem.Content.ToString();
                 int loaiPhongInt = 0;
                 if (loaiPhong == "Loại A")
@@ -1622,6 +1609,26 @@ namespace Nemo
                 var conn_phong = new PhongViewDAO();
                 AutoCompleteOptions = conn_phong.GetListPhongByMaPhong(loaiPhongInt);
             }
+        
+        }
+        private void inputLoaiPhong_PTP_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            
+                /*string selectedValue = selectedItem.Content.ToString();
+
+                // Truy xuất dữ liệu từ cơ sở dữ liệu PostgreSQL dựa trên selectedValue
+                // Ví dụ:
+                // var dataFromDatabase = GetAutoCompleteDataFromDatabase(selectedValue);
+
+                // Cập nhật danh sách AutoCompleteOptions với dữ liệu từ cơ sở dữ liệu PostgreSQL
+                // AutoCompleteOptions = dataFromDatabase;
+
+                // Ví dụ: Cập nhật danh sách AutoCompleteOptions với dữ liệu tĩnh
+                AutoCompleteOptions = GetAutoCompleteOptions(selectedValue);
+
+                // Mở Popup để hiển thị danh sách mới
+                popupAutoComplete.IsOpen = true;*/
+                changeLoaiphong();
         }
 
     }
