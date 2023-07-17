@@ -1594,20 +1594,6 @@ namespace Nemo
         {
             if (inputLoaiPhong_PTP.SelectedItem is ComboBoxItem selectedItem)
             {
-                /*string selectedValue = selectedItem.Content.ToString();
-
-                // Truy xuất dữ liệu từ cơ sở dữ liệu PostgreSQL dựa trên selectedValue
-                // Ví dụ:
-                // var dataFromDatabase = GetAutoCompleteDataFromDatabase(selectedValue);
-
-                // Cập nhật danh sách AutoCompleteOptions với dữ liệu từ cơ sở dữ liệu PostgreSQL
-                // AutoCompleteOptions = dataFromDatabase;
-
-                // Ví dụ: Cập nhật danh sách AutoCompleteOptions với dữ liệu tĩnh
-                AutoCompleteOptions = GetAutoCompleteOptions(selectedValue);
-
-                // Mở Popup để hiển thị danh sách mới
-                popupAutoComplete.IsOpen = true;*/
                 string loaiPhong = selectedItem.Content.ToString();
                 int loaiPhongInt = 0;
                 if (loaiPhong == "Loại A")
