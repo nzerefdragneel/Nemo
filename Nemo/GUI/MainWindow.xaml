@@ -1245,7 +1245,7 @@
                             </TabItem>
                         </TabControl>
                     </TabItem>
-                    <TabItem Foreground="{DynamicResource PrimaryLightBrush}" Height="65" Style="{StaticResource NavigationItemStyle}">
+                    <TabItem x:Name="baocaotabitem" Foreground="{DynamicResource PrimaryLightBrush}" Height="65" Style="{StaticResource NavigationItemStyle}">
                         <TabItem.Header>
                             <StackPanel Orientation="Horizontal" Width="160">
                                 <materialDesign:PackIcon Kind="ChartBox" Width="28" Height="30" Margin="0 0 10 0" VerticalAlignment="Center" />
@@ -1396,6 +1396,7 @@
                                             <StackPanel Margin="10 20" HorizontalAlignment="left">
                                                 <ScrollViewer  HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
                                                     <DataGrid x:Name="dataGrid_MatDo" Background="#F1F1F1" FontSize="15" IsReadOnly="True"
+                                                             
                                                         AutoGenerateColumns="False">
                                                         <DataGrid.Resources>
                                                             <Style TargetType="DataGridColumnHeader">

@@ -81,12 +81,14 @@ namespace Nemo
                 DAtBtn.Visibility = Visibility.Visible;
                 Quanly_tabitem.Visibility = Visibility.Visible;
                 ChangeQD_BTN.Visibility = Visibility.Visible;
+                baocaotabitem.Visibility = Visibility.Visible;
             }
             else
             {
                 DAtBtn.Visibility = Visibility.Collapsed;
                 Quanly_tabitem.Visibility = Visibility.Collapsed;
                 ChangeQD_BTN.Visibility = Visibility.Collapsed;
+                baocaotabitem.Visibility = Visibility.Collapsed;
 
             }
             //update

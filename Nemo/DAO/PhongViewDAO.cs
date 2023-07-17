@@ -224,7 +224,7 @@ namespace Nemo.DAO
                                                     AND tien IS NULL
                                                     AND maphongthue = {maphong});");
             conn.CloseConnection();
-
+            if (result == null) return null;
             return result.Rows[0]["ngaythue"].ToString();
         }
         public string isReservePrevious(int maphong)
