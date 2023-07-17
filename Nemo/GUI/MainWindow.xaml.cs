@@ -31,6 +31,7 @@ using Nemo.GUI;
 using System.Globalization;
 using System.Windows.Threading;
 using CheckBox = System.Windows.Controls.CheckBox;
+using LiveChartsCore.Geo;
 
 namespace Nemo
 {
@@ -225,6 +226,9 @@ namespace Nemo
         private void ThanhToanBtn_PTP_Click(object sender, RoutedEventArgs e)
         {
             TabControl_PhieuThuePhong.SelectedItem = ThanhToanTabItem;
+            string maptp = MaPTPTextBlock_HD.Text;
+            var conn_ptp = new PhieuThuePhongViewDAO();
+            TienThueTextBlock_HD.Text = conn_ptp.getTienThue(int.Parse(maptp)).ToString("N0") +" VNĐ";
         }
 
        
