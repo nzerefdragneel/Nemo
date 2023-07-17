@@ -1040,10 +1040,10 @@
                                             </Grid.ColumnDefinitions>
 
                                             <TextBlock Grid.Column="0" Foreground="#000" VerticalAlignment="Center" FontSize="13" Margin="50,0,0,5">
-                                        <Run Text="Loại phòng "/>
+                                                <Run Text="Loại phòng "/>
                                             </TextBlock>
                                             <Border Grid.Column="1"  BorderBrush="Black" BorderThickness="1" CornerRadius="5" Margin="20,0,0,5">
-                                                <ComboBox x:Name="inputLoaiPhong_PTP" Width="100" VerticalAlignment="Center" >
+                                                <ComboBox x:Name="inputLoaiPhong_PTP" Width="100" VerticalAlignment="Center" SelectionChanged="inputLoaiPhong_PTP_SelectionChanged">
                                                     <ComboBoxItem Content="Loại A" IsSelected ="True"/>
                                                     <ComboBoxItem Content="Loại B"/>
                                                     <ComboBoxItem Content="Loại C"/>
@@ -1055,8 +1055,28 @@
                                             </TextBlock>
 
                                             <Border Grid.Column="3" BorderBrush="Black" BorderThickness="1" CornerRadius="5" Margin="20,0,0,5">
-                                                <TextBox x:Name="inputSoPhong_PTP" Width="100" />
+                                                <TextBox x:Name="inputSoPhong_PTP" Width="100" PreviewMouseUp="txtAutoComplete_PreviewMouseUp" TextChanged="txtAutoComplete_TextChanged" LostFocus="txtAutoComplete_LostFocus"/>
                                             </Border>
+
+                                            <Popup x:Name="popupAutoComplete" IsOpen="False" Placement="Bottom" HorizontalOffset="615" VerticalOffset="0" StaysOpen="False" PlacementTarget="{Binding ElementName=txtAutoComplete}">
+                                                <Grid Background="White" >
+                                                    <Border BorderBrush="Black" BorderThickness="1" Background="White" Padding="5">
+                                                        <ScrollViewer VerticalScrollBarVisibility="Auto" >
+                                                            <StackPanel>
+                                                                <ListBox x:Name="listAutoComplete" Width="{Binding ActualWidth, ElementName=inputSoPhong_PTP}" 
+                                                                        ItemsSource="{Binding AutoCompleteOptions}" MaxHeight="100"
+                                                                        SelectionChanged="listAutoComplete_SelectionChanged">
+                                                                    <ListBox.ItemTemplate>
+                                                                        <DataTemplate>
+                                                                            <TextBlock Text="{Binding}" Padding="5"/>
+                                                                        </DataTemplate>
+                                                                    </ListBox.ItemTemplate>
+                                                                </ListBox>
+                                                            </StackPanel>
+                                                        </ScrollViewer>
+                                                    </Border>
+                                                </Grid>
+                                            </Popup>
 
                                             <TextBlock Grid.Column="4" x:Name="errorSoPhong_PTP" Foreground="red" Visibility="Collapsed" VerticalAlignment="Center" FontStyle="Italic" FontSize="13" Margin="20,0,0,5">
                                                 <Run Text="*Số phòng không tồn tại"/>
@@ -1208,10 +1228,11 @@
 
                                     <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0 50 50 0">
                                         <Button Width="150" Height="45"
+                                                IsEnabled="False"
                                                 x:Name="DoneBtn_PTP"
                                                 Click="DoneBtn_PTP_Click"
                                     materialDesign:ButtonAssist.CornerRadius="10"
-                                    IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
+                                    
                                     Style="{StaticResource MaterialDesignRaisedButton}"
                                     Background="{DynamicResource PrimaryDarkForegroundBrush}" Foreground="{DynamicResource SecondaryHueMidForegroundBrush}"
                                     ToolTip="MaterialDesignRaisedButton with Round Corners">

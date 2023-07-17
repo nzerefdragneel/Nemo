@@ -247,5 +247,19 @@ namespace Nemo.DAO
 
             return result.Rows[0]["ngaythue"].ToString();
         }
+        public List<String> GetListPhongByMaPhong(int malp)
+        {
+            var result = conn.ExecuteQuery($"select phong.maphong from phong join loaiphong on phong.maloaiphong=loaiphong.maloaiphong where phong.maloaiphong={malp}");
+            if (result == null || result.Rows.Count == 0) 
+                return null;
+            List<string> maphongList = new List<string>();
+            foreach (DataRow row in result.Rows)
+            {
+                string maphong = row["maphong"].ToString();
+                maphongList.Add(maphong);
+            }
+
+            return maphongList;
+        }
     }
 }
