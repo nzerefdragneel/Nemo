@@ -1637,6 +1637,34 @@ namespace Nemo
                 changeLoaiphong();
         }
 
+
+
+        private void ListView_PhieuThuePhong_Mousedown(object sender, MouseButtonEventArgs e)
+        {
+            var selectedData = (PhieuThuePhong)ListView_PhieuThuePhong.SelectedItem;
+
+            if (selectedData != null)
+            {
+                ChiTietPTPView.maPTP = selectedData.maPTP;
+                ChiTietPTPView.maPhongThue = selectedData.maPhongThue;
+                ChiTietPTPView.ngayThue = selectedData.ngayThue;
+                ChiTietPTPView.tienThue = selectedData.tienThue;
+                ChiTietPTPView.ngayTra = selectedData.ngayTra;
+
+                DateTime date_ngayThue = DateTime.Parse(selectedData.ngayThue);
+                DateTime currentDate = DateTime.Now;
+
+                var conn_phong = new PhongViewDAO();
+                string ttPhong = conn_phong.checkTinhTrang(Convert.ToInt32(selectedData.maPhongThue));
+
+                bool reserve = false;
+                if (DateTime.Compare(currentDate, date_ngayThue) < 0 && ttPhong == "Đang đợi")
+                    reserve = true;
+
+                TabControl_PhieuThuePhong.SelectedItem = ChiTietPhieuThueTabItem;
+                UpdateChiTietPhieuThueData(ChiTietPTPView, reserve);
+            }
+        }
     }
 }
 

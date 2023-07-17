@@ -359,13 +359,15 @@
                                     </DockPanel>
 
                                     <StackPanel Grid.Row="2" Margin="10">
-                                        <ListView x:Name="ListView_PhieuThuePhong" ItemsSource="{Binding}" SelectionChanged="ListView_PhieuThuePhong_Click">
+                                        <ListView x:Name="ListView_PhieuThuePhong" ItemsSource="{Binding}">
                                             <ListView.ItemContainerStyle>
                                                 <Style TargetType="ListViewItem">
                                                     <Setter Property="HorizontalContentAlignment" Value="Center" />
                                                     <Setter Property="VerticalContentAlignment" Value="Center" />
+                                                    <EventSetter Event="PreviewMouseLeftButtonDown" Handler="ListView_PhieuThuePhong_Mousedown" />
                                                 </Style>
                                             </ListView.ItemContainerStyle>
+                                           
                                             <ListView.ItemTemplate>
                                                 <DataTemplate>
                                                 </DataTemplate>
